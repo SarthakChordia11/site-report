@@ -197,10 +197,10 @@ def _seed_demo_reports():
 
 
 # Seed demo reports on startup
-try:
-    _seed_demo_reports()
-except Exception:
-    pass  # Non-fatal: seeding is best-effort
+@app.on_event("startup")
+def on_startup():
+    # _seed_demo_reports()  # Disabled for production to keep database clean
+    pass
 
 
 if __name__ == "__main__":
