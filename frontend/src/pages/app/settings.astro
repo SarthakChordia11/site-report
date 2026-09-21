@@ -1,0 +1,10 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import AppShell from '../../components/islands/AppShell';
+import SettingsIsland from '../../components/islands/SettingsIsland';
+---
+
+<AppLayout title="Settings" activeModule="settings">
+  <AppShell slot="sidebar" activeModule="settings" client:load />
+  <SettingsIsland client:load />
+</AppLayout>

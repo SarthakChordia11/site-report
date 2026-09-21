@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run site manager app",
+			"type": "shell",
+			"command": "cd backend && ./venv/bin/python -m uvicorn main:app --host 0.0.0.0 --port 8002 >/tmp/site-backend.log 2>&1 & cd ../frontend && npm run dev",
+			"isBackground": true,
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": "build"
+		}
+	]
+}

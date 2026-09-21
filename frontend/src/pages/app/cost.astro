@@ -1,0 +1,10 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import AppShell from '../../components/islands/AppShell';
+import CostIsland from '../../components/islands/CostIsland';
+---
+
+<AppLayout title="Cost" activeModule="cost">
+  <AppShell slot="sidebar" activeModule="cost" client:load />
+  <CostIsland client:load />
+</AppLayout>

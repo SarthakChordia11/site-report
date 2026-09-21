@@ -1,0 +1,6 @@
+{
+  "name": "SiteReportAI - Construction Management",
+  "description": "AI-powered construction site management and reporting platform with voice logging, document OCR scanning, labour, materials, equipment, and live EVM tracking.",
+  "requestFramePermissions": ["microphone", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

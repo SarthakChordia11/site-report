@@ -1,0 +1,10 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import AppShell from '../../components/islands/AppShell';
+import LabourIsland from '../../components/islands/LabourIsland';
+---
+
+<AppLayout title="Labour" activeModule="labour">
+  <AppShell slot="sidebar" activeModule="labour" client:load />
+  <LabourIsland client:load />
+</AppLayout>

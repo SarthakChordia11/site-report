@@ -1,0 +1,10 @@
+---
+import AppLayout from '../../layouts/AppLayout.astro';
+import AppShell from '../../components/islands/AppShell';
+import DashboardIsland from '../../components/islands/DashboardIsland';
+---
+
+<AppLayout title="Dashboard" activeModule="dashboard">
+  <AppShell slot="sidebar" activeModule="dashboard" client:load />
+  <DashboardIsland client:load />
+</AppLayout>

@@ -1,0 +1,27 @@
+# Python
+backend/.env
+backend/venv/
+backend/venv2/
+backend/.venv/
+backend/__pycache__/
+backend/*.db
+backend/reports/
+backend/error_log.txt
+backend/dpr_error.txt
+backend/.pytest_cache/
+
+# Node
+frontend/.env
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Editors
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

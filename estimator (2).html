@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan → BOQ & Cost Estimate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16232E; --blue:#2E4A6B; --blue-light:#4C6E93;
+    --grey:#E7E4DC; --grey-dark:#C9C4B7; --chalk:#FBFAF7;
+    --brick:#A8442E; --brick-dark:#8A3624; --green:#4C7A5E; --line:#B9B2A0;
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--grey); color:var(--ink); font-family:'IBM Plex Sans', sans-serif; line-height:1.5; }
+  .grid-bg{ background-image:linear-gradient(rgba(46,74,107,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(46,74,107,0.07) 1px, transparent 1px); background-size:28px 28px; }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 20px 80px; }
+
+  header.hero{ padding:48px 20px 40px; border-bottom:2px solid var(--ink); }
+  header.hero .eyebrow-line{ display:flex; align-items:center; gap:10px; color:var(--blue); font-size:13px; margin-bottom:14px; }
+  header.hero .eyebrow-line .dot{ width:8px;height:8px;border-radius:50%;background:var(--brick); }
+  header.hero h1{ font-size:clamp(28px,5vw,42px); font-weight:700; max-width:16ch; line-height:1.08; }
+  header.hero p{ max-width:56ch; margin-top:14px; font-size:16px; color:#3C4A55; }
+
+  .uploader{ margin-top:28px; border:2px dashed var(--blue-light); background:var(--chalk); border-radius:4px; padding:26px; display:flex; gap:14px; align-items:center; position:relative; }
+  .uploader.dragover{ background:#EFF3F6; border-color:var(--brick); }
+  .uploader input[type=file]{ position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .uploader .icon{ font-size:26px; }
+  .uploader .u-title{ font-weight:600; font-size:15px; }
+  .uploader .u-sub{ font-size:13px; color:#5A6570; }
+
+  .plans-list{ margin-top:18px; display:flex; flex-direction:column; gap:12px; }
+  .plan-card{ background:var(--chalk); border:1px solid var(--grey-dark); border-radius:4px; padding:14px; display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+  .plan-card img{ width:84px; height:84px; object-fit:cover; border-radius:3px; border:1px solid var(--line); flex-shrink:0; }
+  .plan-meta{ flex:1; min-width:200px; display:flex; flex-direction:column; gap:8px; }
+  .plan-meta .row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .plan-meta select{ padding:7px 8px; border:1px solid var(--grey-dark); border-radius:3px; background:var(--chalk); font-size:13px; font-family:'IBM Plex Sans',sans-serif; }
+  .plan-note{ font-size:12px; color:#3C4A55; background:#EFF3F6; padding:8px 10px; border-left:3px solid var(--blue); display:none; }
+  .plan-note.show{ display:block; }
+  .plan-note.error{ border-left-color:var(--brick); background:#F7ECE9; }
+  .plan-actions{ display:flex; gap:8px; }
+
+  button{ font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:14px; border:none; border-radius:3px; padding:10px 16px; cursor:pointer; }
+  button.primary{ background:var(--brick); color:var(--chalk); }
+  button.primary:hover{ background:var(--brick-dark); }
+  button.secondary{ background:var(--ink); color:var(--chalk); }
+  button.ghost{ background:transparent; color:var(--blue); border:1px solid var(--blue-light); }
+  button.tiny{ padding:6px 10px; font-size:12px; }
+  button:disabled{ opacity:0.5; cursor:not-allowed; }
+
+  section.stage{ margin-top:36px; border-top:1px solid var(--line); padding-top:22px; }
+  .stage-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+  .stage-num{ font-family:'IBM Plex Mono', monospace; color:var(--blue); font-size:13px; border:1px solid var(--blue); border-radius:50%; width:26px; height:26px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .stage-head h2{ font-size:19px; }
+  .stage-desc{ font-size:13px; color:#5A6570; margin:2px 0 16px 38px; max-width:62ch; }
+
+  .field-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:14px; margin-left:38px; }
+  .field label{ display:block; font-size:12px; color:#5A6570; margin-bottom:5px; }
+  .field input, .field select{ width:100%; padding:9px 10px; border:1px solid var(--grey-dark); border-radius:3px; background:var(--chalk); font-family:'IBM Plex Mono', monospace; font-size:14px; color:var(--ink); }
+  .field input:focus, .field select:focus{ outline:2px solid var(--blue-light); outline-offset:1px; }
+
+  .floor-card{ margin-left:38px; border:1px solid var(--grey-dark); border-radius:4px; padding:16px; margin-bottom:14px; background:var(--chalk); }
+  .floor-card-head{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
+  .floor-card-head input.floor-label{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; border:none; background:transparent; padding:2px 0; border-bottom:1px dashed var(--grey-dark); width:auto; max-width:200px; }
+  .floor-card .field-grid{ margin-left:0; }
+  .remove-floor{ background:transparent; border:1px solid var(--brick); color:var(--brick); font-size:12px; padding:5px 10px; }
+
+  .add-floor-row{ margin-left:38px; }
+
+  .calc-bar{ margin-top:40px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+
+  .results{ margin-top:40px; background:var(--ink); color:var(--chalk); border-radius:6px; padding:28px 24px; display:none; }
+  .results.show{ display:block; }
+  .results h2{ color:var(--chalk); font-size:20px; margin-bottom:4px; }
+  .results .sub{ color:#9FB0BE; font-size:13px; margin-bottom:20px; }
+  .slip{ width:100%; border-collapse:collapse; }
+  .slip tr{ border-bottom:1px dashed #3C4C58; }
+  .slip tr:last-child{ border-bottom:none; }
+  .slip td{ padding:11px 4px; font-size:14px; }
+  .slip td.name{ color:#D8DEE3; }
+  .slip td.qty{ text-align:right; font-family:'IBM Plex Mono', monospace; font-weight:600; color:var(--chalk); white-space:nowrap; }
+  .slip td.unit{ color:#9FB0BE; font-size:12px; padding-left:6px; }
+
+  .breakdown{ margin-top:26px; border-top:1px solid #2E3F4B; padding-top:18px; }
+  .breakdown summary{ cursor:pointer; color:#9FB0BE; font-size:13px; margin-bottom:10px; }
+  .bk-section{ margin-bottom:14px; }
+  .bk-section h3{ font-size:13px; color:var(--blue-light); margin-bottom:6px; }
+  .bk-row{ display:flex; justify-content:space-between; font-size:13px; color:#C7CFD5; padding:3px 0; }
+  .bk-row span.v{ font-family:'IBM Plex Mono', monospace; }
+
+  table.boq-table{ width:100%; border-collapse:collapse; font-size:13px; }
+  table.boq-table th, table.boq-table td{ padding:8px 6px; border-bottom:1px solid #2E3F4B; text-align:left; }
+  table.boq-table th{ color:var(--blue-light); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.03em; }
+  table.boq-table td.num{ text-align:right; font-family:'IBM Plex Mono', monospace; white-space:nowrap; }
+  table.boq-table tr.total-row td{ border-top:2px solid var(--chalk); border-bottom:none; font-weight:700; padding-top:10px; }
+  table.boq-table tr.sub-total td{ font-style:italic; color:#9FB0BE; }
+
+  footer.note{ margin-top:30px; font-size:12px; color:#6B7580; max-width:70ch; }
+</style>
+</head>
+<body class="grid-bg">
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow-line"><span class="dot"></span> Site material calculator</div>
+    <h1>Plan in, BOQ & cost out</h1>
+    <p>Upload footing plans, floor plans, and roof plans — as many as you have, for as many floors as the building has. Tag each one, let the reader fill in what it can, then confirm the numbers and get a material requisition, an itemised Bill of Quantities, a steel summary, and a full cost estimate (materials, labour, overheads, profit, GST) for the whole building.</p>
+
+    <div class="uploader" id="uploader">
+      <input type="file" id="fileInput" accept="image/*" multiple>
+      <div class="icon">📐</div>
+      <div>
+        <div class="u-title">Drop plan images here, or tap to choose (you can pick several at once)</div>
+        <div class="u-sub">JPG or PNG. Photos of hand sketches work too.</div>
+      </div>
+    </div>
+
+    <div class="plans-list" id="plansList"></div>
+  </header>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">1</span><h2>Building & floors</h2></div>
+    <div class="stage-desc">Add one card per floor — ground floor, first floor, and so on. Each floor can have its own footprint if it's not identical to the one below it.</div>
+    <div id="floorsContainer"></div>
+    <div class="add-floor-row"><button class="ghost tiny" id="addFloorBtn">+ Add another floor</button></div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">2</span><h2>Foundation / footing</h2></div>
+    <div class="stage-desc">One-time trench footing under all outer and load-bearing walls: PCC bedding, then RCC footing above it.</div>
+    <div class="field-grid">
+      <div class="field"><label>Total footing run (ft)</label><input type="number" id="fLength" value="130"></div>
+      <div class="field"><label>Footing width (ft)</label><input type="number" id="fWidth" value="2"></div>
+      <div class="field"><label>PCC bed thickness (in)</label><input type="number" id="fPccDepth" value="4"></div>
+      <div class="field"><label>RCC footing thickness (in)</label><input type="number" id="fRccDepth" value="9"></div>
+      <div class="field"><label>PCC ratio (cement:sand:agg)</label><input type="text" id="fPccRatio" value="1:4:8"></div>
+      <div class="field"><label>RCC ratio (cement:sand:agg)</label><input type="text" id="fRccRatio" value="1:2:4"></div>
+      <div class="field"><label>Steel in footing (kg/m³)</label><input type="number" id="fSteel" value="70"></div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">3</span><h2>Columns</h2></div>
+    <div class="stage-desc">RCC columns running from the footing to the roof, through every floor. Total height is added up automatically from the floor heights in stage 1.</div>
+    <div class="field-grid">
+      <div class="field"><label>Number of columns</label><input type="number" id="cCount" value="12"></div>
+      <div class="field"><label>Column size (in × in)</label><input type="text" id="cSize" value="9x9"></div>
+      <div class="field"><label>Concrete ratio</label><input type="text" id="cRatio" value="1:1.5:3"></div>
+      <div class="field"><label>Steel in columns (kg/m³)</label><input type="number" id="cSteel" value="110"></div>
+      <div class="field"><label class="mono" style="color:var(--blue)">Total column height</label><div id="colHeightDisplay" class="mono" style="padding:9px 0;font-size:14px;">— ft</div></div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">4</span><h2>Roof / slab</h2></div>
+    <div class="stage-desc">RCC slab cast over the full footprint of every floor (each floor's own area from stage 1).</div>
+    <div class="field-grid">
+      <div class="field"><label>Slab thickness (in)</label><input type="number" id="sThickness" value="5"></div>
+      <div class="field"><label>Concrete ratio</label><input type="text" id="sRatio" value="1:1.5:3"></div>
+      <div class="field"><label>Steel in slab (kg/m³)</label><input type="number" id="sSteel" value="90"></div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">5</span><h2>Wall mortar, plaster, flooring & paint</h2></div>
+    <div class="stage-desc">Finishing quantities across the whole building, based on the floors above.</div>
+    <div class="field-grid">
+      <div class="field"><label>Wall mortar ratio (cement:sand)</label><input type="text" id="wMortar" value="1:6"></div>
+      <div class="field"><label>Internal plaster (in)</label><input type="number" id="pInThick" value="0.5"></div>
+      <div class="field"><label>External plaster (in)</label><input type="number" id="pOutThick" value="0.75"></div>
+      <div class="field"><label>Paint coats</label><input type="number" id="pCoats" value="2"></div>
+      <div class="field"><label>Flooring wastage (%)</label><input type="number" id="pWastage" value="10"></div>
+    </div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-head"><span class="stage-num">6</span><h2>Rates, overheads &amp; costing</h2></div>
+    <div class="stage-desc">Unit rates for the BOQ (edit to match your local market), plus the overhead chain used in the Rate Analysis sheet: Labour → T&amp;P → Contractor's profit → GST, applied on top of material cost.</div>
+    <div class="field-grid">
+      <div class="field"><label>Cement (₹/bag, 50kg)</label><input type="number" id="rCement" value="430"></div>
+      <div class="field"><label>Sand (₹/m³)</label><input type="number" id="rSand" value="1200"></div>
+      <div class="field"><label>Aggregate (₹/m³)</label><input type="number" id="rAgg" value="1050"></div>
+      <div class="field"><label>Steel / TMT (₹/kg)</label><input type="number" id="rSteel" value="68"></div>
+      <div class="field"><label>Bricks (₹/piece)</label><input type="number" id="rBrick" value="8"></div>
+      <div class="field"><label>Earthwork excavation (₹/m³)</label><input type="number" id="rExcavation" value="180"></div>
+      <div class="field"><label>Flooring (₹/sqft)</label><input type="number" id="rFlooring" value="65"></div>
+      <div class="field"><label>Painting (₹/litre applied)</label><input type="number" id="rPaint" value="280"></div>
+    </div>
+    <div class="stage-desc" style="margin-top:14px;">Overhead % chain (each applied on the running subtotal above it, same as the Rate Analysis sheet):</div>
+    <div class="field-grid">
+      <div class="field"><label>Labour (% of material cost)</label><input type="number" id="pctLabour" value="20"></div>
+      <div class="field"><label>T&amp;P (% of material+labour)</label><input type="number" id="pctTnp" value="2"></div>
+      <div class="field"><label>Contractor's profit (%)</label><input type="number" id="pctProfit" value="10"></div>
+      <div class="field"><label>GST (%)</label><input type="number" id="pctGst" value="18"></div>
+      <div class="field"><label>Steel wastage (%)</label><input type="number" id="pctSteelWaste" value="4"></div>
+    </div>
+  </section>
+
+  <div class="calc-bar">
+    <button class="primary" id="calcBtn">Calculate BOQ &amp; cost</button>
+    <span style="font-size:13px;color:#5A6570;">Adjust anything above and recalculate any time.</span>
+  </div>
+
+  <div class="results" id="results">
+    <h2>Material requisition</h2>
+    <div class="sub" id="resultsSub"></div>
+    <table class="slip" id="slipTable"></table>
+    <details class="breakdown">
+      <summary>Show stage-by-stage breakdown</summary>
+      <div id="breakdownBody"></div>
+    </details>
+
+    <h2 style="margin-top:34px;">Bill of Quantities</h2>
+    <div class="sub">Item-wise quantity × rate = amount, in the same layout as a standard Quantity Sheet / BOQ.</div>
+    <table class="boq-table" id="boqTable"></table>
+
+    <h2 style="margin-top:34px;">Cost summary</h2>
+    <div class="sub">Material → Labour → T&amp;P → Contractor's profit → GST, chained the same way as a Rate Analysis sheet.</div>
+    <table class="boq-table" id="costTable"></table>
+
+    <h2 style="margin-top:34px;">Steel / Bar Bending summary</h2>
+    <div class="sub">Reinforcement by structural element, with wastage allowance for procurement.</div>
+    <table class="boq-table" id="steelTable"></table>
+
+    <div class="calc-bar" style="margin-top:26px;">
+      <button class="secondary" id="downloadBoqBtn">⬇ Download BOQ (CSV, opens in Excel)</button>
+    </div>
+  </div>
+
+  <footer class="note">
+    Figures use standard Indian thumb-rule ratios and a 1.54 dry-volume factor for concrete, 1.27–1.33 for mortar. Treat this as a working estimate for procurement planning, not a substitute for a structural engineer's bill of quantities — get footing, column and steel sizing checked by an engineer before you order steel and concrete.
+  </footer>
+
+</div>
+
+<script>
+// ---------------- floors state ----------------
+let floorIdCounter = 0;
+let floors = [];
+
+function newFloor(defaults){
+  floorIdCounter += 1;
+  return Object.assign({
+    id: floorIdCounter,
+    label: 'Floor ' + floors.length,
+    length: 30, width: 25, height: 10,
+    wallLength: 180, wallThickness: 9, opening: 12
+  }, defaults || {});
+}
+
+function addFloor(defaults){
+  const f = newFloor(defaults);
+  if(floors.length === 0) f.label = 'Ground floor';
+  floors.push(f);
+  renderFloors();
+  return f;
+}
+
+function removeFloor(id){
+  if(floors.length <= 1) return;
+  floors = floors.filter(f => f.id !== id);
+  renderFloors();
+}
+
+function renderFloors(){
+  const container = document.getElementById('floorsContainer');
+  container.innerHTML = floors.map(f => `
+    <div class="floor-card" data-floor-id="${f.id}">
+      <div class="floor-card-head">
+        <input class="floor-label" value="${f.label}" data-role="label" data-floor-id="${f.id}">
+        ${floors.length > 1 ? `<button class="remove-floor" data-remove-floor="${f.id}">Remove floor</button>` : ''}
+      </div>
+      <div class="field-grid">
+        <div class="field"><label>Length (ft)</label><input type="number" value="${f.length}" data-role="length" data-floor-id="${f.id}"></div>
+        <div class="field"><label>Width (ft)</label><input type="number" value="${f.width}" data-role="width" data-floor-id="${f.id}"></div>
+        <div class="field"><label>Floor-to-floor height (ft)</label><input type="number" value="${f.height}" data-role="height" data-floor-id="${f.id}"></div>
+        <div class="field"><label>Total wall length, this floor (ft)</label><input type="number" value="${f.wallLength}" data-role="wallLength" data-floor-id="${f.id}"></div>
+        <div class="field"><label>Wall thickness (in)</label><input type="number" value="${f.wallThickness}" data-role="wallThickness" data-floor-id="${f.id}"></div>
+        <div class="field"><label>Opening deduction (%)</label><input type="number" value="${f.opening}" data-role="opening" data-floor-id="${f.id}"></div>
+      </div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('input[data-role]').forEach(inp => {
+    inp.addEventListener('input', e => {
+      const id = Number(e.target.dataset.floorId);
+      const role = e.target.dataset.role;
+      const f = floors.find(fl => fl.id === id);
+      if(!f) return;
+      f[role] = role === 'label' ? e.target.value : (parseFloat(e.target.value) || 0);
+    });
+  });
+  container.querySelectorAll('[data-remove-floor]').forEach(btn => {
+    btn.addEventListener('click', e => removeFloor(Number(e.target.dataset.removeFloor)));
+  });
+  updateColumnHeightDisplay();
+  refreshAllPlanFloorSelects();
+}
+
+function updateColumnHeightDisplay(){
+  const total = floors.reduce((s,f) => s + (f.height || 0), 0);
+  const disp = document.getElementById('colHeightDisplay');
+  if(disp) disp.textContent = total + ' ft (across ' + floors.length + ' floor' + (floors.length>1?'s':'') + ')';
+}
+
+document.getElementById('addFloorBtn').addEventListener('click', () => addFloor());
+
+// ---------------- plans / uploads ----------------
+let plans = [];
+let planIdCounter = 0;
+
+const fileInput = document.getElementById('fileInput');
+const uploader = document.getElementById('uploader');
+const plansList = document.getElementById('plansList');
+
+// seed with one floor (after plansList exists, since renderFloors() touches it)
+addFloor();
+
+fileInput.addEventListener('change', e => { handleFiles(e.target.files); fileInput.value=''; });
+['dragover'].forEach(evt => uploader.addEventListener(evt, e => { e.preventDefault(); uploader.classList.add('dragover'); }));
+['dragleave','drop'].forEach(evt => uploader.addEventListener(evt, e => { e.preventDefault(); uploader.classList.remove('dragover'); }));
+uploader.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+
+function handleFiles(fileList){
+  Array.from(fileList).forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    planIdCounter += 1;
+    const plan = { id: planIdCounter, file, mediaType: file.type, base64: null, type: 'floor', floorChoice: 'new' };
+    plans.push(plan);
+    const reader = new FileReader();
+    reader.onload = () => {
+      plan.base64 = reader.result.split(',')[1];
+      plan.dataUrl = reader.result;
+      renderPlans();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function planFloorOptions(selected){
+  let opts = floors.map(f => `<option value="${f.id}" ${String(f.id)===String(selected)?'selected':''}>${f.label}</option>`).join('');
+  opts += `<option value="new" ${selected==='new'?'selected':''}>+ Add as new floor</option>`;
+  return opts;
+}
+
+function renderPlans(){
+  plansList.innerHTML = plans.map(p => `
+    <div class="plan-card" data-plan-id="${p.id}">
+      <img src="${p.dataUrl || ''}" alt="plan">
+      <div class="plan-meta">
+        <div class="row">
+          <select data-plan-role="type" data-plan-id="${p.id}">
+            <option value="floor" ${p.type==='floor'?'selected':''}>Floor plan</option>
+            <option value="foundation" ${p.type==='foundation'?'selected':''}>Foundation / footing plan</option>
+            <option value="roof" ${p.type==='roof'?'selected':''}>Roof / terrace plan</option>
+            <option value="other" ${p.type==='other'?'selected':''}>Reference only</option>
+          </select>
+          <select data-plan-role="floorChoice" data-plan-id="${p.id}" style="${p.type==='floor'?'':'display:none;'}">
+            ${planFloorOptions(p.floorChoice)}
+          </select>
+        </div>
+        <div class="plan-actions">
+          <button class="secondary tiny" data-read-plan="${p.id}" ${p.type==='other'?'disabled':''}>Read this plan</button>
+          <button class="ghost tiny" data-remove-plan="${p.id}">Remove</button>
+        </div>
+        <div class="plan-note" id="planNote-${p.id}"></div>
+      </div>
+    </div>
+  `).join('');
+
+  plansList.querySelectorAll('[data-plan-role="type"]').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const p = plans.find(pl => pl.id === Number(e.target.dataset.planId));
+      p.type = e.target.value;
+      renderPlans();
+    });
+  });
+  plansList.querySelectorAll('[data-plan-role="floorChoice"]').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const p = plans.find(pl => pl.id === Number(e.target.dataset.planId));
+      p.floorChoice = e.target.value;
+    });
+  });
+  plansList.querySelectorAll('[data-remove-plan]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      plans = plans.filter(pl => pl.id !== Number(e.target.dataset.removePlan));
+      renderPlans();
+    });
+  });
+  plansList.querySelectorAll('[data-read-plan]').forEach(btn => {
+    btn.addEventListener('click', e => readPlan(Number(e.target.dataset.readPlan)));
+  });
+}
+
+function refreshAllPlanFloorSelects(){
+  plansList.querySelectorAll('[data-plan-role="floorChoice"]').forEach(sel => {
+    const p = plans.find(pl => pl.id === Number(sel.dataset.planId));
+    if(p) sel.innerHTML = planFloorOptions(p.floorChoice);
+  });
+}
+
+function noteFor(id, msg, isError){
+  const el = document.getElementById('planNote-' + id);
+  if(!el) return;
+  el.textContent = msg;
+  el.className = 'plan-note show' + (isError ? ' error' : '');
+}
+
+async function callVision(base64, mediaType, promptText){
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-6',
+      max_tokens: 500,
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: mediaType, data: base64 } },
+          { type: 'text', text: promptText }
+        ]
+      }]
+    })
+  });
+  const data = await response.json();
+  const textBlock = (data.content || []).find(b => b.type === 'text');
+  if(!textBlock) throw new Error('no response');
+  const cleaned = textBlock.text.replace(/```json|```/g, '').trim();
+  return JSON.parse(cleaned);
+}
+
+async function readPlan(id){
+  const p = plans.find(pl => pl.id === id);
+  if(!p || !p.base64) return;
+  const btn = plansList.querySelector(`[data-read-plan="${id}"]`);
+  btn.disabled = true;
+  btn.textContent = 'Reading…';
+  noteFor(id, 'Reading dimensions…', false);
+  try{
+    if(p.type === 'foundation'){
+      const parsed = await callVision(p.base64, p.mediaType,
+        'This is a construction foundation/footing plan. Respond with ONLY a raw JSON object, no markdown: {"footing_run_ft": number, "footing_width_ft": number, "pcc_depth_in": number, "rcc_depth_in": number, "notes": "short string"}. Estimate sensibly where not labeled and say so in notes.');
+      if(parsed.footing_run_ft) document.getElementById('fLength').value = parsed.footing_run_ft;
+      if(parsed.footing_width_ft) document.getElementById('fWidth').value = parsed.footing_width_ft;
+      if(parsed.pcc_depth_in) document.getElementById('fPccDepth').value = parsed.pcc_depth_in;
+      if(parsed.rcc_depth_in) document.getElementById('fRccDepth').value = parsed.rcc_depth_in;
+      noteFor(id, 'Filled into the Foundation stage. ' + (parsed.notes || 'Please check the values.'), false);
+
+    } else if(p.type === 'roof'){
+      const parsed = await callVision(p.base64, p.mediaType,
+        'This is a roof or terrace slab plan. Respond with ONLY a raw JSON object, no markdown: {"slab_thickness_in": number, "notes": "short string"}. Estimate sensibly if not labeled.');
+      if(parsed.slab_thickness_in) document.getElementById('sThickness').value = parsed.slab_thickness_in;
+      noteFor(id, 'Filled into the Roof/slab stage. ' + (parsed.notes || ''), false);
+
+    } else { // floor
+      const parsed = await callVision(p.base64, p.mediaType,
+        'This is a floor plan of one floor of a residential building. Respond with ONLY a raw JSON object, no markdown: {"length_ft": number, "width_ft": number, "wall_length_ft": number, "wall_thickness_in": number, "floor_height_ft": number, "notes": "short string describing what you could and could not read"}. Estimate sensibly from typical residential proportions if not labeled, and say so in notes.');
+
+      let floorObj;
+      if(p.floorChoice === 'new'){
+        floorObj = addFloor();
+        p.floorChoice = String(floorObj.id);
+      } else {
+        floorObj = floors.find(f => String(f.id) === String(p.floorChoice));
+      }
+      if(!floorObj) throw new Error('floor not found');
+
+      if(parsed.length_ft) floorObj.length = parsed.length_ft;
+      if(parsed.width_ft) floorObj.width = parsed.width_ft;
+      if(parsed.wall_length_ft) floorObj.wallLength = parsed.wall_length_ft;
+      if(parsed.wall_thickness_in) floorObj.wallThickness = parsed.wall_thickness_in;
+      if(parsed.floor_height_ft) floorObj.height = parsed.floor_height_ft;
+      renderFloors();
+      renderPlans();
+      noteFor(id, 'Filled into "' + floorObj.label + '". ' + (parsed.notes || 'Please check the values.'), false);
+    }
+  }catch(err){
+    noteFor(id, 'Could not read this plan reliably (' + err.message + '). Fill in the matching fields by hand instead.', true);
+  }finally{
+    const btnAgain = plansList.querySelector(`[data-read-plan="${id}"]`);
+    if(btnAgain){ btnAgain.disabled = false; btnAgain.textContent = 'Read this plan'; }
+  }
+}
+
+// ---------------- calculation engine ----------------
+const FT = 0.3048, IN = 0.0254;
+const BAG_M3 = 0.0347;
+const M3_TO_CFT = 35.3147;
+const BRICK_EFF_VOL = 0.00248;
+
+function parseRatio(str){ return str.split(':').map(Number); }
+
+function concreteMix(volumeM3, ratioStr, steelKgPerM3){
+  const [c,s,a] = parseRatio(ratioStr);
+  const sum = c+s+a;
+  const dryVol = volumeM3 * 1.54;
+  return {
+    volumeM3,
+    cementBags: (dryVol*c/sum)/BAG_M3,
+    sandM3: dryVol*s/sum,
+    aggM3: dryVol*a/sum,
+    steelKg: volumeM3 * (steelKgPerM3 || 0)
+  };
+}
+function mortarMix(volumeM3, ratioStr, dryFactor){
+  const [c,s] = parseRatio(ratioStr);
+  const sum = c+s;
+  const dryVol = volumeM3 * dryFactor;
+  return { cementBags: (dryVol*c/sum)/BAG_M3, sandM3: dryVol*s/sum };
+}
+
+document.getElementById('calcBtn').addEventListener('click', calculate);
+
+function calculate(){
+  const g = id => parseFloat(document.getElementById(id).value) || 0;
+
+  // Foundation (once)
+  const fLen = g('fLength') * FT, fWidth = g('fWidth') * FT;
+  const pccVol = fLen * fWidth * (g('fPccDepth') * IN);
+  const rccVol = fLen * fWidth * (g('fRccDepth') * IN);
+  const excavationVol = fLen * fWidth * ((g('fPccDepth') + g('fRccDepth')) * IN);
+  const pcc = concreteMix(pccVol, document.getElementById('fPccRatio').value, 0);
+  const rccFooting = concreteMix(rccVol, document.getElementById('fRccRatio').value, g('fSteel'));
+
+  // Columns (once, height summed across floors)
+  const totalColHeight = floors.reduce((s,f) => s + f.height, 0) * FT;
+  const cCount = g('cCount');
+  const [csW, csD] = document.getElementById('cSize').value.split('x').map(v => parseFloat(v) * IN);
+  const colVolTotal = cCount * csW * csD * totalColHeight;
+  const columns = concreteMix(colVolTotal, document.getElementById('cRatio').value, g('cSteel'));
+
+  // Per-floor accumulation: walls, slab, plaster, flooring
+  const wMortarRatio = document.getElementById('wMortar').value;
+  const sRatio = document.getElementById('sRatio').value;
+  const sSteel = g('sSteel');
+  const sThickM = g('sThickness') * IN;
+
+  let netWallVolTotal = 0, slabVolTotal = 0, internalPlasterArea = 0, externalPlasterArea = 0, flooringAreaM2Sum = 0;
+
+  floors.forEach(f => {
+    const lengthM = f.length * FT, widthM = f.width * FT, heightM = f.height * FT;
+    const wallLenM = f.wallLength * FT, wallThickM = f.wallThickness * IN, opening = f.opening/100;
+
+    const areaM2 = lengthM * widthM;
+    const wallVolGross = wallLenM * wallThickM * heightM;
+    const wallVolNet = wallVolGross * (1 - opening);
+    netWallVolTotal += wallVolNet;
+
+    slabVolTotal += areaM2 * sThickM;
+
+    internalPlasterArea += wallLenM * heightM * (1 - opening);
+    externalPlasterArea += (lengthM + widthM) * 2 * heightM;
+
+    flooringAreaM2Sum += areaM2;
+  });
+
+  const brickCount = netWallVolTotal / BRICK_EFF_VOL;
+  const mortarVol = netWallVolTotal * 0.30;
+  const wallMortar = mortarMix(mortarVol, wMortarRatio, 1.33);
+
+  const slab = concreteMix(slabVolTotal, sRatio, sSteel);
+
+  const internalPlaster = mortarMix(internalPlasterArea * (g('pInThick') * IN), '1:6', 1.27);
+  const externalPlaster = mortarMix(externalPlasterArea * (g('pOutThick') * IN), '1:4', 1.27);
+
+  const flooringAreaM2 = flooringAreaM2Sum * (1 + g('pWastage')/100);
+  const flooringSqft = flooringAreaM2 * 10.7639;
+
+  const paintableArea = internalPlasterArea + externalPlasterArea;
+  const paintLitres = (paintableArea / 12.5) * g('pCoats');
+
+  const totalCementBags = pcc.cementBags + rccFooting.cementBags + columns.cementBags + wallMortar.cementBags + slab.cementBags + internalPlaster.cementBags + externalPlaster.cementBags;
+  const totalSandM3 = pcc.sandM3 + rccFooting.sandM3 + columns.sandM3 + wallMortar.sandM3 + slab.sandM3 + internalPlaster.sandM3 + externalPlaster.sandM3;
+  const totalAggM3 = pcc.aggM3 + rccFooting.aggM3 + columns.aggM3 + slab.aggM3;
+  const totalSteelKg = rccFooting.steelKg + columns.steelKg + slab.steelKg;
+  const totalConcreteM3 = pcc.volumeM3 + rccFooting.volumeM3 + columns.volumeM3 + slab.volumeM3;
+
+  const rates = {
+    cement: g('rCement'), sand: g('rSand'), agg: g('rAgg'), steel: g('rSteel'),
+    brick: g('rBrick'), excavation: g('rExcavation'), flooring: g('rFlooring'), paint: g('rPaint'),
+    pctLabour: g('pctLabour'), pctTnp: g('pctTnp'), pctProfit: g('pctProfit'), pctGst: g('pctGst'),
+    pctSteelWaste: g('pctSteelWaste')
+  };
+
+  renderResults({
+    floors, totalCementBags, totalSandM3, totalAggM3, totalSteelKg, totalConcreteM3,
+    brickCount, flooringSqft, paintLitres, excavationVol,
+    netWallVolTotal, internalPlasterArea, externalPlasterArea,
+    rates,
+    breakdown: { pcc, rccFooting, columns, wallMortar, slab, internalPlaster, externalPlaster, brickCount, flooringSqft, paintLitres }
+  });
+}
+
+function fmt(n, d){ return (n||0).toLocaleString('en-IN', { maximumFractionDigits: d===undefined?0:d }); }
+
+function renderResults(r){
+  const results = document.getElementById('results');
+  const sub = document.getElementById('resultsSub');
+  const table = document.getElementById('slipTable');
+  const bkBody = document.getElementById('breakdownBody');
+
+  const totalSqft = r.floors.reduce((s,f) => s + f.length*f.width, 0);
+  sub.textContent = r.floors.length + ' floor' + (r.floors.length>1?'s':'') + ' — ' + r.floors.map(f => f.label + ' (' + f.length + '×' + f.width + ' ft)').join(', ') + '. Total built-up area ' + fmt(totalSqft) + ' sqft.';
+
+  const rows = [
+    ['Cement', fmt(r.totalCementBags), 'bags (50 kg)'],
+    ['Sand', fmt(r.totalSandM3 * M3_TO_CFT) + ' cft', '(' + fmt(r.totalSandM3,1) + ' m³)'],
+    ['Aggregate / gravel', fmt(r.totalAggM3 * M3_TO_CFT) + ' cft', '(' + fmt(r.totalAggM3,1) + ' m³)'],
+    ['Steel (TMT bars)', fmt(r.totalSteelKg), 'kg (' + fmt(r.totalSteelKg/1000,2) + ' tons)'],
+    ['Concrete poured', fmt(r.totalConcreteM3,1), 'm³ total (footing + columns + slab)'],
+    ['Bricks', fmt(r.brickCount), 'nos'],
+    ['Flooring', fmt(r.flooringSqft), 'sqft (wastage included)'],
+    ['Paint', fmt(r.paintLitres), 'litres, all coats']
+  ];
+  table.innerHTML = rows.map(([name, qty, unit]) => `<tr><td class="name">${name}</td><td class="qty">${qty}</td><td class="unit">${unit}</td></tr>`).join('');
+
+  const b = r.breakdown;
+  const section = (title, obj) => `
+    <div class="bk-section">
+      <h3>${title}</h3>
+      ${obj.cementBags !== undefined ? `<div class="bk-row"><span>Cement</span><span class="v">${fmt(obj.cementBags,1)} bags</span></div>` : ''}
+      ${obj.sandM3 !== undefined ? `<div class="bk-row"><span>Sand</span><span class="v">${fmt(obj.sandM3*M3_TO_CFT)} cft</span></div>` : ''}
+      ${obj.aggM3 !== undefined ? `<div class="bk-row"><span>Aggregate</span><span class="v">${fmt(obj.aggM3*M3_TO_CFT)} cft</span></div>` : ''}
+      ${obj.steelKg ? `<div class="bk-row"><span>Steel</span><span class="v">${fmt(obj.steelKg)} kg</span></div>` : ''}
+      ${obj.volumeM3 !== undefined ? `<div class="bk-row"><span>Concrete volume</span><span class="v">${fmt(obj.volumeM3,2)} m³</span></div>` : ''}
+    </div>`;
+
+  bkBody.innerHTML =
+    section('Foundation — PCC bed', b.pcc) +
+    section('Foundation — RCC footing', b.rccFooting) +
+    section('Columns', b.columns) +
+    `<div class="bk-section"><h3>Walls (all floors)</h3>
+      <div class="bk-row"><span>Bricks</span><span class="v">${fmt(b.brickCount)} nos</span></div>
+      <div class="bk-row"><span>Mortar cement</span><span class="v">${fmt(b.wallMortar.cementBags,1)} bags</span></div>
+      <div class="bk-row"><span>Mortar sand</span><span class="v">${fmt(b.wallMortar.sandM3*M3_TO_CFT)} cft</span></div>
+    </div>` +
+    section('Roof / slab (all floors)', b.slab) +
+    `<div class="bk-section"><h3>Plaster (all floors)</h3>
+      <div class="bk-row"><span>Internal cement</span><span class="v">${fmt(b.internalPlaster.cementBags,1)} bags</span></div>
+      <div class="bk-row"><span>Internal sand</span><span class="v">${fmt(b.internalPlaster.sandM3*M3_TO_CFT)} cft</span></div>
+      <div class="bk-row"><span>External cement</span><span class="v">${fmt(b.externalPlaster.cementBags,1)} bags</span></div>
+      <div class="bk-row"><span>External sand</span><span class="v">${fmt(b.externalPlaster.sandM3*M3_TO_CFT)} cft</span></div>
+    </div>` +
+    `<div class="bk-section"><h3>Finishing (all floors)</h3>
+      <div class="bk-row"><span>Flooring</span><span class="v">${fmt(b.flooringSqft)} sqft</span></div>
+      <div class="bk-row"><span>Paint</span><span class="v">${fmt(b.paintLitres)} litres</span></div>
+    </div>`;
+
+  const boq = buildBOQ(r);
+  renderBOQTable(boq.items);
+  renderCostTable(boq.costs);
+  renderSteelTable(boq.steel);
+  window._lastBOQ = boq; // for CSV export
+
+  results.classList.add('show');
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ---------------- BOQ, costing & steel summary ----------------
+function buildBOQ(r){
+  const b = r.breakdown;
+  const rt = r.rates;
+
+  const line = (desc, qty, unit, amount) => ({ desc, qty, unit, rate: qty ? amount/qty : 0, amount });
+
+  const excavation = line('Earthwork excavation in foundation trench', r.excavationVol, 'm³', r.excavationVol * rt.excavation);
+  const pccItem = line('Foundation — PCC bed', b.pcc.volumeM3, 'm³', b.pcc.cementBags*rt.cement + b.pcc.sandM3*rt.sand + b.pcc.aggM3*rt.agg);
+  const rccFootingItem = line('Foundation — RCC footing', b.rccFooting.volumeM3, 'm³', b.rccFooting.cementBags*rt.cement + b.rccFooting.sandM3*rt.sand + b.rccFooting.aggM3*rt.agg + b.rccFooting.steelKg*rt.steel);
+  const columnsItem = line('RCC columns (footing to roof)', b.columns.volumeM3, 'm³', b.columns.cementBags*rt.cement + b.columns.sandM3*rt.sand + b.columns.aggM3*rt.agg + b.columns.steelKg*rt.steel);
+  const brickworkItem = line('Brickwork in walls, all floors', r.netWallVolTotal, 'm³', b.brickCount*rt.brick + b.wallMortar.cementBags*rt.cement + b.wallMortar.sandM3*rt.sand);
+  const slabItem = line('RCC roof / floor slab, all floors', b.slab.volumeM3, 'm³', b.slab.cementBags*rt.cement + b.slab.sandM3*rt.sand + b.slab.aggM3*rt.agg + b.slab.steelKg*rt.steel);
+  const intPlasterItem = line('Internal plaster, all floors', r.internalPlasterArea, 'm²', b.internalPlaster.cementBags*rt.cement + b.internalPlaster.sandM3*rt.sand);
+  const extPlasterItem = line('External plaster, all floors', r.externalPlasterArea, 'm²', b.externalPlaster.cementBags*rt.cement + b.externalPlaster.sandM3*rt.sand);
+  const flooringItem = line('Flooring, all floors', r.flooringSqft, 'sqft', r.flooringSqft * rt.flooring);
+  const paintItem = line('Painting, all coats', r.paintLitres, 'litre', r.paintLitres * rt.paint);
+
+  const items = [excavation, pccItem, rccFootingItem, columnsItem, brickworkItem, slabItem, intPlasterItem, extPlasterItem, flooringItem, paintItem]
+    .map((it, i) => Object.assign({ sr: i + 1 }, it));
+
+  const A_material = pccItem.amount + rccFootingItem.amount + columnsItem.amount + brickworkItem.amount + slabItem.amount + intPlasterItem.amount + extPlasterItem.amount;
+  const B_other = excavation.amount + flooringItem.amount + paintItem.amount;
+  const C_labour = A_material * (rt.pctLabour/100);
+  const D_tnp = (A_material + B_other + C_labour) * (rt.pctTnp/100);
+  const E_profit = (A_material + B_other + C_labour + D_tnp) * (rt.pctProfit/100);
+  const F_gst = (A_material + B_other + C_labour + D_tnp + E_profit) * (rt.pctGst/100);
+  const grandTotal = A_material + B_other + C_labour + D_tnp + E_profit + F_gst;
+
+  const costs = { A_material, B_other, C_labour, D_tnp, E_profit, F_gst, grandTotal, pct: rt };
+
+  const steelSources = [
+    { name: 'Footing', kg: b.rccFooting.steelKg },
+    { name: 'Columns', kg: b.columns.steelKg },
+    { name: 'Slab', kg: b.slab.steelKg }
+  ];
+  const totalSteelKg = steelSources.reduce((s,x) => s + x.kg, 0);
+  const totalInclWaste = totalSteelKg * (1 + rt.pctSteelWaste/100);
+  const steel = { sources: steelSources, totalSteelKg, wastePct: rt.pctSteelWaste, totalInclWaste, tonnes: totalInclWaste/1000 };
+
+  return { items, costs, steel };
+}
+
+function renderBOQTable(items){
+  const el = document.getElementById('boqTable');
+  const head = `<tr><th>Sr</th><th>Item description</th><th>Qty</th><th>Unit</th><th>Rate (₹)</th><th>Amount (₹)</th></tr>`;
+  const body = items.map(it => `<tr><td>${it.sr}</td><td>${it.desc}</td><td class="num">${fmt(it.qty,2)}</td><td>${it.unit}</td><td class="num">${fmt(it.rate)}</td><td class="num">${fmt(it.amount)}</td></tr>`).join('');
+  el.innerHTML = head + body;
+}
+
+function renderCostTable(c){
+  const el = document.getElementById('costTable');
+  el.innerHTML = `
+    <tr><td>A</td><td>Material cost (structural items)</td><td class="num">${fmt(c.A_material)}</td></tr>
+    <tr><td>B</td><td>Other direct costs (excavation, flooring, paint)</td><td class="num">${fmt(c.B_other)}</td></tr>
+    <tr class="sub-total"><td></td><td>Subtotal (A+B)</td><td class="num">${fmt(c.A_material + c.B_other)}</td></tr>
+    <tr><td>C</td><td>Labour (${c.pct.pctLabour}% of A)</td><td class="num">${fmt(c.C_labour)}</td></tr>
+    <tr><td>D</td><td>T&amp;P (${c.pct.pctTnp}% of A+B+C)</td><td class="num">${fmt(c.D_tnp)}</td></tr>
+    <tr><td>E</td><td>Contractor's profit (${c.pct.pctProfit}% of A+B+C+D)</td><td class="num">${fmt(c.E_profit)}</td></tr>
+    <tr><td>F</td><td>GST (${c.pct.pctGst}% of A+B+C+D+E)</td><td class="num">${fmt(c.F_gst)}</td></tr>
+    <tr class="total-row"><td></td><td>GRAND TOTAL</td><td class="num">₹ ${fmt(c.grandTotal)}</td></tr>
+  `;
+}
+
+function renderSteelTable(s){
+  const el = document.getElementById('steelTable');
+  const head = `<tr><th>Structural element</th><th>Steel (kg)</th></tr>`;
+  const body = s.sources.map(x => `<tr><td>${x.name}</td><td class="num">${fmt(x.kg)}</td></tr>`).join('');
+  const totals = `
+    <tr class="sub-total"><td>Total (before wastage)</td><td class="num">${fmt(s.totalSteelKg)}</td></tr>
+    <tr><td>Wastage allowance (${s.wastePct}%)</td><td class="num">${fmt(s.totalInclWaste - s.totalSteelKg)}</td></tr>
+    <tr class="total-row"><td>Total steel to procure</td><td class="num">${fmt(s.totalInclWaste)} kg (${fmt(s.tonnes,2)} t)</td></tr>
+  `;
+  el.innerHTML = head + body + totals;
+}
+
+function downloadBOQCSV(){
+  const boq = window._lastBOQ;
+  if(!boq) return;
+  const rows = [['Sr','Item Description','Quantity','Unit','Rate (Rs.)','Amount (Rs.)']];
+  boq.items.forEach(it => rows.push([it.sr, it.desc, it.qty.toFixed(2), it.unit, it.rate.toFixed(2), it.amount.toFixed(2)]));
+  rows.push([]);
+  const c = boq.costs;
+  rows.push(['','A: Material cost','','','', c.A_material.toFixed(2)]);
+  rows.push(['','B: Other direct costs','','','', c.B_other.toFixed(2)]);
+  rows.push(['','C: Labour','','','', c.C_labour.toFixed(2)]);
+  rows.push(['','D: T&P','','','', c.D_tnp.toFixed(2)]);
+  rows.push(['','E: Contractor profit','','','', c.E_profit.toFixed(2)]);
+  rows.push(['','F: GST','','','', c.F_gst.toFixed(2)]);
+  rows.push(['','GRAND TOTAL','','','', c.grandTotal.toFixed(2)]);
+  rows.push([]);
+  rows.push(['Steel summary']);
+  boq.steel.sources.forEach(x => rows.push([x.name, x.kg.toFixed(2) + ' kg']));
+  rows.push(['Total incl. wastage', boq.steel.totalInclWaste.toFixed(2) + ' kg (' + boq.steel.tonnes.toFixed(2) + ' t)']);
+
+  const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'BOQ_estimate.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+document.getElementById('downloadBoqBtn').addEventListener('click', downloadBOQCSV);
+</script>
+</body>
+</html>
