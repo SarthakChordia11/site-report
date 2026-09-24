@@ -5,6 +5,7 @@ import CostIsland from '../../components/islands/CostIsland';
 ---
 
 <AppLayout title="Cost" activeModule="cost">
-  <AppShell slot="sidebar" activeModule="cost" client:load />
-  <CostIsland client:load />
+  <AppShell activeModule="cost" client:load>
+    <CostIsland client:load />
+  </AppShell>
 </AppLayout>

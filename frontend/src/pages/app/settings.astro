@@ -5,6 +5,7 @@ import SettingsIsland from '../../components/islands/SettingsIsland';
 ---
 
 <AppLayout title="Settings" activeModule="settings">
-  <AppShell slot="sidebar" activeModule="settings" client:load />
-  <SettingsIsland client:load />
+  <AppShell activeModule="settings" client:load>
+    <SettingsIsland client:load />
+  </AppShell>
 </AppLayout>

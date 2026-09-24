@@ -5,6 +5,7 @@ import ReportsIsland from '../../components/islands/ReportsIsland';
 ---
 
 <AppLayout title="Reports" activeModule="reports">
-  <AppShell slot="sidebar" activeModule="reports" client:load />
-  <ReportsIsland client:load />
+  <AppShell activeModule="reports" client:load>
+    <ReportsIsland client:load />
+  </AppShell>
 </AppLayout>

@@ -4,7 +4,8 @@ import AppShell from '../../components/islands/AppShell';
 import ResourceIsland from '../../components/islands/ResourceIsland';
 ---
 
-<AppLayout title="Resources" activeModule="resource">
-  <AppShell slot="sidebar" activeModule="resource" client:load />
-  <ResourceIsland client:load />
+<AppLayout title="Resource" activeModule="resource">
+  <AppShell activeModule="resource" client:load>
+    <ResourceIsland client:load />
+  </AppShell>
 </AppLayout>

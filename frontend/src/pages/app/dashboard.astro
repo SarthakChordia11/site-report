@@ -5,6 +5,7 @@ import DashboardIsland from '../../components/islands/DashboardIsland';
 ---
 
 <AppLayout title="Dashboard" activeModule="dashboard">
-  <AppShell slot="sidebar" activeModule="dashboard" client:load />
-  <DashboardIsland client:load />
+  <AppShell activeModule="dashboard" client:load>
+    <DashboardIsland client:load />
+  </AppShell>
 </AppLayout>

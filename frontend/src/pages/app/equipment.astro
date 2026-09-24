@@ -5,6 +5,7 @@ import EquipmentIsland from '../../components/islands/EquipmentIsland';
 ---
 
 <AppLayout title="Equipment" activeModule="equipment">
-  <AppShell slot="sidebar" activeModule="equipment" client:load />
-  <EquipmentIsland client:load />
+  <AppShell activeModule="equipment" client:load>
+    <EquipmentIsland client:load />
+  </AppShell>
 </AppLayout>

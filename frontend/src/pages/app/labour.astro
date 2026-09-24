@@ -5,6 +5,7 @@ import LabourIsland from '../../components/islands/LabourIsland';
 ---
 
 <AppLayout title="Labour" activeModule="labour">
-  <AppShell slot="sidebar" activeModule="labour" client:load />
-  <LabourIsland client:load />
+  <AppShell activeModule="labour" client:load>
+    <LabourIsland client:load />
+  </AppShell>
 </AppLayout>
