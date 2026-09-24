@@ -1,4 +1,4 @@
-const BASE = import.meta.env.PUBLIC_API_BASE_URL || 'http://localhost:8002/api';
+const BASE = 'https://site-report-605b.onrender.com/api';
 
 async function req<T>(path: string, opts?: RequestInit): Promise<T> {
   const token = typeof window !== 'undefined' ? localStorage.getItem('sm_token') : null;
