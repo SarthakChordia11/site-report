@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Float, Enum, DateTime, Text
+from sqlalchemy import Column, String, Integer, Float, Enum, DateTime, Text, ForeignKey
 from sqlalchemy.sql import func
 from database import Base
 import enum
@@ -18,6 +18,7 @@ class SiteStatus(str, enum.Enum):
 class Site(Base):
     __tablename__ = "sites"
     id = Column(String, primary_key=True)
+    owner_id = Column(String, ForeignKey("users.id"), nullable=True, index=True)
     name = Column(String, nullable=False)
     project_name = Column(String, nullable=False)
     client = Column(String, default="")

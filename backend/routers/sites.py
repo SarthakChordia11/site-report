@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from services.auth_utils import get_current_user
 from models.site import Site
+from models.user import User
 from pydantic import BaseModel
 from typing import Optional
 import uuid, datetime
@@ -21,47 +22,52 @@ class SiteCreate(BaseModel):
     active_workers: Optional[int] = 0
     weather: Optional[str] = ""
 
+def _site_to_dict(s: Site):
+    return {
+        "id": s.id, "name": s.name, "project_name": s.project_name,
+        "client": s.client, "contractor": s.contractor, "location": s.location,
+        "site_type": s.site_type, "status": s.status,
+        "progress_percent": s.progress_percent, "active_workers": s.active_workers,
+        "weather": s.weather, "image": s.image,
+    }
+
 @router.get("")
-def list_sites(db: Session = Depends(get_db)):
-    sites = db.query(Site).all()
-    return [{"id": s.id, "name": s.name, "project_name": s.project_name,
-             "client": s.client, "contractor": s.contractor, "location": s.location,
-             "site_type": s.site_type, "status": s.status,
-             "progress_percent": s.progress_percent, "active_workers": s.active_workers,
-             "weather": s.weather, "image": s.image} for s in sites]
+def list_sites(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    sites = db.query(Site).filter(Site.owner_id == current_user.id).all()
+    return [_site_to_dict(s) for s in sites]
 
 @router.post("")
-def create_site(data: SiteCreate, db: Session = Depends(get_db)):
-    site = Site(id=str(uuid.uuid4()), **data.model_dump())
+def create_site(data: SiteCreate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    site = Site(id=str(uuid.uuid4()), owner_id=current_user.id, **data.model_dump())
     db.add(site)
     db.commit()
     db.refresh(site)
-    return {"id": site.id, "name": site.name, "project_name": site.project_name,
-            "site_type": site.site_type, "status": site.status}
+    return _site_to_dict(site)
 
 @router.get("/{site_id}")
-def get_site(site_id: str, db: Session = Depends(get_db)):
-    site = db.query(Site).filter(Site.id == site_id).first()
+def get_site(site_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    site = db.query(Site).filter(Site.id == site_id, Site.owner_id == current_user.id).first()
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
-    return site
+    return _site_to_dict(site)
 
 @router.patch("/{site_id}")
-def update_site(site_id: str, data: dict, db: Session = Depends(get_db)):
-    site = db.query(Site).filter(Site.id == site_id).first()
+def update_site(site_id: str, data: dict, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    site = db.query(Site).filter(Site.id == site_id, Site.owner_id == current_user.id).first()
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
     for k, v in data.items():
-        if hasattr(site, k):
+        if hasattr(site, k) and k not in ("id", "owner_id"):
             setattr(site, k, v)
     db.commit()
     return {"ok": True}
 
 @router.delete("/{site_id}")
-def delete_site(site_id: str, db: Session = Depends(get_db)):
-    site = db.query(Site).filter(Site.id == site_id).first()
+def delete_site(site_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    site = db.query(Site).filter(Site.id == site_id, Site.owner_id == current_user.id).first()
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
     db.delete(site)
     db.commit()
     return {"ok": True}
+

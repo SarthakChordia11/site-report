@@ -57,6 +57,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 }) => {
   const [activeMode, setActiveMode] = useState<InputMode>(initialMode);
   const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [voiceText, setVoiceText] = useState('');
   const [selectedPreset, setSelectedPreset] = useState<VoicePreset | null>(SAMPLE_VOICE_PROMPTS[0]);
   const [selectedChallan, setSelectedChallan] = useState<SampleChallan | null>(SAMPLE_CHALLANS[0]);
@@ -118,28 +119,58 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
     }
   }, []);
 
-  const toggleRecording = () => {
-    if (isRecording) {
-      if (recognitionRef.current) {
-        try { recognitionRef.current.stop(); } catch(e) {}
-      }
-      setIsRecording(false);
-      if (voiceText) {
-        handleProcessVoice(voiceText);
-      }
-    } else {
-      setVoiceText('');
-      setExtractedResult(null);
-      setIsRecording(true);
-      if (recognitionRef.current) {
-        try {
-          recognitionRef.current.start();
-        } catch (err) {
-          console.log('Using simulated speech stream');
-        }
+  const startRecording = () => {
+    setVoiceText('');
+    setExtractedResult(null);
+    setIsRecording(true);
+    setIsPaused(false);
+    if (recognitionRef.current) {
+      try { recognitionRef.current.start(); } catch (err) {
+        console.log('Using simulated speech stream');
       }
     }
   };
+
+  const pauseRecording = () => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+    setIsRecording(false);
+    setIsPaused(true);
+  };
+
+  const resumeRecording = () => {
+    setIsRecording(true);
+    setIsPaused(false);
+    if (recognitionRef.current) {
+      // Append new speech on top of existing transcript
+      const existingText = voiceText;
+      recognitionRef.current.onresult = (event: any) => {
+        let newSpeech = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          newSpeech += event.results[i][0].transcript;
+        }
+        if (newSpeech) {
+          setVoiceText(existingText ? `${existingText} ${newSpeech}` : newSpeech);
+        }
+      };
+      try { recognitionRef.current.start(); } catch (err) {
+        console.log('Using simulated speech stream');
+      }
+    }
+  };
+
+  const doneRecording = () => {
+    if (recognitionRef.current) {
+      try { recognitionRef.current.stop(); } catch (e) {}
+    }
+    setIsRecording(false);
+    setIsPaused(false);
+    if (voiceText) {
+      handleProcessVoice(voiceText);
+    }
+  };
+
 
   const handleSelectPreset = (preset: VoicePreset) => {
     setSelectedPreset(preset);
@@ -380,18 +411,66 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 
                   {/* Mic Button & Waveform */}
                   <div className="flex flex-col items-center justify-center py-3">
-                    <button
-                      onClick={toggleRecording}
-                      className={`w-14 h-14 rounded-full flex items-center justify-center transition-all transform shadow-md cursor-pointer ${
-                        isRecording 
-                          ? 'bg-brand-900 text-white animate-pulse ring-4 ring-brand-300' 
-                          : 'bg-brand-800 hover:bg-brand-900 text-white'
-                      }`}
-                    >
-                      {isRecording ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
-                    </button>
+                    {/* Idle: single mic button */}
+                    {!isRecording && !isPaused && (
+                        <button
+                          onClick={startRecording}
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all transform shadow-md cursor-pointer bg-brand-800 hover:bg-brand-900 text-white"
+                        >
+                          <Mic className="w-6 h-6" />
+                        </button>
+                      )}
+
+                      {/* Recording: Pause + Done */}
+                      {isRecording && (
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={pauseRecording}
+                            title="Pause recording"
+                            className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-200"
+                          >
+                            {/* Pause icon: two vertical bars */}
+                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                              <rect x="6" y="4" width="4" height="16" rx="1" />
+                              <rect x="14" y="4" width="4" height="16" rx="1" />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={doneRecording}
+                            title="Stop and parse"
+                            className="px-4 py-2 rounded-xl bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow cursor-pointer transition-colors"
+                          >
+                            Done ✓
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Paused: Resume + Done */}
+                      {isPaused && (
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={resumeRecording}
+                            title="Resume recording"
+                            className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white ring-4 ring-emerald-200"
+                          >
+                            <Mic className="w-6 h-6" />
+                          </button>
+                          <button
+                            onClick={doneRecording}
+                            title="Stop and parse"
+                            className="px-4 py-2 rounded-xl bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow cursor-pointer transition-colors"
+                          >
+                            Done ✓
+                          </button>
+                        </div>
+                      )}
+
                     <p className="mt-2.5 text-xs font-medium text-brand-700">
-                      {isRecording ? 'Listening... Click to stop & parse' : 'Tap Microphone or select preset voice below'}
+                      {isRecording
+                        ? '🔴 Listening... Click Pause to take a break or Done when finished'
+                        : isPaused
+                        ? '⏸ Paused — Click Resume to add more, or Done to parse'
+                        : 'Tap Microphone or select preset voice below'}
                     </p>
                   </div>
 
@@ -415,8 +494,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 
                     <button
                       onClick={() => handleProcessVoice()}
-                      disabled={isProcessing}
-                      className="flex items-center gap-1.5 px-4 py-1.5 bg-brand-800 hover:bg-brand-900 text-white font-medium rounded-lg text-xs transition-colors shadow-xs cursor-pointer"
+                      disabled={isProcessing || isRecording}
+                      className="flex items-center gap-1.5 px-4 py-1.5 bg-brand-800 hover:bg-brand-900 text-white font-medium rounded-lg text-xs transition-colors shadow-xs cursor-pointer disabled:opacity-50"
                     >
                       {isProcessing ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-brand-200" />}
                       <span>Extract with AI</span>
