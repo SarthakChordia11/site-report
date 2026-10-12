@@ -413,59 +413,59 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   <div className="flex flex-col items-center justify-center py-3">
                     {/* Idle: single mic button */}
                     {!isRecording && !isPaused && (
+                      <button
+                        onClick={startRecording}
+                        className="w-14 h-14 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-lg cursor-pointer bg-[#FF6A00] hover:bg-[#E65F00] text-white"
+                      >
+                        <Mic className="w-6 h-6 text-white" />
+                      </button>
+                    )}
+
+                    {/* Recording: Pause + Done */}
+                    {isRecording && (
+                      <div className="flex items-center gap-3">
                         <button
-                          onClick={startRecording}
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all transform shadow-md cursor-pointer bg-brand-800 hover:bg-brand-900 text-white"
+                          onClick={pauseRecording}
+                          title="Pause recording"
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-300"
                         >
-                          <Mic className="w-6 h-6" />
+                          {/* Pause icon: two vertical bars */}
+                          <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
+                            <rect x="6" y="4" width="4" height="16" rx="1" />
+                            <rect x="14" y="4" width="4" height="16" rx="1" />
+                          </svg>
                         </button>
-                      )}
+                        <button
+                          onClick={doneRecording}
+                          title="Stop and parse"
+                          className="px-5 py-2.5 rounded-xl bg-[#0E0E0E] hover:bg-[#262626] text-white text-xs font-bold shadow-md cursor-pointer transition-colors border border-neutral-700"
+                        >
+                          Done ✓
+                        </button>
+                      </div>
+                    )}
 
-                      {/* Recording: Pause + Done */}
-                      {isRecording && (
-                        <div className="flex items-center gap-3">
-                          <button
-                            onClick={pauseRecording}
-                            title="Pause recording"
-                            className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-200"
-                          >
-                            {/* Pause icon: two vertical bars */}
-                            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                              <rect x="6" y="4" width="4" height="16" rx="1" />
-                              <rect x="14" y="4" width="4" height="16" rx="1" />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={doneRecording}
-                            title="Stop and parse"
-                            className="px-4 py-2 rounded-xl bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow cursor-pointer transition-colors"
-                          >
-                            Done ✓
-                          </button>
-                        </div>
-                      )}
+                    {/* Paused: Resume + Done */}
+                    {isPaused && (
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={resumeRecording}
+                          title="Resume recording"
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white ring-4 ring-emerald-300"
+                        >
+                          <Mic className="w-6 h-6 text-white" />
+                        </button>
+                        <button
+                          onClick={doneRecording}
+                          title="Stop and parse"
+                          className="px-5 py-2.5 rounded-xl bg-[#0E0E0E] hover:bg-[#262626] text-white text-xs font-bold shadow-md cursor-pointer transition-colors border border-neutral-700"
+                        >
+                          Done ✓
+                        </button>
+                      </div>
+                    )}
 
-                      {/* Paused: Resume + Done */}
-                      {isPaused && (
-                        <div className="flex items-center gap-3">
-                          <button
-                            onClick={resumeRecording}
-                            title="Resume recording"
-                            className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-md cursor-pointer bg-emerald-500 hover:bg-emerald-600 text-white ring-4 ring-emerald-200"
-                          >
-                            <Mic className="w-6 h-6" />
-                          </button>
-                          <button
-                            onClick={doneRecording}
-                            title="Stop and parse"
-                            className="px-4 py-2 rounded-xl bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow cursor-pointer transition-colors"
-                          >
-                            Done ✓
-                          </button>
-                        </div>
-                      )}
-
-                    <p className="mt-2.5 text-xs font-medium text-brand-700">
+                    <p className="mt-2.5 text-xs font-semibold text-[#0E0E0E]">
                       {isRecording
                         ? '🔴 Listening... Click Pause to take a break or Done when finished'
                         : isPaused
@@ -475,9 +475,9 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   </div>
 
                   {/* Transcript Display */}
-                  <div className="mt-2 text-left bg-white p-3 rounded-lg border border-brand-200 min-h-[56px]">
-                    <p className="text-[10px] text-brand-400 font-medium mb-0.5">Live Transcript:</p>
-                    <p className="text-xs text-brand-800 italic font-mono">
+                  <div className="mt-2 text-left bg-white p-3 rounded-lg border border-neutral-200 min-h-[56px] shadow-2xs">
+                    <p className="text-[10px] text-neutral-500 font-medium mb-0.5">Live Transcript:</p>
+                    <p className="text-xs text-neutral-900 italic font-mono">
                       "{voiceText || selectedPreset?.transcript || 'Press mic to record audio or select a preset prompt below...'}"
                     </p>
                   </div>
@@ -486,18 +486,18 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     <button
                       onClick={() => playPresetAudio(voiceText || selectedPreset?.transcript || '')}
                       disabled={isPlayingAudio}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-brand-100 border border-brand-200 rounded-lg text-xs font-medium text-brand-700 transition-colors cursor-pointer"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-100 border border-neutral-300 rounded-lg text-xs font-medium text-neutral-700 transition-colors cursor-pointer shadow-2xs"
                     >
-                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-brand-900 animate-bounce' : 'text-brand-500'}`} />
+                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-[#FF6A00] animate-bounce' : 'text-neutral-500'}`} />
                       <span>{isPlayingAudio ? 'Playing...' : 'Hear Spoken Voice'}</span>
                     </button>
 
                     <button
                       onClick={() => handleProcessVoice()}
                       disabled={isProcessing || isRecording}
-                      className="flex items-center gap-1.5 px-4 py-1.5 bg-brand-800 hover:bg-brand-900 text-white font-medium rounded-lg text-xs transition-colors shadow-xs cursor-pointer disabled:opacity-50"
+                      className="flex items-center gap-1.5 px-4 py-2 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-lg text-xs transition-colors shadow-md cursor-pointer disabled:opacity-50"
                     >
-                      {isProcessing ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Sparkles className="w-3.5 h-3.5 text-brand-200" />}
+                      {isProcessing ? <RefreshCw className="w-3.5 h-3.5 animate-spin text-white" /> : <Sparkles className="w-3.5 h-3.5 text-white" />}
                       <span>Extract with AI</span>
                     </button>
                   </div>

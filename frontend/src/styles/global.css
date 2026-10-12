@@ -1,6 +1,20 @@
 /* Tailwind v4 — single import replaces the three @tailwind directives */
 @import "tailwindcss";
 
+@theme {
+  --color-brand-50: #fef7ee;
+  --color-brand-100: #fdead7;
+  --color-brand-200: #f9d1ae;
+  --color-brand-300: #f4b07c;
+  --color-brand-400: #ee8446;
+  --color-brand-500: #ea6421;
+  --color-brand-600: #db4c17;
+  --color-brand-700: #b63715;
+  --color-brand-800: #912e19;
+  --color-brand-900: #762717;
+  --color-brand-950: #40110a;
+}
+
 * {
   box-sizing: border-box;
 }
