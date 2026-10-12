@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { $isLoggedIn, clearSession } from '../../stores/authStore';
 import { $currentSite, $sites, setSites, setCurrentSite } from '../../stores/siteStore';
+import { $isMobileSidebarOpen, $isAddSiteModalOpen, $aiModalState } from '../../stores/uiStore';
 import { Sidebar } from '../common/Sidebar';
 import { Header } from '../common/Header';
+import { AddSiteModal } from '../modules/dashboard/AddSiteModal';
+import { GlobalAIModal } from '../ai/GlobalAIModal';
 import { sitesApi } from '../../services/api';
 import type { ModuleId } from '../../types';
 
@@ -16,9 +19,9 @@ export default function AppShell({ activeModule, children }: AppShellProps) {
   const isLoggedIn = useStore($isLoggedIn);
   const currentSite = useStore($currentSite);
   const sites = useStore($sites);
-
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [isAddSiteModalOpen, setIsAddSiteModalOpen] = useState(false);
+  const isMobileSidebarOpen = useStore($isMobileSidebarOpen);
+  const isAddSiteModalOpen = useStore($isAddSiteModalOpen);
+  const aiModalState = useStore($aiModalState);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -44,7 +47,7 @@ export default function AppShell({ activeModule, children }: AppShellProps) {
           window.location.href = '/login';
         }}
         isOpenMobile={isMobileSidebarOpen}
-        onCloseMobile={() => setIsMobileSidebarOpen(false)}
+        onCloseMobile={() => $isMobileSidebarOpen.set(false)}
       />
       <div className="flex-1 lg:pl-64 flex flex-col min-w-0">
         <Header
@@ -53,17 +56,44 @@ export default function AppShell({ activeModule, children }: AppShellProps) {
           onSelectSite={setCurrentSite}
           activeModule={activeModule}
           onSelectModule={handleNavigate}
-          onOpenAIModal={() => {}}
+          onOpenAIModal={(mode) => $aiModalState.set({ isOpen: true, mode: mode || 'voice' })}
           onBackToLanding={() => {
             window.location.href = '/';
           }}
-          onToggleMobileSidebar={() => setIsMobileSidebarOpen(true)}
-          onAddSite={() => setIsAddSiteModalOpen(true)}
+          onToggleMobileSidebar={() => $isMobileSidebarOpen.set(true)}
+          onAddSite={() => $isAddSiteModalOpen.set(true)}
         />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full">
           {children}
         </main>
       </div>
+
+      <AddSiteModal
+        isOpen={isAddSiteModalOpen}
+        onClose={() => $isAddSiteModalOpen.set(false)}
+        onSiteCreated={(newSite) => {
+          const updated = [...sites, newSite];
+          setSites(updated);
+          setCurrentSite(newSite);
+        }}
+      />
+
+      <GlobalAIModal
+        isOpen={aiModalState.isOpen}
+        initialMode={aiModalState.mode}
+        onClose={() => $aiModalState.set({ isOpen: false, mode: 'voice' })}
+        onApplyExtraction={async () => {
+          $aiModalState.set({ isOpen: false, mode: 'voice' });
+          window.location.reload();
+        }}
+        onModulesSynced={() => {
+          window.location.reload();
+        }}
+        trades={[]}
+        materials={[]}
+        equipment={[]}
+        activeSiteId={currentSite?.id ?? null}
+      />
     </div>
   );
 }

@@ -32,6 +32,16 @@ from routers import sites, labour, resource, equipment, cost, ai_voice, dpr, aut
 # Create all DB tables
 Base.metadata.create_all(bind=engine)
 
+# Migration: ensure owner_id column exists on sites table
+try:
+    from sqlalchemy import text
+    with engine.connect() as conn:
+        conn.execute(text("ALTER TABLE sites ADD COLUMN IF NOT EXISTS owner_id VARCHAR;"))
+        conn.execute(text("CREATE INDEX IF NOT EXISTS ix_sites_owner_id ON sites (owner_id);"))
+        conn.commit()
+except Exception as e:
+    logger.warning(f"Column migration warning (might already exist or SQLite): {e}")
+
 app = FastAPI(
     title="Site Manager AI",
     description="AI-powered 5-module construction site management system (incl. DPR)",
