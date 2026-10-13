@@ -8,7 +8,8 @@ import {
   ShieldCheck, 
   Building, 
   CheckCircle2, 
-  Mic
+  Mic,
+  Lightbulb
 } from 'lucide-react';
 import { TradeRosterItem, AgencyLog, WorkerInduction } from '../../../types';
 
@@ -356,8 +357,9 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
                 </div>
               </div>
 
-              <div className="mt-4 p-3 bg-brand-100 rounded-lg border border-brand-200 text-[11px] text-brand-900 font-medium">
-                ✅ Weekly wage forecast: ₹{(totalDailyWage * 6).toLocaleString()} (Within planned manpower allocation)
+              <div className="mt-4 p-3 bg-brand-100 rounded-lg border border-brand-200 text-[11px] text-brand-900 font-medium flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>Weekly wage forecast: ₹{(totalDailyWage * 6).toLocaleString()} (Within planned manpower allocation)</span>
               </div>
             </div>
           </div>
@@ -439,8 +441,9 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
                 </div>
               </div>
 
-              <div className="mt-4 p-3 bg-brand-50 rounded-lg border border-brand-200 text-[11px] text-brand-600">
-                💡 <strong>AI Recommendation:</strong> Rebar fixing team requires +1 Bar Bender to maintain pour deadline for Crosshead Pier 48 tomorrow.
+              <div className="mt-4 p-3 bg-brand-50 rounded-lg border border-brand-200 text-[11px] text-brand-600 flex items-start gap-1.5">
+                <Lightbulb className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
+                <span><strong>AI Recommendation:</strong> Rebar fixing team requires +1 Bar Bender to maintain pour deadline for Crosshead Pier 48 tomorrow.</span>
               </div>
             </div>
           </div>

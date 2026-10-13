@@ -511,24 +511,24 @@ export const EstimatorModule: React.FC = () => {
     suffix?: string;
   }) => (
     <div>
-      <label className="block text-xs text-gray-500 mb-1.5">{label}</label>
+      <label className="block text-xs text-neutral-400 mb-1.5 font-medium">{label}</label>
       <div className="relative">
         <input
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-full px-3 py-2.5 border border-gray-200 rounded-lg bg-white font-mono text-sm text-[#0E0E0E] focus:outline-none focus:ring-2 focus:ring-[#FF6A00]/30 focus:border-[#FF6A00] transition-colors"
+          className="w-full px-3.5 py-2.5 border border-white/10 rounded-xl bg-[#0B0D13] font-mono text-sm text-white focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
         />
-        {suffix && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-400 pointer-events-none">{suffix}</span>}
+        {suffix && <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-neutral-500 pointer-events-none">{suffix}</span>}
       </div>
     </div>
   );
 
   const planBadgeStyles: Record<PlanType, string> = {
-    floor: 'bg-[#FFF2E8] text-[#FF6A00] border-[#FF6A00]/20',
-    foundation: 'bg-[#EFF3F6] text-[#2E4A6B] border-[#2E4A6B]/20',
-    roof: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    other: 'bg-gray-100 text-gray-600 border-gray-200',
+    floor: 'bg-sky-500/10 text-sky-400 border-sky-500/20',
+    foundation: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
+    roof: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    other: 'bg-white/5 text-neutral-400 border-white/10',
   };
 
   // ── Render ─────────────────────────────────────────────────────────────
@@ -536,28 +536,28 @@ export const EstimatorModule: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-[#FF6A00] flex items-center justify-center">
-          <Calculator className="w-5 h-5 text-white" />
+        <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+          <Calculator className="w-5 h-5 text-sky-400" />
         </div>
         <div>
-          <h1 className="text-xl font-bold text-[#0E0E0E]">Estimator</h1>
-          <p className="text-xs text-gray-500">Plan in → BOQ & cost out — Free for all users</p>
+          <h1 className="text-xl font-bold text-white tracking-tight">Estimator</h1>
+          <p className="text-xs text-neutral-400">Plan in → BOQ & cost out — Free for all users</p>
         </div>
       </div>
 
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#10131A] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">
-            <ImageIcon className="w-3.5 h-3.5" />
+          <span className="w-8 h-8 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
+            <ImageIcon className="w-4 h-4" />
           </span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Plan images</h2>
-            <p className="text-xs text-gray-500">Upload footing, floor, or roof plan images and tag each one before estimating.</p>
+            <h2 className="text-sm font-bold text-white">Plan images</h2>
+            <p className="text-xs text-neutral-400">Upload footing, floor, or roof plan images and tag each one before estimating.</p>
           </div>
         </div>
 
         <div
-          className="relative flex items-center gap-4 rounded-xl border-2 border-dashed border-[#2E4A6B]/40 bg-[#FBFAF7] p-5 hover:bg-[#F7F4EC] transition-colors cursor-pointer"
+          className="relative flex items-center gap-4 rounded-2xl border-2 border-dashed border-white/15 bg-[#0B0D13] p-6 hover:bg-white/5 transition-colors cursor-pointer"
           onClick={() => fileInputRef.current?.click()}
           onDragOver={(e) => { e.preventDefault(); }}
           onDrop={(e) => {
@@ -576,12 +576,12 @@ export const EstimatorModule: React.FC = () => {
               e.currentTarget.value = '';
             }}
           />
-          <div className="w-12 h-12 rounded-xl bg-white border border-[#2E4A6B]/20 flex items-center justify-center shrink-0">
-            <Upload className="w-5 h-5 text-[#2E4A6B]" />
+          <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-sky-400">
+            <Upload className="w-5 h-5" />
           </div>
           <div className="min-w-0">
-            <div className="text-sm font-semibold text-[#0E0E0E]">Drop plan images here, or tap to choose</div>
-            <div className="text-xs text-gray-500">JPG or PNG. Photos of hand sketches work too.</div>
+            <div className="text-sm font-bold text-white">Drop plan images here, or tap to choose</div>
+            <div className="text-xs text-neutral-400">JPG or PNG. Photos of hand sketches work too.</div>
           </div>
         </div>
 
@@ -681,7 +681,7 @@ export const EstimatorModule: React.FC = () => {
                 <input
                   value={f.label}
                   onChange={e => updateFloor(f.id, 'label', e.target.value)}
-                  className="font-bold text-sm text-[#0E0E0E] bg-transparent border-b border-dashed border-gray-300 focus:outline-none focus:border-[#FF6A00] px-0 py-0.5 max-w-[200px]"
+                  className="font-bold text-sm text-white bg-transparent border-b border-dashed border-white/20 focus:outline-none focus:border-sky-400 px-0 py-0.5 max-w-[200px]"
                 />
                 {floors.length > 1 && (
                   <button
@@ -824,17 +824,17 @@ export const EstimatorModule: React.FC = () => {
       <div className="flex items-center gap-4">
         <button
           onClick={calculate}
-          className="flex items-center gap-2 px-6 py-3 bg-[#FF6A00] hover:bg-orange-600 text-white font-bold rounded-xl transition-colors cursor-pointer shadow-md shadow-[#FF6A00]/20"
+          className="flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full transition-all cursor-pointer shadow-xl shadow-white/10 active:scale-95 text-xs sm:text-sm"
         >
-          <Calculator className="w-4 h-4" />
-          Calculate BOQ & cost
+          <Calculator className="w-4 h-4 text-neutral-950" />
+          <span>Calculate BOQ & cost</span>
         </button>
-        <span className="text-xs text-gray-500">Adjust anything above and recalculate any time.</span>
+        <span className="text-xs text-neutral-400">Adjust any input above and recalculate at any time.</span>
       </div>
 
       {/* Results */}
       {results && boq && (
-        <div ref={resultsRef} className="bg-[#0E0E0E] text-white rounded-xl p-6 space-y-6">
+        <div ref={resultsRef} className="bg-[#10131A] border border-white/10 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
           {/* Material Requisition */}
           <div>
             <h2 className="text-lg font-bold">Material requisition</h2>
@@ -1016,13 +1016,13 @@ export const EstimatorModule: React.FC = () => {
           </div>
 
           {/* CSV Download */}
-          <div className="border-t border-gray-700 pt-4">
+          <div className="border-t border-white/10 pt-4">
             <button
               onClick={downloadCSV}
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#0E0E0E] hover:bg-gray-800 text-white font-bold text-sm rounded-xl border border-gray-600 transition-colors cursor-pointer"
+              className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold text-xs rounded-full shadow-lg shadow-white/10 transition-all cursor-pointer active:scale-95"
             >
-              <Download className="w-4 h-4" />
-              Download BOQ (CSV, opens in Excel)
+              <Download className="w-4 h-4 text-neutral-950" />
+              <span>Download BOQ (CSV, opens in Excel)</span>
             </button>
           </div>
         </div>

@@ -281,7 +281,7 @@ export default function App() {
           estimatedDaysRemaining: 0,
           aiNarrative: 'Loading AI narrative...',
           overspendAlerts: c.total?.variance < 0
-            ? [`⚠️ Budget overrun: ₹${Math.abs(c.total.variance).toLocaleString('en-IN')} over budget.`]
+            ? [`Budget overrun: ₹${Math.abs(c.total.variance).toLocaleString('en-IN')} over budget.`]
             : [],
           optimizationRecommendations: [],
         });

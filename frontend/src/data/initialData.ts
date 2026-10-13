@@ -739,14 +739,14 @@ export const INITIAL_COST_SUMMARY: CostSummary = {
   estimatedDaysRemaining: 124,
   aiNarrative: 'Site Sector 62 is performing in a healthy financial envelope with Cost Performance Index (CPI) at 1.031 (Under budget by ₹39.0 Lakh). Daily manpower cost was ₹62,450 across 73 present tradesmen with 29 overtime hours. Material expenditure peaked at ₹3.28 Lakh due to high precast casting throughput. Noticeable optimization opportunity: JCB 3DX remained idle for 3.0 hours due to delayed trench clearance, resulting in ₹3,560 unutilized rental spend. Boom pump downtime was contained to 120 mins with zero structural concrete cold joint penalty.',
   overspendAlerts: [
-    '⚠️ Equipment Idle Warning: JCB 3DX idle 3.0h today (₹3,560 unutilized rental burn).',
-    '⚠️ Reorder Alert: Epoxy Grout stock at 6 bags (below 15 bag threshold; next cast in 48h).',
-    '⚠️ Steel Rebar 16mm at 4.1 MT (minimum safety stock 5.0 MT).',
+    'Equipment Idle Warning: JCB 3DX idle 3.0h today (₹3,560 unutilized rental burn).',
+    'Reorder Alert: Epoxy Grout stock at 6 bags (below 15 bag threshold; next cast in 48h).',
+    'Safety Stock: Steel Rebar 16mm at 4.1 MT (minimum safety stock 5.0 MT).',
   ],
   optimizationRecommendations: [
-    '🔄 Re-sequence excavator deployment: Pre-clear Pier 49 layout before dispatching JCB operator to eliminate 3h daily idle cost.',
-    '📊 Shift Carpenter OT to early shift (07:00 AM) to prepare shuttering beds before batching plant pours commence.',
-    '⚡ Batch GRN receipts directly via camera scan to claim 2% early settlement discount with UltraTech.',
+    'Re-sequence excavator deployment: Pre-clear Pier 49 layout before dispatching JCB operator to eliminate 3h daily idle cost.',
+    'Shift Carpenter OT to early shift (07:00 AM) to prepare shuttering beds before batching plant pours commence.',
+    'Batch GRN receipts directly via camera scan to claim 2% early settlement discount with UltraTech.',
   ],
 };
 

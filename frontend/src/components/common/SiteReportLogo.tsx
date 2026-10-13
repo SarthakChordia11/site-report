@@ -32,43 +32,43 @@ export const SiteReportLogo: React.FC<SiteReportLogoProps> = ({
           <path
             d="M18 3L32 10.5V25.5L18 33L4 25.5V10.5L18 3Z"
             fill="#0E0E0E"
-            stroke="#FF6A00"
+            stroke="#38BDF8"
             strokeWidth="2.2"
             strokeLinejoin="round"
           />
           <path
             d="M18 3V33"
-            stroke="#FF6A00"
+            stroke="#38BDF8"
             strokeWidth="1.6"
             strokeLinecap="round"
           />
           <path
             d="M18 18L32 10.5"
-            stroke="#FF6A00"
+            stroke="#38BDF8"
             strokeWidth="1.6"
             strokeLinecap="round"
           />
           <path
             d="M18 18L4 10.5"
-            stroke="#FF6A00"
+            stroke="#38BDF8"
             strokeWidth="1.6"
             strokeLinecap="round"
           />
           {/* Internal orange accent polygon */}
           <polygon
             points="18,18 30,11.5 18,5.5 6,11.5"
-            fill="#FF6A00"
+            fill="#38BDF8"
             fillOpacity="0.22"
           />
         </svg>
       </div>
 
-      {/* Brand Text: SiteReport in dark or white + AI in #FF6A00 */}
+      {/* Brand Text: SiteReport in dark or white + AI in #38BDF8 */}
       <div className={`font-bold tracking-tight ${textSizes[size]}`}>
         <span className={isDark ? 'text-white' : 'text-[#0E0E0E]'}>
           SiteReport
         </span>
-        <span className="text-[#FF6A00] font-extrabold ml-0.5">
+        <span className="text-[#38BDF8] font-extrabold ml-0.5">
           AI
         </span>
       </div>

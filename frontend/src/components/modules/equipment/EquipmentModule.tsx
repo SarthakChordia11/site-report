@@ -5,7 +5,9 @@ import {
   AlertTriangle, 
   Mic, 
   Fuel, 
-  Activity
+  Activity,
+  User,
+  AlertCircle
 } from 'lucide-react';
 import { EquipmentItem, BreakdownEvent, EquipmentStatus } from '../../../types';
 
@@ -234,14 +236,15 @@ export const EquipmentModule: React.FC<EquipmentModuleProps> = ({
                   </div>
 
                   {eq.idleReason && (
-                    <div className="mt-2.5 p-2 bg-brand-100 border border-brand-200 rounded-lg text-[11px] text-brand-900">
-                      ⚠️ <strong>Idle Reason:</strong> {eq.idleReason}
+                    <div className="mt-2.5 p-2 bg-brand-100 border border-brand-200 rounded-lg text-[11px] text-brand-900 flex items-center gap-1.5">
+                      <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+                      <span><strong>Idle Reason:</strong> {eq.idleReason}</span>
                     </div>
                   )}
 
                   <div className="mt-3 text-[11px] text-brand-500 space-y-1">
-                    <p>👨‍🔧 Operator: <strong className="text-brand-800">{eq.operatorName}</strong></p>
-                    <p>⛽ Fuel: <span className="text-brand-900 font-mono font-medium">{eq.fuelConsumedLiters} Liters</span></p>
+                    <p className="flex items-center gap-1.5"><User className="w-3 h-3 text-sky-400 shrink-0" /> Operator: <strong className="text-brand-800">{eq.operatorName}</strong></p>
+                    <p className="flex items-center gap-1.5"><Fuel className="w-3 h-3 text-sky-400 shrink-0" /> Fuel: <span className="text-brand-900 font-mono font-medium">{eq.fuelConsumedLiters} Liters</span></p>
                   </div>
                 </div>
 
@@ -397,8 +400,8 @@ export const EquipmentModule: React.FC<EquipmentModuleProps> = ({
                   </div>
 
                   <div className="text-brand-600 space-y-1 text-[11px]">
-                    <p>🚨 <strong>Root Cause:</strong> {bd.reason}</p>
-                    <p>🔧 <strong>Action Taken:</strong> {bd.actionTaken}</p>
+                    <p className="flex items-center gap-1.5"><AlertCircle className="w-3 h-3 text-rose-500 shrink-0" /> <strong>Root Cause:</strong> {bd.reason}</p>
+                    <p className="flex items-center gap-1.5"><Wrench className="w-3 h-3 text-sky-400 shrink-0" /> <strong>Action Taken:</strong> {bd.actionTaken}</p>
                     <div className="flex items-center justify-between pt-1 text-brand-500">
                       <span>Technician: <strong className="text-brand-800">{bd.technician}</strong></span>
                       <span>Repair Cost Impact: <strong className="text-brand-900 font-mono">₹{bd.costImpact.toLocaleString()}</strong></span>

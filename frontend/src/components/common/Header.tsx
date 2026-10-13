@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   const currentUser = authHelpers.getUser();
 
   return (
-    <header className="sticky top-0 z-30 bg-[#0E0E0E] border-b border-[#262626] text-white shadow-sm">
+    <header className="sticky top-0 z-30 bg-[#08090C]/90 backdrop-blur-md border-b border-white/10 text-white shadow-sm">
       <div className="px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
         
         {/* Left Section: Mobile Menu & Site Switcher */}
@@ -53,7 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Mobile hamburger */}
           <button
             onClick={onToggleMobileSidebar}
-            className="p-2 rounded-lg bg-[#1A1A1A] hover:bg-[#262626] text-[#A3A3A3] hover:text-white lg:hidden cursor-pointer"
+            className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/10 lg:hidden cursor-pointer"
           >
             <Menu className="w-4 h-4" />
           </button>
@@ -68,20 +68,20 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               id="header-site-selector-btn"
               onClick={() => setSiteMenuOpen(!siteMenuOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-[#1A1A1A] hover:bg-[#262626] border border-[#333333] rounded-lg text-xs font-semibold text-white transition-colors cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition-colors cursor-pointer"
             >
-              <Building2 className="w-3.5 h-3.5 text-[#FF6A00]" />
+              <Building2 className="w-3.5 h-3.5 text-sky-400" />
               <span className="max-w-[180px] lg:max-w-[240px] truncate">
                 {currentSite ? currentSite.name : 'No Site Selected'}
               </span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#737373] ml-0.5" />
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 ml-0.5" />
             </button>
 
             {siteMenuOpen && (
-              <div className="absolute left-0 mt-1.5 w-72 bg-[#141414] border border-[#262626] rounded-xl shadow-2xl z-50 p-1.5 animate-in fade-in">
-                <p className="px-3 py-1.5 text-[10px] font-bold text-[#737373] uppercase tracking-wider">Select Construction Site</p>
+              <div className="absolute left-0 mt-2 w-72 bg-[#10131A] border border-white/10 rounded-2xl shadow-2xl z-50 p-2 animate-in fade-in">
+                <p className="px-3 py-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Select Construction Site</p>
                 {sites.length === 0 && (
-                  <p className="px-3 py-2 text-xs text-[#737373] italic">No sites created yet.</p>
+                  <p className="px-3 py-2 text-xs text-neutral-500 italic">No sites created yet.</p>
                 )}
                 {sites.map((s) => (
                   <button
@@ -90,27 +90,27 @@ export const Header: React.FC<HeaderProps> = ({
                       onSelectSite(s);
                       setSiteMenuOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
-                      s.id === currentSite?.id ? 'bg-[#FF6A00] text-white font-bold' : 'text-[#D4D4D4] hover:bg-[#1A1A1A]'
+                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
+                      s.id === currentSite?.id ? 'bg-sky-500/15 border border-sky-500/30 text-white font-bold' : 'text-neutral-300 hover:bg-white/5'
                     }`}
                   >
-                    <Building2 className={`w-4 h-4 mt-0.5 ${s.id === currentSite?.id ? 'text-white' : 'text-[#FF6A00]'}`} />
+                    <Building2 className={`w-4 h-4 mt-0.5 ${s.id === currentSite?.id ? 'text-sky-400' : 'text-neutral-400'}`} />
                     <div className="flex-1 min-w-0">
                       <p className="truncate font-semibold">{s.name}</p>
-                      <p className={`text-[10px] ${s.id === currentSite?.id ? 'text-white/80' : 'text-[#737373]'}`}>
+                      <p className={`text-[10px] ${s.id === currentSite?.id ? 'text-neutral-300' : 'text-neutral-500'}`}>
                         {s.location} • ₹{(s.budgetTotal / 10000000).toFixed(0)} Cr
                       </p>
                     </div>
                   </button>
                 ))}
                 
-                <div className="border-t border-[#262626] mt-1 pt-1">
+                <div className="border-t border-white/10 mt-1.5 pt-1.5">
                   <button
                     onClick={() => {
                       setSiteMenuOpen(false);
                       onAddSite?.();
                     }}
-                    className="w-full text-left px-3 py-2 hover:bg-[#1A1A1A] text-[#FF6A00] rounded-lg transition-colors flex items-center gap-2 cursor-pointer font-semibold text-xs"
+                    className="w-full text-left px-3 py-2 hover:bg-white/5 text-sky-400 rounded-xl transition-colors flex items-center gap-2 cursor-pointer font-semibold text-xs"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Create New Site</span>
@@ -123,70 +123,67 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Section: Actions, Notifications, User Profile */}
         <div className="flex items-center gap-3">
-          {/* Quick Voice Log Button */}
+          {/* Quick Voice Log Button - Crisp White Pill */}
           <button
             id="header-voice-btn"
             onClick={() => onOpenAIModal('voice')}
-            className="flex items-center gap-2 px-3 py-1.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-lg text-xs shadow-sm shadow-[#FF6A00]/25 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs shadow-md transition-all cursor-pointer"
           >
-            <Mic className="w-3.5 h-3.5" />
+            <Mic className="w-3.5 h-3.5 text-neutral-950" />
             <span className="hidden sm:inline">Voice Log</span>
           </button>
 
-          {/* Quick Challan OCR Button */}
-
-
-          {/* Notification Bell matching reference */}
+          {/* Notification Bell */}
           <div className="relative">
             <button
               onClick={() => setNotificationsOpen(!notificationsOpen)}
-              className="p-2 rounded-lg bg-[#1A1A1A] hover:bg-[#262626] text-[#D4D4D4] hover:text-white transition-colors cursor-pointer relative"
+              className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 transition-colors cursor-pointer relative"
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#FF6A00]" />
+              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-sky-400" />
             </button>
 
             {notificationsOpen && (
-              <div className="absolute right-0 mt-2 w-80 bg-[#141414] border border-[#262626] rounded-xl shadow-2xl z-50 p-4 text-xs space-y-3 animate-in fade-in">
-                <div className="flex items-center justify-between pb-2 border-b border-[#262626]">
+              <div className="absolute right-0 mt-2 w-80 bg-[#10131A] border border-white/10 rounded-2xl shadow-2xl z-50 p-4 text-xs space-y-3 animate-in fade-in">
+                <div className="flex items-center justify-between pb-2 border-b border-white/10">
                   <span className="font-bold text-white">Notifications</span>
-                  <span className="text-[10px] text-[#737373] font-semibold">0 New</span>
+                  <span className="text-[10px] text-neutral-400 font-semibold">0 New</span>
                 </div>
-                <div className="p-4 text-center text-[#737373]">
+                <div className="p-4 text-center text-neutral-500">
                   No new notifications
                 </div>
               </div>
             )}
           </div>
 
-          <div className="h-5 w-px bg-[#262626]" />
+          <div className="h-5 w-px bg-white/10" />
 
-          {/* User Profile Dropdown matching reference image: "Project Manager ▾" */}
+          {/* User Profile Pill Dropdown */}
           <div className="relative">
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-[#1A1A1A] transition-colors cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
             >
-              <div className="w-7 h-7 rounded-lg bg-[#FF6A00] flex items-center justify-center text-white font-extrabold text-xs">
+              <div className="w-6 h-6 rounded-full bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-xs">
                 {currentUser?.name?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <span className="hidden sm:inline text-xs font-semibold text-white">{currentUser?.name || 'User'}</span>
-              <ChevronDown className="w-3.5 h-3.5 text-[#737373]" />
+              <ChevronDown className="w-3.5 h-3.5 text-neutral-400" />
             </button>
 
             {userMenuOpen && (
-              <div className="absolute right-0 mt-1.5 w-48 bg-[#141414] border border-[#262626] rounded-xl shadow-2xl z-50 p-1.5 text-xs animate-in fade-in">
-                <div className="px-3 py-2 border-b border-[#262626]">
+              <div className="absolute right-0 mt-2 w-48 bg-[#10131A] border border-white/10 rounded-2xl shadow-2xl z-50 p-1.5 text-xs animate-in fade-in">
+                <div className="px-3 py-2 border-b border-white/10">
                   <p className="font-bold text-white">{currentUser?.name || 'User'}</p>
-                  <p className="text-[10px] text-[#737373] truncate">{currentUser?.email || 'user@example.com'}</p>
+                  <p className="text-[10px] text-neutral-400 truncate">{currentUser?.email || 'user@example.com'}</p>
                 </div>
                 <button
                   onClick={() => {
                     onSelectModule('settings');
                     setUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 hover:bg-[#1A1A1A] text-[#D4D4D4] rounded-lg transition-colors cursor-pointer font-medium"
+                  className="w-full text-left px-3 py-2 hover:bg-white/5 text-neutral-300 rounded-xl transition-colors cursor-pointer font-medium"
                 >
                   Account Settings
                 </button>
@@ -195,7 +192,7 @@ export const Header: React.FC<HeaderProps> = ({
                     onBackToLanding();
                     setUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 hover:bg-[#1A1A1A] text-[#FF6A00] rounded-lg transition-colors cursor-pointer font-medium"
+                  className="w-full text-left px-3 py-2 hover:bg-white/5 text-sky-400 rounded-xl transition-colors cursor-pointer font-medium"
                 >
                   Exit to Landing
                 </button>

@@ -4,7 +4,8 @@ import {
   DollarSign, 
   Sparkles, 
   CheckCircle2, 
-  Calendar
+  Calendar,
+  Clock
 } from 'lucide-react';
 import { 
   CostSummary, 
@@ -353,11 +354,13 @@ export const CostModule: React.FC<CostModuleProps> = ({
 
             {/* EVM Interpretation Callout */}
             <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 bg-brand-100 rounded-xl border border-brand-200 text-brand-900">
-                ✅ <strong>Cost Variance (CV = EV - AC): +₹39.0 Lakh</strong>. The solid EV curve is above the AC curve, representing ₹39 Lakh savings below budgeted allowance.
+              <div className="p-3 bg-brand-100 rounded-xl border border-brand-200 text-brand-900 flex items-start gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong>Cost Variance (CV = EV - AC): +₹39.0 Lakh</strong>. The solid EV curve is above the AC curve, representing ₹39 Lakh savings below budgeted allowance.</span>
               </div>
-              <div className="p-3 bg-brand-50 rounded-xl border border-brand-200 text-brand-800">
-                ⏱️ <strong>Schedule Variance (SV = EV - PV): -₹16.0 Lakh (SPI 0.987)</strong>. Current project progress is 98.7% aligned with milestone timetable.
+              <div className="p-3 bg-brand-50 rounded-xl border border-brand-200 text-brand-800 flex items-start gap-2">
+                <Clock className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <span><strong>Schedule Variance (SV = EV - PV): -₹16.0 Lakh (SPI 0.987)</strong>. Current project progress is 98.7% aligned with milestone timetable.</span>
               </div>
             </div>
           </div>

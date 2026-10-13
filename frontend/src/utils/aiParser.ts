@@ -202,7 +202,7 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
     const invMatch = text.match(/invoice\s*([a-zA-Z0-9-]+)/i) || text.match(/ut-\d+/i);
     if (invMatch) {
       parsedFields.invoiceNo = invMatch[1] || invMatch[0];
-      actionSummary.push(`📄 Attached Vendor Invoice: ${parsedFields.invoiceNo}`);
+      actionSummary.push(`[INVOICE] Attached Vendor Invoice: ${parsedFields.invoiceNo}`);
     }
 
     // Precast element dispatch in Marathi or English
@@ -210,7 +210,7 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
       parsedFields.elementsDispatched = 2;
       parsedFields.vehicleNo = 'MH-12-RN-4892';
       parsedFields.destination = 'Skyline Horizon Tower B Site';
-      actionSummary.push(`🚛 Scheduled Trailer MH-12-RN-4892 with 2 Precast Beams`);
+      actionSummary.push(`[DISPATCH] Scheduled Trailer MH-12-RN-4892 with 2 Precast Beams`);
     }
   } else if (
     lower.includes('crane') || lower.includes('jcb') || lower.includes('pump') ||
@@ -223,21 +223,21 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
     if (lower.includes('tower crane') || lower.includes('crane')) {
       const craneMatch = text.match(/crane.*?\b(\d+)\b\s*ghante/i) || text.match(/(\d+)\s*hrs?\s*crane/i);
       parsedFields.towerCraneHours = craneMatch ? parseInt(craneMatch[1], 10) : 7;
-      actionSummary.push(`🏗️ Potain Tower Crane: ${parsedFields.towerCraneHours} Working Hours logged`);
+      actionSummary.push(`[EQUIPMENT] Potain Tower Crane: ${parsedFields.towerCraneHours} Working Hours logged`);
     }
 
     if (lower.includes('jcb')) {
       const jcbMatch = text.match(/jcb.*?\b(\d+)\b\s*ghante\s*idle/i) || text.match(/jcb\s*(\d+)\s*hrs?\s*idle/i);
       parsedFields.jcbIdleHours = jcbMatch ? parseInt(jcbMatch[1], 10) : 3;
       parsedFields.jcbIdleReason = 'Site clearance pending at Pier 49 foundation trench';
-      actionSummary.push(`⏳ JCB 3DX Backhoe: 3.0 Idle Hours flagged (Clearance delay)`);
+      actionSummary.push(`[DOWNTIME] JCB 3DX Backhoe: 3.0 Idle Hours flagged (Clearance delay)`);
     }
 
     if (lower.includes('breakdown') || lower.includes('bandh')) {
       parsedFields.boomPumpBreakdown = true;
       parsedFields.downtimeHours = 2;
       parsedFields.breakdownReason = 'Hydraulic high-pressure line hose leakage';
-      actionSummary.push(`🚨 Putzmeister Boom Pump: 2.0 hrs breakdown logged & technician alerted`);
+      actionSummary.push(`[ALERT] Putzmeister Boom Pump: 2.0 hrs breakdown logged & technician alerted`);
     }
   } else if (
     lower.includes('cpi') || lower.includes('burn rate') || lower.includes('earned value') ||
@@ -245,15 +245,15 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
   ) {
     targetModule = 'cost';
     intent = 'Earned Value Management & Project Cost Audit';
-    actionSummary.push(`📈 Computed CPI at 1.031 (Cost Variance +₹39.0 Lakh Under Budget)`);
-    actionSummary.push(`💡 LLaMA 3.3 flagged ₹3,560 potential daily saving on idle JCB excavator`);
+    actionSummary.push(`[EVM] Computed CPI at 1.031 (Cost Variance +₹39.0 Lakh Under Budget)`);
+    actionSummary.push(`[INSIGHT] LLaMA 3.3 flagged ₹3,560 potential daily saving on idle JCB excavator`);
   } else if (
     lower.includes('report') || lower.includes('dpr') || lower.includes('daily progress') ||
     lower.includes('summary') || lower.includes('full report')
   ) {
     targetModule = 'reports';
     intent = 'Generate Daily Progress Report (DPR)';
-    actionSummary.push(`📄 Compiled Full Daily Progress Report (DPR)`);
+    actionSummary.push(`[DPR] Compiled Full Daily Progress Report (DPR)`);
   } else {
     // Default to Labour
     targetModule = 'labour';
@@ -263,40 +263,40 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
     const masonMatch = text.match(/mason\s*(\d+)\s*present/i) || text.match(/(\d+)\s*mason/i);
     if (masonMatch) {
       parsedFields.masonPresent = parseInt(masonMatch[1], 10);
-      actionSummary.push(`👷 Mason: ${parsedFields.masonPresent} Present`);
+      actionSummary.push(`[LABOUR] Mason: ${parsedFields.masonPresent} Present`);
     }
 
     const masonAbsentMatch = text.match(/mason.*?\b(\d+)\b\s*absent/i) || text.match(/(\d+)\s*absent/i);
     if (masonAbsentMatch) {
       parsedFields.masonAbsent = parseInt(masonAbsentMatch[1], 10);
-      actionSummary.push(`❌ Mason: ${parsedFields.masonAbsent} Absent`);
+      actionSummary.push(`[ABSENT] Mason: ${parsedFields.masonAbsent} Absent`);
     }
 
     // Helper
     const helperMatch = text.match(/helper\s*(\d+)\s*present/i) || text.match(/(\d+)\s*helper/i);
     if (helperMatch) {
       parsedFields.helperPresent = parseInt(helperMatch[1], 10);
-      actionSummary.push(`👷 Helper: ${parsedFields.helperPresent} Present`);
+      actionSummary.push(`[LABOUR] Helper: ${parsedFields.helperPresent} Present`);
     }
 
     // Carpenter & OT
     const carpMatch = text.match(/carpenter\s*(\d+)/i);
     if (carpMatch) {
       parsedFields.carpenterPresent = parseInt(carpMatch[1], 10);
-      actionSummary.push(`🪚 Carpenter: ${parsedFields.carpenterPresent} Present`);
+      actionSummary.push(`[LABOUR] Carpenter: ${parsedFields.carpenterPresent} Present`);
     }
 
     const otMatch = text.match(/ot.*?(\d+)\s*ghante/i) || text.match(/(\d+)\s*hrs?\s*ot/i);
     if (otMatch) {
       parsedFields.carpenterOtHours = parseInt(otMatch[1], 10);
-      actionSummary.push(`⏱️ Carpenter Overtime: ${parsedFields.carpenterOtHours} hours logged`);
+      actionSummary.push(`[OVERTIME] Carpenter Overtime: ${parsedFields.carpenterOtHours} hours logged`);
     }
 
     // Agencies
     if (lower.includes('agency a') || lower.includes('agency b') || lower.includes('30 log')) {
       parsedFields.agencyA = 30;
       parsedFields.agencyB = 10;
-      actionSummary.push(`🏢 Subcontractor Split: Agency A (30 Pax), Agency B (10 Pax)`);
+      actionSummary.push(`[CONTRACTOR] Subcontractor Split: Agency A (30 Pax), Agency B (10 Pax)`);
     }
   }
 

@@ -34,7 +34,9 @@ import {
   Sliders,
   CheckCircle,
   HelpCircle,
-  Calculator
+  Calculator,
+  GraduationCap,
+  X
 } from 'lucide-react';
 import { SiteReportLogo } from '../common/SiteReportLogo';
 import { SkyscraperHeroGraphic } from '../common/SkyscraperHeroGraphic';
@@ -271,104 +273,206 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F7F7] text-[#0E0E0E] selection:bg-[#FF6A00] selection:text-white">
-      {/* Carbon Black Top Navigation Bar */}
-      <nav className="sticky top-0 z-40 bg-[#0E0E0E] border-b border-[#262626] px-4 lg:px-10 py-4 flex items-center justify-between shadow-md">
+    <div className="min-h-screen bg-[#08090C] text-[#F8FAFC] selection:bg-[#38BDF8] selection:text-[#08090C]">
+      {/* Dark Glass Top Navigation Bar */}
+      <nav className="sticky top-0 z-40 bg-[#0B0D13]/85 backdrop-blur-md border-b border-white/10 px-4 lg:px-10 py-3.5 flex items-center justify-between shadow-lg">
         <div className="flex items-center gap-3">
           <SiteReportLogo isDark={true} size="md" />
         </div>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-white">
-          <a href="#hero" className="hover:text-[#FF6A00] transition-colors">Home</a>
-          <a href="#why-it-works" className="hover:text-[#FF6A00] transition-colors">Features</a>
-          <a href="#how-it-works" className="hover:text-[#FF6A00] transition-colors">How It Works</a>
-          <a href="#pricing" className="hover:text-[#FF6A00] transition-colors">Pricing</a>
-          <a href="#about" className="hover:text-[#FF6A00] transition-colors">About Us</a>
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
+          <a href="#hero" className="hover:text-white transition-colors">Home</a>
+          <a href="#catalog" className="hover:text-white transition-colors">Catalog</a>
+          <a href="#modules" className="hover:text-white transition-colors">Modules</a>
+          <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
+          <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             id="landing-get-started-btn"
             onClick={() => onLaunchApp('dashboard')}
-            className="px-5 py-2.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-lg text-sm shadow-md shadow-[#FF6A00]/20 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+            className="px-6 py-2 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-md transition-all cursor-pointer"
           >
-            <span>Get Started</span>
+            Launch App
           </button>
         </div>
       </nav>
 
-      {/* Hero Section: Carbon Black Background with Full Bleed Image on Right */}
-      <section id="hero" className="relative bg-[#0E0E0E] text-white min-h-[600px] flex items-center border-b border-[#262626] overflow-hidden">
-        {/* Full bleed image on the right with a fade to black on the left */}
-        <div className="absolute inset-0 z-0 flex justify-end">
-          <div className="w-full lg:w-[65%] h-full relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0E0E0E] via-[#0E0E0E]/80 to-transparent z-10" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E] via-transparent to-transparent z-10" />
-            <img 
-              src="/hero-bg-3.jpg" 
-              alt="Engineers shaking hands over blueprints" 
-              className="w-full h-full object-cover object-center opacity-90"
-            />
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 lg:py-24 relative z-20 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            {/* Left Column: Headlines & Call to Actions */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              {/* Sub Headline */}
-              <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
-                AI FOR CONSTRUCTION REPORTS
-              </p>
-              
-              {/* Main Bold Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
-                Smarter Reports.<br />
-                Stronger Decisions<span className="text-[#FF6A00]">.</span>
-              </h1>
-
-              {/* Description */}
-              <p className="text-sm sm:text-base lg:text-lg text-[#D4D4D4] max-w-lg leading-relaxed font-normal">
-                SiteReportAI analyzes site data and documents to generate accurate, insightful, and easy-to-understand reports in minutes.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <button
-                  id="hero-analyze-report-btn"
-                  onClick={() => onLaunchApp('dashboard')}
-                  className="px-8 py-3.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-xl text-sm shadow-lg shadow-[#FF6A00]/25 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <span>Analyze Report</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => onOpenAIModal('voice')}
-                  className="px-8 py-3.5 bg-transparent hover:bg-[#1A1A1A] text-white border border-[#333333] hover:border-[#525252] font-semibold rounded-xl text-sm flex items-center gap-2.5 transition-all cursor-pointer"
-                >
-                  <Play className="w-4 h-4" />
-                  <span>Watch Demo</span>
-                </button>
+      {/* Hero Section: RentPe Style Contained Box */}
+      <section id="hero" className="pt-8 pb-10 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="rounded-[28px] border border-white/10 bg-[#0B0F17] bg-grid bg-radial-hero relative overflow-hidden py-16 sm:py-24 px-6 text-center shadow-2xl">
+          {/* Top Feature Timeline Node */}
+          <div className="relative flex items-center justify-center mb-8">
+            <div className="absolute w-48 sm:w-72 h-[1px] bg-white/15" />
+            <div className="flex items-center gap-6 sm:gap-10 relative z-10">
+              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-sky-400 shadow-lg">
+                <GraduationCap className="w-4 h-4" />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-emerald-400 shadow-lg">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
+              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-amber-400 shadow-lg">
+                <FileText className="w-4 h-4" />
               </div>
             </div>
-
-            {/* Empty Right Column (Image is now background) */}
-            <div className="lg:col-span-5 hidden lg:block"></div>
           </div>
+
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.08] max-w-4xl mx-auto">
+            Smarter site logs.<br />
+            <span className="text-[#38BDF8]">Generated in seconds.</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="mt-5 text-sm sm:text-base text-neutral-400 max-w-xl mx-auto font-normal leading-relaxed">
+            Turn field voice notes, site photos, and logs into accurate progress reports with zero manual overhead.
+          </p>
+
+          {/* Action Buttons */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <button
+              id="hero-analyze-report-btn"
+              onClick={() => onLaunchApp('dashboard')}
+              className="px-8 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-sm shadow-xl shadow-white/5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Browse Workspace
+            </button>
+            <button
+              onClick={() => onOpenAIModal('voice')}
+              className="px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-sm font-semibold transition-all backdrop-blur-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+            >
+              + Voice Field Log
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Catalog Grid Section: Screenshot 2 Style */}
+      <section id="catalog" className="py-10 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-sky-400 font-semibold">
+              CATALOG : FIELD MODULES
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
+              Automated Site Operations
+            </h2>
+          </div>
+          <button
+            onClick={() => onLaunchApp('reports')}
+            className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white font-medium transition-colors cursor-pointer"
+          >
+            <span>View All Records</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* 4 Cards Matching Screenshot 2 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            {
+              sku: 'SKU : DPR-AUTO-01',
+              title: 'Daily Progress Report',
+              desc: 'AI synthesized multi-trade field logs with verified workforce counts and site metrics.',
+              metric: '128 Reports',
+              action: 'View Hub',
+              target: 'reports' as const,
+              icon: FileText
+            },
+            {
+              sku: 'SKU : CREW-MGR-02',
+              title: 'Labour & Workforce',
+              desc: 'Trade attendance tracking, agency breakdowns, and overtime wage calculations.',
+              metric: '73 Active',
+              action: 'Manage',
+              target: 'labour' as const,
+              icon: HardHat
+            },
+            {
+              sku: 'SKU : PLANT-MON-03',
+              title: 'Equipment & Machinery',
+              desc: 'Real-time telemetry, breakdown logs, downtime alerts, and fuel consumption analytics.',
+              metric: '96% Uptime',
+              action: 'Track Assets',
+              target: 'equipment' as const,
+              icon: Wrench
+            },
+            {
+              sku: 'SKU : EVM-AUDIT-04',
+              title: 'Analytics & EVM',
+              desc: 'Earned Value Management, CPI/SPI curves, and automated budget overrun detection.',
+              metric: 'CPI 1.031',
+              action: 'Audit Cost',
+              target: 'cost' as const,
+              icon: BarChart3
+            }
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-[#10131A] hover:bg-[#141822] border border-white/10 hover:border-white/20 rounded-2xl p-5 transition-all shadow-xl flex flex-col justify-between group"
+            >
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400 mb-4 group-hover:scale-105 transition-transform">
+                  <item.icon className="w-5 h-5" />
+                </div>
+                <p className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                  {item.sku}
+                </p>
+                <h3 className="text-white font-semibold text-base mt-1.5 group-hover:text-sky-400 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-neutral-400 text-xs mt-1.5 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div>
+                <div className="border-t border-white/[0.08] my-4" />
+                <div className="flex items-center justify-between">
+                  <span className="text-white font-bold text-sm font-mono">
+                    {item.metric}
+                  </span>
+                  <button
+                    onClick={() => onLaunchApp(item.target)}
+                    className="px-4 py-1.5 bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-semibold rounded-full transition-all cursor-pointer"
+                  >
+                    {item.action}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Load More Button */}
+        <div className="text-center mt-8">
+          <button
+            onClick={() => onLaunchApp('dashboard')}
+            className="px-6 py-2.5 bg-[#151922] hover:bg-[#1C2230] text-neutral-300 border border-white/10 text-xs font-medium rounded-xl transition-all cursor-pointer shadow-sm"
+          >
+            Load More
+          </button>
+        </div>
+
+        {/* Giant Watermark Branding */}
+        <div className="overflow-hidden select-none pointer-events-none mt-16 sm:mt-24 text-center">
+          <span className="text-neutral-800/25 font-black text-[70px] sm:text-[130px] md:text-[190px] leading-none tracking-tight block uppercase">
+            SiteReport
+          </span>
         </div>
       </section>
 
       {/* WHAT SITEREPORAI DOES: Comprehensive Interactive Module Explorer */}
       <section id="modules" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
+          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
             WHAT SITEREPORAI DOES
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             5 Core Modules Engineered for the Field
           </h2>
-          <p className="text-sm text-[#525252] max-w-2xl mx-auto">
+          <p className="text-sm text-neutral-400 max-w-2xl mx-auto">
             Explore how SiteReportAI manages every operational pillar of your construction project — from morning muster roll to structural concrete delivery and executive financial EVM curves.
           </p>
         </div>
@@ -382,16 +486,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <button
                 key={mod.id}
                 onClick={() => setActiveModuleTab(mod.id)}
-                className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
+                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
                   isActive
-                    ? 'bg-[#0E0E0E] text-white border-[#0E0E0E] shadow-md'
-                    : 'bg-white text-[#525252] border-[#E5E5E5] hover:border-[#FF6A00]/40 hover:text-[#0E0E0E]'
+                    ? 'bg-white text-neutral-950 border-white shadow-lg'
+                    : 'bg-[#10131A] text-neutral-400 border-white/10 hover:border-white/20 hover:text-white'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-[#FF6A00]' : 'text-[#737373]'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-sky-500' : 'text-neutral-400'}`} />
                 <span>{mod.name}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-md font-semibold ${
-                  isActive ? 'bg-[#FF6A00] text-white' : 'bg-[#F7F7F7] text-[#737373]'
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
+                  isActive ? 'bg-neutral-900 text-white' : 'bg-white/5 text-neutral-400'
                 }`}>
                   {mod.badge}
                 </span>
@@ -401,41 +505,41 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
 
         {/* Active Module Deep Dive Card */}
-        <div className="mt-8 bg-white border border-[#E5E5E5] rounded-3xl p-6 sm:p-10 shadow-sm transition-all animate-in fade-in">
+        <div className="mt-8 bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl transition-all animate-in fade-in">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             {/* Left Column: Module Details & Features */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFF2E8] border border-[#FF6A00]/30 rounded-full text-xs font-bold text-[#FF6A00]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-500/10 border border-sky-400/30 rounded-full text-xs font-bold text-sky-400">
                 {React.createElement(currentModuleData.icon, { className: 'w-4 h-4' })}
                 <span>{currentModuleData.name} Module</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0E0E0E] leading-tight">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
                 {currentModuleData.headline}
               </h3>
 
-              <p className="text-sm text-[#525252] leading-relaxed">
+              <p className="text-sm text-neutral-400 leading-relaxed">
                 {currentModuleData.description}
               </p>
 
               {/* KPI Stat Badges */}
               <div className="grid grid-cols-3 gap-3 pt-2">
                 {currentModuleData.kpis.map((kpi, idx) => (
-                  <div key={idx} className="p-3.5 bg-[#F7F7F7] rounded-xl border border-[#E5E5E5]">
-                    <p className="text-[10px] text-[#737373] uppercase font-semibold">{kpi.label}</p>
-                    <p className="text-lg sm:text-xl font-extrabold text-[#FF6A00] mt-0.5">{kpi.value}</p>
+                  <div key={idx} className="p-3.5 bg-[#141722] rounded-xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400 uppercase font-semibold">{kpi.label}</p>
+                    <p className="text-lg sm:text-xl font-extrabold text-sky-400 mt-0.5">{kpi.value}</p>
                   </div>
                 ))}
               </div>
 
               {/* Feature Checklist */}
               <div className="space-y-2.5 pt-2">
-                <p className="text-xs font-bold uppercase text-[#0E0E0E] tracking-wider">Key Functional Capabilities:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#0E0E0E]">
+                <p className="text-xs font-bold uppercase text-neutral-300 tracking-wider">Key Functional Capabilities:</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-neutral-300">
                   {currentModuleData.features.map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-[#FF6A00] shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                       <span className="font-medium">{feat}</span>
                     </div>
                   ))}
@@ -446,7 +550,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <div className="pt-4 flex items-center gap-3">
                 <button
                   onClick={() => onLaunchApp(currentModuleData.id)}
-                  className="px-5 py-3 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-xl text-xs shadow-md shadow-[#FF6A00]/25 flex items-center gap-2 transition-all cursor-pointer"
+                  className="px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-md flex items-center gap-2 transition-all cursor-pointer"
                 >
                   <span>Open {currentModuleData.name} in Console</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -475,37 +579,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     <p className="text-[10px] text-[#737373] uppercase">Active Site</p>
                     <p className="font-bold text-white">Greenfield Towers - Block A</p>
                   </div>
-                  <span className="text-xs font-bold text-[#FF6A00]">Sector 62</span>
+                  <span className="text-xs font-bold text-sky-400">Sector 62</span>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3 bg-[#141414] rounded-xl border border-[#262626]">
-                    <p className="text-[10px] text-[#737373]">Live Metric A</p>
+                  <div className="p-3 bg-[#10131A] rounded-xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400">Live Metric A</p>
                     <p className="text-sm font-bold text-white mt-0.5">{currentModuleData.previewStats.activeWorkers}</p>
                   </div>
-                  <div className="p-3 bg-[#141414] rounded-xl border border-[#262626]">
-                    <p className="text-[10px] text-[#737373]">Live Metric B</p>
-                    <p className="text-sm font-bold text-[#FF6A00] mt-0.5">{currentModuleData.previewStats.tradesLogged}</p>
+                  <div className="p-3 bg-[#10131A] rounded-xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400">Live Metric B</p>
+                    <p className="text-sm font-bold text-sky-400 mt-0.5">{currentModuleData.previewStats.tradesLogged}</p>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#141414] rounded-xl border border-[#262626] space-y-1.5">
-                  <p className="text-[10px] text-[#737373] uppercase">AI Auto-Reconciliation Status</p>
+                <div className="p-3 bg-[#10131A] rounded-xl border border-white/10 space-y-1.5">
+                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider">AI Auto-Reconciliation Status</p>
                   <div className="flex items-center justify-between">
                     <span className="text-white font-medium">{currentModuleData.previewStats.agenciesVerified}</span>
                     <span className="text-emerald-400 font-bold">100% Verified</span>
                   </div>
-                  <div className="w-full h-1.5 bg-[#262626] rounded-full overflow-hidden">
-                    <div className="h-full bg-[#FF6A00] w-[94%]" />
+                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                    <div className="h-full bg-sky-400 w-[94%]" />
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#141414] rounded-xl border border-[#262626] flex items-center justify-between">
+                <div className="p-3 bg-[#10131A] rounded-xl border border-white/10 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-[#FF6A00]" />
-                    <span className="text-[11px] text-[#D4D4D4]">Multilingual Groq Whisper Connected</span>
+                    <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+                    <span className="text-[11px] text-neutral-200">Multilingual Groq Whisper Connected</span>
                   </div>
-                  <span className="text-[10px] text-[#A3A3A3]">380ms Latency</span>
+                  <span className="text-[10px] text-neutral-400">380ms Latency</span>
                 </div>
               </div>
             </div>
@@ -517,41 +621,41 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* CORE CAPABILITIES GRID matching reference layout */}
       <section id="why-it-works" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         <div className="space-y-3 max-w-3xl mx-auto mb-14 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
+          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
             WHY SITEREPORAI?
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Built for Construction. Powered by AI.
           </h2>
-          <p className="text-sm text-[#525252] max-w-xl mx-auto">
+          <p className="text-sm text-neutral-400 max-w-xl mx-auto">
             From daily muster roll attendance to structural concrete inventory and plant uptime, SiteReportAI turns unstructured field notes into executive clarity.
           </p>
         </div>
 
-        {/* 4 Feature Cards Grid with Orange Icons */}
+        {/* 4 Feature Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
           {valueProps.map((card, idx) => {
             const Icon = card.icon;
             return (
               <div
                 key={idx}
-                className="bg-white border border-[#E5E5E5] hover:border-[#FF6A00]/40 rounded-2xl p-6 shadow-xs hover:shadow-md transition-all group flex flex-col justify-between"
+                className="bg-[#10131A] hover:bg-[#141822] border border-white/10 hover:border-white/20 rounded-2xl p-6 shadow-xl transition-all group flex flex-col justify-between"
               >
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-[#FFF2E8] border border-[#FF6A00]/20 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
-                    <Icon className="w-6 h-6 text-[#FF6A00]" />
+                  <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-400/20 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform text-sky-400">
+                    <Icon className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-[#0E0E0E] mb-2">
+                  <h3 className="text-base font-bold text-white mb-2">
                     {card.title}
                   </h3>
-                  <p className="text-xs text-[#525252] leading-relaxed">
+                  <p className="text-xs text-neutral-400 leading-relaxed">
                     {card.description}
                   </p>
                 </div>
 
                 <div 
                   onClick={() => onLaunchApp('dashboard')}
-                  className="pt-5 mt-4 border-t border-[#F5F5F5] flex items-center gap-1.5 text-xs font-semibold text-[#FF6A00] cursor-pointer"
+                  className="pt-5 mt-4 border-t border-white/[0.08] flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-white cursor-pointer transition-colors"
                 >
                   <span>Explore Feature</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -563,67 +667,68 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* HOW IT WORKS: 3 Simple Steps */}
-      <section id="how-it-works" className="py-16 bg-white border-y border-[#E5E5E5]">
+      <section id="how-it-works" className="py-16 bg-[#0B0D13] border-y border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
+            <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
               WORKFLOW IN ACTION
             </p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               How SiteReportAI Works in 3 Steps
             </h2>
-            <p className="text-sm text-[#525252]">
+            <p className="text-sm text-neutral-400">
               Simple for supervisors on site. Accurate and audit-ready for executive decision makers.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
-            <div className="bg-[#F7F7F7] border border-[#E5E5E5] rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-[#0E0E0E] text-white flex items-center justify-center font-extrabold text-sm mb-4">
+            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
+              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-extrabold text-sm mb-4">
                 01
               </div>
-              <h3 className="text-base font-bold text-[#0E0E0E] mb-2">
+              <h3 className="text-base font-bold text-white mb-2">
                 Capture on Site via Voice or Photo
               </h3>
-              <p className="text-xs text-[#525252] leading-relaxed">
+              <p className="text-xs text-neutral-400 leading-relaxed">
                 Site supervisors record a 20-second voice note in Hindi, Marathi, or English, or snap a photo of paper delivery challans and batch tickets.
               </p>
-              <div className="mt-4 p-3 bg-white rounded-xl border border-[#E5E5E5] text-[11px] text-[#737373] italic">
+              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] text-neutral-300 italic font-mono">
                 "25 mason, 30 helper present. 400 bags cement received on Challan #8914."
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="bg-[#F7F7F7] border border-[#E5E5E5] rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-[#FF6A00] text-white flex items-center justify-center font-extrabold text-sm mb-4">
+            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
+              <div className="w-10 h-10 rounded-xl bg-sky-500 text-neutral-950 flex items-center justify-center font-extrabold text-sm mb-4">
                 02
               </div>
-              <h3 className="text-base font-bold text-[#0E0E0E] mb-2">
+              <h3 className="text-base font-bold text-white mb-2">
                 AI Cleanses, Structures & Reconciles
               </h3>
-              <p className="text-xs text-[#525252] leading-relaxed">
+              <p className="text-xs text-neutral-400 leading-relaxed">
                 Groq Whisper and LLaMA neural models instantly extract trade counts, supplier names, truck numbers, and hours into structured database schemas.
               </p>
-              <div className="mt-4 p-3 bg-white rounded-xl border border-[#E5E5E5] text-[11px] font-mono text-emerald-700">
-                ✓ Extracted: 55 Manpower • 400 Bags • Verified CPI 1.04
+              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span>Extracted: 55 Manpower • 400 Bags • Verified CPI 1.04</span>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-[#F7F7F7] border border-[#E5E5E5] rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-[#0E0E0E] text-white flex items-center justify-center font-extrabold text-sm mb-4">
+            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
+              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-extrabold text-sm mb-4">
                 03
               </div>
-              <h3 className="text-base font-bold text-[#0E0E0E] mb-2">
+              <h3 className="text-base font-bold text-white mb-2">
                 Executive Clarity & 1-Click Reports
               </h3>
-              <p className="text-xs text-[#525252] leading-relaxed">
+              <p className="text-xs text-neutral-400 leading-relaxed">
                 Real-time muster rolls, material stock balances, plant uptime rates, and EVM S-curves update automatically. Instant PDF shift report export.
               </p>
-              <div className="mt-4 p-3 bg-white rounded-xl border border-[#E5E5E5] text-[11px] text-[#0E0E0E] font-semibold flex items-center justify-between">
+              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] text-white font-semibold flex items-center justify-between">
                 <span>Certified DPR #128 Ready</span>
-                <span className="text-[#FF6A00]">Share PDF →</span>
+                <span className="text-sky-400">Share PDF →</span>
               </div>
             </div>
           </div>
@@ -631,24 +736,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* Interactive Voice & Challan OCR Playground */}
-      <section id="playground" className="py-16 bg-[#0E0E0E] text-white border-y border-[#262626]">
+      <section id="playground" className="py-20 bg-[#08090C] text-white border-y border-white/10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-            <span className="px-3 py-1 bg-[#1A1A1A] border border-[#FF6A00]/40 rounded-full text-[11px] font-semibold text-[#FF6A00] uppercase tracking-wide">
-              Live Field Multimodal Testing
+          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+            <span className="px-3.5 py-1 bg-white/10 border border-white/15 rounded-full text-[11px] font-semibold text-sky-400 uppercase tracking-wider">
+              Multimodal Field Capture
             </span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Speak or Snap. AI Does the Rest.
             </h2>
-            <p className="text-xs sm:text-sm text-[#A3A3A3]">
-              Tap any multilingual field supervisor prompt below to hear speech synthesis and trigger instant extraction.
+            <p className="text-xs sm:text-sm text-neutral-400">
+              Tap any multilingual field supervisor prompt below to trigger instant structured extraction.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Audio Prompts Picker */}
             <div className="lg:col-span-5 space-y-3">
-              <p className="text-xs font-semibold text-[#A3A3A3] uppercase tracking-wider mb-2">
+              <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
                 Sample Field Voice Transcripts
               </p>
               {SAMPLE_VOICE_PROMPTS.slice(0, 3).map((sample, idx) => (
@@ -658,14 +763,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     setActiveVoiceDemo(idx);
                     playVoice(sample.transcript);
                   }}
-                  className={`p-4 rounded-xl border text-xs cursor-pointer transition-all ${
+                  className={`p-4 rounded-2xl border text-xs cursor-pointer transition-all ${
                     activeVoiceDemo === idx
-                      ? 'bg-[#1A1A1A] border-[#FF6A00] ring-1 ring-[#FF6A00] text-white shadow-lg'
-                      : 'bg-[#141414] border-[#262626] hover:bg-[#1A1A1A] text-[#A3A3A3]'
+                      ? 'bg-[#10131A] border-sky-400/50 ring-1 ring-sky-400/40 text-white shadow-lg'
+                      : 'bg-[#10131A]/60 border-white/10 hover:bg-[#10131A] text-neutral-400'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 bg-[#FF6A00]/20 text-[#FF6A00] text-[10px] rounded-md font-semibold border border-[#FF6A00]/30">
+                    <span className="px-2.5 py-0.5 bg-sky-500/15 text-sky-400 text-[10px] rounded-full font-semibold border border-sky-500/30">
                       {sample.language}
                     </span>
                     <button
@@ -673,76 +778,76 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                         e.stopPropagation();
                         playVoice(sample.transcript);
                       }}
-                      className="p-1 rounded-md hover:bg-[#262626] text-[#FF6A00] transition-colors"
+                      className="p-1 rounded-full hover:bg-white/10 text-sky-400 transition-colors"
                       title="Play Audio"
                     >
                       <Volume2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
-                  <p className="italic text-[#E5E5E5] line-clamp-2">"{sample.transcript}"</p>
-                  <div className="mt-2 flex items-center justify-between text-[11px] text-[#737373]">
+                  <p className="italic text-neutral-200 line-clamp-2">"{sample.transcript}"</p>
+                  <div className="mt-2.5 flex items-center justify-between text-[11px] text-neutral-400">
                     <span>Module: <strong className="text-white capitalize">{sample.module}</strong></span>
-                    <span className="text-[#FF6A00] font-medium">Tap to load →</span>
+                    <span className="text-sky-400 font-medium">Tap to load →</span>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Extracted JSON / AI Structure Output Card */}
-            <div className="lg:col-span-7 bg-[#141414] border border-[#262626] rounded-2xl p-6 shadow-xl">
-              <div className="flex items-center justify-between pb-4 border-b border-[#262626]">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#FF6A00]/20 border border-[#FF6A00]/40 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-[#FF6A00]" />
+            <div className="lg:col-span-7 bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl">
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-sky-500/15 border border-sky-500/30 flex items-center justify-center">
+                    <Sparkles className="w-4 h-4 text-sky-400" />
                   </div>
                   <div>
                     <h3 className="text-sm font-bold text-white">AI Structured Output</h3>
-                    <p className="text-[11px] text-[#A3A3A3]">Extracted parameters ready for database sync</p>
+                    <p className="text-[11px] text-neutral-400">Extracted parameters ready for database sync</p>
                   </div>
                 </div>
 
                 <button
                   onClick={() => onOpenAIModal('voice')}
-                  className="px-3.5 py-1.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white text-xs font-semibold rounded-lg shadow-sm flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-semibold rounded-full shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
                 >
                   <Mic className="w-3.5 h-3.5" />
-                  <span>Try Your Own Voice</span>
+                  <span>Try Voice Log</span>
                 </button>
               </div>
 
               {/* Field Summary */}
               <div className="mt-5 space-y-4 text-xs">
-                <div className="p-3.5 bg-[#0E0E0E] rounded-xl border border-[#262626]">
-                  <p className="text-[11px] font-semibold text-[#A3A3A3] uppercase mb-1">Active Transcript</p>
+                <div className="p-4 bg-[#0B0D13] rounded-2xl border border-white/10">
+                  <p className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Active Transcript</p>
                   <p className="text-white font-medium leading-relaxed">
                     "{SAMPLE_VOICE_PROMPTS[activeVoiceDemo].transcript}"
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="p-3 bg-[#0E0E0E] rounded-xl border border-[#262626]">
-                    <p className="text-[10px] text-[#A3A3A3] uppercase">Target Module</p>
-                    <p className="text-sm font-bold text-[#FF6A00] capitalize mt-0.5">
+                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Target Module</p>
+                    <p className="text-sm font-bold text-sky-400 capitalize mt-1">
                       {SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module}
                     </p>
                   </div>
-                  <div className="p-3 bg-[#0E0E0E] rounded-xl border border-[#262626]">
-                    <p className="text-[10px] text-[#A3A3A3] uppercase">Confidence Score</p>
-                    <p className="text-sm font-bold text-emerald-400 mt-0.5">99.4%</p>
+                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Confidence</p>
+                    <p className="text-sm font-bold text-emerald-400 mt-1">99.4%</p>
                   </div>
-                  <div className="p-3 bg-[#0E0E0E] rounded-xl border border-[#262626]">
-                    <p className="text-[10px] text-[#A3A3A3] uppercase">Processing Time</p>
-                    <p className="text-sm font-bold text-white mt-0.5">380ms</p>
+                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
+                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Latency</p>
+                    <p className="text-sm font-bold text-white mt-1">380ms</p>
                   </div>
                 </div>
 
                 <div className="pt-2 flex justify-end">
                   <button
                     onClick={() => onLaunchApp(SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module as ModuleId)}
-                    className="px-4 py-2 bg-[#1A1A1A] hover:bg-[#262626] text-white border border-[#333333] hover:border-[#FF6A00] rounded-lg text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+                    className="px-5 py-2.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
                   >
                     <span>View in {SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module.toUpperCase()} Module</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-[#FF6A00]" />
+                    <ArrowRight className="w-3.5 h-3.5 text-sky-400" />
                   </button>
                 </div>
               </div>
@@ -752,95 +857,101 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* FREE FEATURE: Cost Estimator - Standalone Section */}
-      <section className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto bg-gradient-to-br from-[#FFF2E8] to-white border-y border-[#FF6A00]/20">
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <span className="px-4 py-1.5 bg-[#FF6A00] text-white rounded-full text-xs font-bold uppercase tracking-wide">
-            FREE FEATURE
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
-            Cost Estimator - BOQ & Material Calculator
-          </h2>
-          <p className="text-sm text-[#525252] max-w-xl mx-auto">
-            Generate instant Bill of Quantities, material requisitions, and complete cost estimates from building dimensions — 100% free, no signup required.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* Left: Feature Description */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-[#FF6A00] flex items-center justify-center">
-                <Calculator className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-[#0E0E0E]">Instant BOQ Generation</h3>
-                <p className="text-xs text-[#525252]">Complete Bill of Quantities with item-wise rates</p>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#FF6A00] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-[#0E0E0E]">Multi-floor building parameters</p>
-                  <p className="text-xs text-[#525252]">Enter dimensions for each floor with live column height calculation</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#FF6A00] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-[#0E0E0E]">Material requisition summary</p>
-                  <p className="text-xs text-[#525252]">Cement, sand, aggregate, steel, bricks with exact quantities</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#FF6A00] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-[#0E0E0E]">Complete cost chain breakdown</p>
-                  <p className="text-xs text-[#525252]">Material → Labour → T&P → Profit → GST calculation</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#FF6A00] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-[#0E0E0E]">Steel procurement summary</p>
-                  <p className="text-xs text-[#525252]">Total steel required with waste percentage and tonnage</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#FF6A00] shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-semibold text-[#0E0E0E]">CSV export ready</p>
-                  <p className="text-xs text-[#525252]">Download complete BOQ for procurement and billing</p>
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={onLaunchEstimator}
-              className="px-8 py-3.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-xl text-sm shadow-lg shadow-[#FF6A00]/25 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <Calculator className="w-4 h-4" />
-              <span>Launch Estimator</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+      <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-radial-glow pointer-events-none opacity-40 -mr-20 -mt-20" />
+          
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3 relative z-10">
+            <span className="px-3.5 py-1 bg-white/10 text-sky-400 border border-white/15 rounded-full text-xs font-semibold uppercase tracking-wider">
+              Free Feature
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Cost Estimator & BOQ Calculator
+            </h2>
+            <p className="text-sm text-neutral-400 max-w-xl mx-auto">
+              Generate instant Bill of Quantities, material requisitions, and complete cost estimates from building dimensions — 100% free, no signup required.
+            </p>
           </div>
 
-          {/* Right: Quick Stats */}
-          <div className="bg-white border border-[#E5E5E5] rounded-2xl p-6 shadow-sm">
-            <h4 className="text-sm font-bold text-[#0E0E0E] mb-4">Quick Results Preview</h4>
-            <div className="space-y-4">
-              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-[#E5E5E5]">
-                <p className="text-[10px] text-[#737373] uppercase mb-1">Calculation Speed</p>
-                <p className="text-2xl font-bold text-[#FF6A00]">&lt; 1 Second</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
+            {/* Left: Feature Description */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center">
+                  <Calculator className="w-6 h-6 text-sky-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Instant BOQ Generation</h3>
+                  <p className="text-xs text-neutral-400">Complete Bill of Quantities with item-wise rates</p>
+                </div>
               </div>
-              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-[#E5E5E5]">
-                <p className="text-[10px] text-[#737373] uppercase mb-1">Potential Savings</p>
-                <p className="text-2xl font-bold text-[#0E0E0E]">₹2-5L per Project</p>
+
+              <div className="space-y-3.5">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Multi-floor building parameters</p>
+                    <p className="text-xs text-neutral-400">Enter dimensions for each floor with live column height calculation</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Material requisition summary</p>
+                    <p className="text-xs text-neutral-400">Cement, sand, aggregate, steel, bricks with exact quantities</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Complete cost chain breakdown</p>
+                    <p className="text-xs text-neutral-400">Material → Labour → Plant → Contractor Margin → GST calculation</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">Steel procurement summary</p>
+                    <p className="text-xs text-neutral-400">Total steel required with waste percentage and tonnage</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-white">CSV export ready</p>
+                    <p className="text-xs text-neutral-400">Download complete BOQ for procurement and billing</p>
+                  </div>
+                </div>
               </div>
-              <div className="p-4 bg-[#F7F7F7] rounded-xl border border-[#E5E5E5]">
-                <p className="text-[10px] text-[#737373] uppercase mb-1">Pricing</p>
-                <p className="text-2xl font-bold text-emerald-600">100% Free</p>
+
+              <div className="pt-2">
+                <button
+                  onClick={onLaunchEstimator}
+                  className="px-8 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-sm shadow-xl flex items-center gap-2.5 transition-all cursor-pointer"
+                >
+                  <Calculator className="w-4 h-4" />
+                  <span>Launch Free Estimator</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Quick Stats */}
+            <div className="bg-[#0B0D13] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4">
+              <h4 className="text-sm font-bold text-white mb-2">Instant Engineering Engine</h4>
+              <div className="space-y-3.5">
+                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
+                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Calculation Latency</p>
+                  <p className="text-2xl font-bold text-sky-400">&lt; 1 Second</p>
+                </div>
+                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
+                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Average Waste Mitigation</p>
+                  <p className="text-2xl font-bold text-white">₹2-5 Lakhs / Site</p>
+                </div>
+                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
+                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Platform License</p>
+                  <p className="text-2xl font-bold text-emerald-400">100% Free</p>
+                </div>
               </div>
             </div>
           </div>
@@ -848,41 +959,41 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* COMPARISON MATRIX: Traditional vs SiteReportAI */}
-      <section id="comparison" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+      <section id="comparison" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
-            THE SITEREPORAI DIFFERENCE
+          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+            Precision vs Paperwork
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Stop Bleeding Money on Manual Site Chaos
           </h2>
-          <p className="text-sm text-[#525252]">
+          <p className="text-sm text-neutral-400">
             See how modern AI infrastructure reporting replaces paper delays, contractor disputes, and budget blowouts.
           </p>
         </div>
 
-        <div className="bg-white border border-[#E5E5E5] rounded-2xl overflow-hidden shadow-xs">
+        <div className="bg-[#10131A] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="bg-[#0E0E0E] text-white border-b border-[#262626]">
-                  <th className="py-4 px-5 font-bold uppercase tracking-wider text-[11px] w-1/4">Operational Area</th>
-                  <th className="py-4 px-5 font-bold uppercase tracking-wider text-[11px] text-red-400 w-3/8">Traditional Site Method</th>
-                  <th className="py-4 px-5 font-bold uppercase tracking-wider text-[11px] text-[#FF6A00] w-3/8">With SiteReportAI</th>
+                <tr className="bg-[#0B0D13] text-white border-b border-white/10">
+                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] w-1/4">Operational Area</th>
+                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] text-rose-400 w-3/8">Traditional Site Method</th>
+                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] text-sky-400 w-3/8">With SiteReport AI</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E5E5]">
+              <tbody className="divide-y divide-white/5">
                 {comparisons.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-[#F7F7F7] transition-colors">
-                    <td className="py-4 px-5 font-bold text-[#0E0E0E]">
+                  <tr key={idx} className="hover:bg-white/5 transition-colors">
+                    <td className="py-4.5 px-6 font-bold text-white">
                       {row.dimension}
                     </td>
-                    <td className="py-4 px-5 text-[#737373]">
-                      <span className="text-red-500 mr-1.5 font-bold">✕</span>
+                    <td className="py-4.5 px-6 text-neutral-400">
+                      <X className="w-3.5 h-3.5 text-rose-400 inline mr-2 shrink-0" />
                       {row.traditional}
                     </td>
-                    <td className="py-4 px-5 text-[#0E0E0E] font-medium bg-[#FFF2E8]/40">
-                      <span className="text-emerald-600 mr-1.5 font-bold">✓</span>
+                    <td className="py-4.5 px-6 text-white font-medium bg-sky-500/5">
+                      <Check className="w-3.5 h-3.5 text-sky-400 inline mr-2 shrink-0" />
                       {row.sitereport}
                     </td>
                   </tr>
@@ -894,141 +1005,143 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ROI & Business Impact Calculator */}
-      <section id="calculator" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto bg-white rounded-3xl border border-[#E5E5E5] my-10 shadow-sm">
-        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
-            ROI & EFFICIENCY
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
-            Calculate Your Time & Cost Savings
-          </h2>
-          <p className="text-sm text-[#525252]">
-            See how automating daily construction logs and EVM reconciliation impacts your site profitability.
-          </p>
-        </div>
+      <section id="calculator" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl">
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+              ROI & Efficiency
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Calculate Your Time & Cost Savings
+            </h2>
+            <p className="text-sm text-neutral-400">
+              See how automating daily construction logs and EVM reconciliation impacts your site profitability.
+            </p>
+          </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            <div className="space-y-6">
-              <div>
-                <div className="flex justify-between text-xs font-semibold text-[#0E0E0E] mb-2">
-                  <span>Project Portfolio Budget</span>
-                  <span className="text-[#FF6A00]">₹{projectSizeCr} Crores</span>
+          <div className="max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-white mb-2">
+                    <span>Project Portfolio Budget</span>
+                    <span className="text-sky-400">₹{projectSizeCr} Crores</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="5"
+                    max="500"
+                    step="5"
+                    value={projectSizeCr}
+                    onChange={(e) => setProjectSizeCr(Number(e.target.value))}
+                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-sky-400"
+                  />
                 </div>
-                <input
-                  type="range"
-                  min="5"
-                  max="500"
-                  step="5"
-                  value={projectSizeCr}
-                  onChange={(e) => setProjectSizeCr(Number(e.target.value))}
-                  className="w-full h-2 bg-[#E5E5E5] rounded-lg appearance-none cursor-pointer accent-[#FF6A00]"
-                />
-              </div>
 
-              <div>
-                <div className="flex justify-between text-xs font-semibold text-[#0E0E0E] mb-2">
-                  <span>Active Construction Sites</span>
-                  <span className="text-[#FF6A00]">{numSites} Sites</span>
+                <div>
+                  <div className="flex justify-between text-xs font-semibold text-white mb-2">
+                    <span>Active Construction Sites</span>
+                    <span className="text-sky-400">{numSites} Sites</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="20"
+                    step="1"
+                    value={numSites}
+                    onChange={(e) => setNumSites(Number(e.target.value))}
+                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-sky-400"
+                  />
                 </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="20"
-                  step="1"
-                  value={numSites}
-                  onChange={(e) => setNumSites(Number(e.target.value))}
-                  className="w-full h-2 bg-[#E5E5E5] rounded-lg appearance-none cursor-pointer accent-[#FF6A00]"
-                />
-              </div>
 
-              <div className="p-4 bg-[#FFF2E8] border border-[#FF6A00]/20 rounded-xl text-xs text-[#525252] space-y-1">
-                <p className="font-bold text-[#0E0E0E]">Automated Benefits:</p>
-                <p>• Zero manual Excel data re-entry at end of shift</p>
-                <p>• Immediate detection of material wastage anomalies</p>
-                <p>• Subcontractor invoice verification against voice check-ins</p>
-                <p>• Early warning alerts before budget cost overruns occur</p>
-              </div>
-            </div>
-
-            <div className="bg-[#0E0E0E] text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border border-[#262626]">
-              <div className="space-y-4">
-                <p className="text-xs font-bold uppercase tracking-wider text-[#FF6A00]">
-                  Projected Annual Impact
-                </p>
-
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-xs text-[#A3A3A3]">Reporting Time Recovered</p>
-                    <p className="text-2xl lg:text-3xl font-extrabold text-white mt-0.5">
-                      {estimatedDaysSaved} Eng Days / yr
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs text-[#A3A3A3]">Wastage & Delay Prevention</p>
-                    <p className="text-2xl lg:text-3xl font-extrabold text-[#FF6A00] mt-0.5">
-                      ₹{estimatedCostSavedLakhs} Lakhs
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs text-[#A3A3A3]">Idle Plant Recovery</p>
-                    <p className="text-lg font-bold text-white mt-0.5">
-                      ₹{idleMachinerySavedLakhs} Lakhs fuel & rental savings
-                    </p>
-                  </div>
+                <div className="p-5 bg-[#0B0D13] border border-white/10 rounded-2xl text-xs text-neutral-400 space-y-2">
+                  <p className="font-bold text-white">Automated Site Advantage:</p>
+                  <p>• Zero manual Excel data re-entry at end of shift</p>
+                  <p>• Immediate detection of material wastage anomalies</p>
+                  <p>• Subcontractor invoice verification against voice check-ins</p>
+                  <p>• Real-time EVM alerts before budget overruns occur</p>
                 </div>
               </div>
 
-              <button
-                onClick={() => onLaunchApp('dashboard')}
-                className="w-full py-3.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-xl text-xs shadow-md flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <span>Launch Live Site Console</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div className="bg-[#0B0D13] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border border-white/10">
+                <div className="space-y-5">
+                  <p className="text-xs font-bold uppercase tracking-wider text-sky-400">
+                    Projected Annual Impact
+                  </p>
+
+                  <div className="space-y-4">
+                    <div>
+                      <p className="text-xs text-neutral-400">Reporting Time Recovered</p>
+                      <p className="text-2xl lg:text-3xl font-extrabold text-white mt-1">
+                        {estimatedDaysSaved} Eng Days / yr
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-neutral-400">Wastage & Delay Prevention</p>
+                      <p className="text-2xl lg:text-3xl font-extrabold text-sky-400 mt-1">
+                        ₹{estimatedCostSavedLakhs} Lakhs
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="text-xs text-neutral-400">Idle Plant Recovery</p>
+                      <p className="text-lg font-bold text-white mt-1">
+                        ₹{idleMachinerySavedLakhs} Lakhs fuel & rental savings
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => onLaunchApp('dashboard')}
+                  className="w-full py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <span>Launch Live Site Console</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* FREQUENTLY ASKED QUESTIONS (FAQ) */}
-      <section id="faq" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-4xl mx-auto">
-        <div className="text-center mb-12 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-[#FF6A00]">
-            QUESTIONS & ANSWERS
+      <section id="faq" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-4xl mx-auto">
+        <div className="text-center mb-14 space-y-3">
+          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
+            Questions & Answers
           </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0E0E0E] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-sm text-[#525252]">
-            Everything you need to know about implementing SiteReportAI across your sites.
+          <p className="text-sm text-neutral-400">
+            Everything you need to know about implementing SiteReport across your construction portfolio.
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           {faqs.map((faq, idx) => {
             const isExpanded = expandedFaq === idx;
             return (
               <div
                 key={idx}
-                className="bg-white border border-[#E5E5E5] rounded-2xl overflow-hidden transition-all shadow-xs"
+                className="bg-[#10131A] border border-white/10 rounded-2xl overflow-hidden transition-all shadow-md"
               >
                 <button
                   onClick={() => setExpandedFaq(isExpanded ? null : idx)}
-                  className="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4 font-bold text-sm text-[#0E0E0E] cursor-pointer hover:bg-[#F7F7F7] transition-colors"
+                  className="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4 font-bold text-sm text-white cursor-pointer hover:bg-white/5 transition-colors"
                 >
                   <span>{faq.q}</span>
                   {isExpanded ? (
-                    <ChevronUp className="w-4 h-4 text-[#FF6A00] shrink-0" />
+                    <ChevronUp className="w-4 h-4 text-sky-400 shrink-0" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 text-[#737373] shrink-0" />
+                    <ChevronDown className="w-4 h-4 text-neutral-400 shrink-0" />
                   )}
                 </button>
 
                 {isExpanded && (
-                  <div className="px-6 pb-5 pt-1 text-xs text-[#525252] leading-relaxed border-t border-[#F5F5F5]">
+                  <div className="px-6 pb-5 pt-1 text-xs text-neutral-400 leading-relaxed border-t border-white/5">
                     {faq.a}
                   </div>
                 )}
@@ -1039,9 +1152,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* Call To Action Banner */}
-      <section className="bg-[#0E0E0E] text-white py-16 px-4 sm:px-6 lg:px-10 border-t border-[#262626]">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#1A1A1A] border border-[#FF6A00]/40 rounded-full text-xs font-bold text-[#FF6A00]">
+      <section className="bg-[#08090C] text-white py-20 px-4 sm:px-6 lg:px-10 border-t border-white/10 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/10 border border-white/15 rounded-full text-xs font-semibold text-sky-400">
             <Zap className="w-3.5 h-3.5" />
             <span>Ready for Instant Deployment</span>
           </div>
@@ -1050,14 +1163,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             Transform Your Construction Reporting Today
           </h2>
 
-          <p className="text-sm sm:text-base text-[#A3A3A3] max-w-xl mx-auto">
-            Join forward-thinking general contractors, infrastructure developers, and project managers using SiteReportAI.
+          <p className="text-sm sm:text-base text-neutral-400 max-w-xl mx-auto">
+            Join forward-thinking infrastructure developers, general contractors, and project managers using SiteReport.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={() => onLaunchApp('dashboard')}
-              className="px-7 py-3.5 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-xl text-xs sm:text-sm shadow-xl shadow-[#FF6A00]/30 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="px-8 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs sm:text-sm shadow-xl flex items-center gap-2 transition-all cursor-pointer"
             >
               <span>Launch Live Site Console</span>
               <ArrowRight className="w-4 h-4" />
@@ -1065,36 +1178,43 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
             <button
               onClick={() => onOpenAIModal('voice')}
-              className="px-6 py-3.5 bg-[#1A1A1A] hover:bg-[#262626] text-white border border-[#333333] rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer"
+              className="px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer"
             >
-              <Mic className="w-4 h-4 text-[#FF6A00]" />
+              <Mic className="w-4 h-4 text-sky-400" />
               <span>Try Multilingual Voice Input</span>
             </button>
           </div>
         </div>
       </section>
 
-      {/* Footer matching reference image: Carbon Black with SiteReportAI Branding */}
-      <footer className="bg-[#0E0E0E] border-t border-[#262626] text-white py-12 px-4 sm:px-6 lg:px-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* Footer matching RentPe reference: Deep obsidian with giant watermark SiteReport typography */}
+      <footer className="bg-[#08090C] border-t border-white/10 text-neutral-400 py-16 px-4 sm:px-6 lg:px-10 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
             <SiteReportLogo isDark={true} size="md" />
-            <div className="h-4 w-px bg-[#333333] hidden sm:block" />
-            <p className="text-xs text-[#A3A3A3]">
+            <div className="h-4 w-px bg-white/10 hidden sm:block" />
+            <p className="text-xs text-neutral-400">
               AI-Powered Construction Reporting & Earned Value Management System
             </p>
           </div>
 
-          <div className="flex items-center gap-6 text-xs text-[#A3A3A3]">
+          <div className="flex items-center gap-6 text-xs text-neutral-400">
             <span>Smarter Reports. Stronger Sites.</span>
-            <div className="h-3 w-px bg-[#333333]" />
+            <div className="h-3 w-px bg-white/10" />
             <button
               onClick={() => onLaunchApp('dashboard')}
-              className="text-[#FF6A00] hover:underline font-semibold cursor-pointer"
+              className="text-white hover:text-sky-400 font-semibold transition-colors cursor-pointer"
             >
               Open Console →
             </button>
           </div>
+        </div>
+
+        {/* Giant RentPe-style Watermark Typography */}
+        <div className="mt-12 select-none pointer-events-none text-center">
+          <span className="text-[14vw] font-black text-white/[0.03] leading-none tracking-tighter uppercase inline-block">
+            SiteReport
+          </span>
         </div>
       </footer>
     </div>

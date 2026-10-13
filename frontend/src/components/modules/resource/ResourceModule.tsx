@@ -10,7 +10,9 @@ import {
   ArrowRight, 
   Star, 
   Search,
-  Check
+  Check,
+  MapPin,
+  Scale
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { 
@@ -356,8 +358,8 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
                         </div>
 
                         <div className="text-[10px] text-brand-600 space-y-0.5 font-mono">
-                          <p>📍 {el.targetLocation}</p>
-                          <p>⚖️ {el.weightTons} MT ({el.dimensions})</p>
+                          <p className="flex items-center gap-1"><MapPin className="w-3 h-3 text-sky-400 shrink-0" /> {el.targetLocation}</p>
+                          <p className="flex items-center gap-1"><Scale className="w-3 h-3 text-sky-400 shrink-0" /> {el.weightTons} MT ({el.dimensions})</p>
                         </div>
 
                         {/* Stage Progression Buttons */}

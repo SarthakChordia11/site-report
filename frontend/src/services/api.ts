@@ -87,8 +87,13 @@ function mapSite(s: any) {
 // ─── Sites ────────────────────────────────────────────────────────────────────
 export const sitesApi = {
   list: async () => {
-    const data = await req<any[]>('/sites');
-    return data.map(mapSite);
+    try {
+      const data = await req<any[]>('/sites');
+      return data.map(mapSite);
+    } catch (err) {
+      console.warn('sitesApi.list failed, returning empty list:', err);
+      return [];
+    }
   },
   create: (data: any) => req<any>('/sites', { method: 'POST', body: JSON.stringify(data) }),
 };

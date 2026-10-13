@@ -333,103 +333,103 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-brand-900/40 backdrop-blur-xs overflow-y-auto">
-      <div className="bg-white border border-brand-200 rounded-2xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-brand-900">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
+      <div className="bg-[#10131A] border border-white/10 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
         {/* Modal Header */}
-        <div className="px-5 py-4 bg-white border-b border-brand-200 flex items-center justify-between">
+        <div className="px-6 py-4 bg-[#0B0D13] border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-100 border border-brand-200 flex items-center justify-center text-brand-800">
+            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-semibold text-brand-900">AI Site Operations Assistant</h3>
-                <span className="px-2 py-0.5 text-[10px] font-medium bg-brand-100 text-brand-800 rounded border border-brand-200">
+                <h3 className="text-base font-bold text-white tracking-tight">AI Site Operations Assistant</h3>
+                <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-sky-500/10 text-sky-400 rounded-full border border-sky-500/20">
                   Groq Whisper + LLaMA 3.3
                 </span>
               </div>
-              <p className="text-xs text-brand-500">Log attendance, materials, or machinery instantly via natural input</p>
+              <p className="text-xs text-neutral-400 mt-0.5">Log attendance, materials, or machinery instantly via natural voice</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-brand-400 hover:text-brand-700 hover:bg-brand-50 transition-colors cursor-pointer"
+            className="p-2 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Input Mode Selector Bar */}
-        <div className="px-5 py-2.5 bg-brand-50/70 border-b border-brand-200 flex items-center justify-between gap-2 overflow-x-auto">
-          <div className="flex items-center gap-1.5 bg-brand-100/80 p-1 rounded-lg border border-brand-200">
+        <div className="px-6 py-3 bg-[#0B0D13]/60 border-b border-white/10 flex items-center justify-between gap-2 overflow-x-auto">
+          <div className="p-1 bg-[#08090C] border border-white/10 rounded-full flex gap-1">
             <button
               onClick={() => { setActiveMode('voice'); setExtractedResult(null); }}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'voice'
-                  ? 'bg-white text-brand-900 shadow-xs'
-                  : 'text-brand-600 hover:text-brand-900'
+                  ? 'bg-white text-neutral-950 shadow-md font-bold'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
-              <Mic className="w-3.5 h-3.5 text-brand-700" />
+              <Mic className="w-3.5 h-3.5" />
               <span>Voice Input (Hindi/Marathi/English)</span>
             </button>
 
-
-
             <button
               onClick={() => { setActiveMode('form'); setExtractedResult(null); }}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'form'
-                  ? 'bg-white text-brand-900 shadow-xs'
-                  : 'text-brand-600 hover:text-brand-900'
+                  ? 'bg-white text-neutral-950 shadow-md font-bold'
+                  : 'text-neutral-400 hover:text-white'
               }`}
             >
-              <FileText className="w-3.5 h-3.5 text-brand-700" />
+              <FileText className="w-3.5 h-3.5" />
               <span>Quick Form</span>
             </button>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-brand-500 font-medium">
-            <span className="w-2 h-2 rounded-full bg-brand-800"></span>
-            <span>Edge Parser Ready</span>
+          <div className="hidden sm:flex items-center gap-2 text-xs text-neutral-400 font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Edge Engine Active</span>
           </div>
         </div>
 
         {/* Modal Body: Split view of Input + Extracted AI Output */}
-        <div className="flex-1 p-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="flex-1 p-6 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Interactive Input Controls */}
           <div className="lg:col-span-7 space-y-4">
             {activeMode === 'voice' && (
               <div className="space-y-4">
                 {/* Voice Recording Box */}
-                <div className="bg-brand-50 p-4 rounded-xl border border-brand-200 text-center relative">
-                  <div className="flex items-center justify-between mb-3 text-xs">
-                    <span className="text-brand-600 font-medium">Spoken Audio Stream</span>
-                    <span className="text-brand-500 font-mono text-[11px]">Supports Hindi / Marathi / English</span>
+                <div className="bg-[#0B0D13] p-5 rounded-2xl border border-white/10 text-center relative">
+                  <div className="flex items-center justify-between mb-4 text-xs">
+                    <span className="text-neutral-300 font-semibold">Spoken Audio Stream</span>
+                    <span className="text-sky-400 font-mono text-[11px] bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                      Hindi / Marathi / English
+                    </span>
                   </div>
 
                   {/* Mic Button & Waveform */}
-                  <div className="flex flex-col items-center justify-center py-3">
+                  <div className="flex flex-col items-center justify-center py-4">
                     {/* Idle: single mic button */}
                     {!isRecording && !isPaused && (
                       <button
                         onClick={startRecording}
-                        className="w-14 h-14 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-lg cursor-pointer bg-[#FF6A00] hover:bg-[#E65F00] text-white"
+                        className="w-16 h-16 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-white/10 cursor-pointer bg-white hover:bg-neutral-200 text-neutral-950"
+                        title="Click to start recording"
                       >
-                        <Mic className="w-6 h-6 text-white" />
+                        <Mic className="w-7 h-7 text-neutral-950" />
                       </button>
                     )}
 
                     {/* Recording: Pause + Done */}
                     {isRecording && (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
                         <button
                           onClick={pauseRecording}
                           title="Pause recording"
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-300"
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-500/30"
                         >
-                          {/* Pause icon: two vertical bars */}
                           <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
                             <rect x="6" y="4" width="4" height="16" rx="1" />
                             <rect x="14" y="4" width="4" height="16" rx="1" />
@@ -438,81 +438,138 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <button
                           onClick={doneRecording}
                           title="Stop and parse"
-                          className="px-5 py-2.5 rounded-xl bg-[#0E0E0E] hover:bg-[#262626] text-white text-xs font-bold shadow-md cursor-pointer transition-colors border border-neutral-700"
+                          className="px-6 py-3 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-bold shadow-md cursor-pointer transition-colors"
                         >
-                          Done ✓
+                          Done
                         </button>
                       </div>
                     )}
 
                     {/* Paused: Resume + Done */}
                     {isPaused && (
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
                         <button
                           onClick={resumeRecording}
                           title="Resume recording"
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white ring-4 ring-emerald-300"
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-sky-500 hover:bg-sky-600 text-white ring-4 ring-sky-500/30"
                         >
                           <Mic className="w-6 h-6 text-white" />
                         </button>
                         <button
                           onClick={doneRecording}
                           title="Stop and parse"
-                          className="px-5 py-2.5 rounded-xl bg-[#0E0E0E] hover:bg-[#262626] text-white text-xs font-bold shadow-md cursor-pointer transition-colors border border-neutral-700"
+                          className="px-6 py-3 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-bold shadow-md cursor-pointer transition-colors"
                         >
-                          Done ✓
+                          Done
                         </button>
                       </div>
                     )}
 
-                    <p className="mt-2.5 text-xs font-semibold text-[#0E0E0E]">
-                      {isRecording
-                        ? '🔴 Listening... Click Pause to take a break or Done when finished'
-                        : isPaused
-                        ? '⏸ Paused — Click Resume to add more, or Done to parse'
-                        : 'Tap Microphone or select preset voice below'}
+                    <p className="mt-3 text-xs font-medium text-neutral-300 flex items-center justify-center">
+                      {isRecording ? (
+                        <>
+                          <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping inline-block mr-2" />
+                          <span>Listening... Click Pause or Done when finished</span>
+                        </>
+                      ) : isPaused ? (
+                        <>
+                          <span className="w-2 h-2 rounded-full bg-amber-400 inline-block mr-2" />
+                          <span>Paused — Click Resume to continue speaking, or Done to parse</span>
+                        </>
+                      ) : (
+                        'Tap Microphone to speak or choose a sample prompt below'
+                      )}
                     </p>
                   </div>
 
-                  {/* Transcript Display */}
-                  <div className="mt-2 text-left bg-white p-3 rounded-lg border border-neutral-200 min-h-[56px] shadow-2xs">
-                    <p className="text-[10px] text-neutral-500 font-medium mb-0.5">Live Transcript:</p>
-                    <p className="text-xs text-neutral-900 italic font-mono">
-                      "{voiceText || selectedPreset?.transcript || 'Press mic to record audio or select a preset prompt below...'}"
-                    </p>
+                  {/* Transcript Display & Editable Input */}
+                  <div className="mt-3 text-left bg-[#10131A] p-3.5 rounded-xl border border-white/10">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">
+                        Live Transcript (Editable):
+                      </span>
+                      {voiceText && (
+                        <button
+                          onClick={() => setVoiceText('')}
+                          className="text-[10px] text-neutral-500 hover:text-white transition-colors"
+                        >
+                          Clear
+                        </button>
+                      )}
+                    </div>
+                    <textarea
+                      rows={2}
+                      value={voiceText}
+                      onChange={(e) => setVoiceText(e.target.value)}
+                      placeholder="Spoken words will appear here in real-time, or type manually..."
+                      className="w-full bg-transparent text-xs text-white placeholder-neutral-500 font-mono resize-none focus:outline-none"
+                    />
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between gap-2">
+                  {/* Actions Bar */}
+                  <div className="mt-4 flex items-center justify-between gap-3">
                     <button
                       onClick={() => playPresetAudio(voiceText || selectedPreset?.transcript || '')}
-                      disabled={isPlayingAudio}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-neutral-100 border border-neutral-300 rounded-lg text-xs font-medium text-neutral-700 transition-colors cursor-pointer shadow-2xs"
+                      disabled={isPlayingAudio || (!voiceText && !selectedPreset?.transcript)}
+                      className="flex items-center gap-2 px-3.5 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-40 border border-white/10 rounded-full text-xs font-semibold text-neutral-300 transition-colors cursor-pointer"
                     >
-                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-[#FF6A00] animate-bounce' : 'text-neutral-500'}`} />
-                      <span>{isPlayingAudio ? 'Playing...' : 'Hear Spoken Voice'}</span>
+                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-sky-400 animate-bounce' : 'text-neutral-400'}`} />
+                      <span>{isPlayingAudio ? 'Playing Audio...' : 'Hear Spoken Voice'}</span>
                     </button>
 
                     <button
                       onClick={() => handleProcessVoice()}
-                      disabled={isProcessing || isRecording}
-                      className="flex items-center gap-1.5 px-4 py-2 bg-[#FF6A00] hover:bg-[#E65F00] text-white font-bold rounded-lg text-xs transition-colors shadow-md cursor-pointer disabled:opacity-50"
+                      disabled={isProcessing || isRecording || (!voiceText.trim() && !selectedPreset?.transcript)}
+                      className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs transition-all shadow-lg shadow-white/10 cursor-pointer disabled:opacity-40"
                     >
-                      {isProcessing ? <RefreshCw className="w-3.5 h-3.5 animate-spin text-white" /> : <Sparkles className="w-3.5 h-3.5 text-white" />}
+                      {isProcessing ? (
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin text-neutral-950" />
+                      ) : (
+                        <Sparkles className="w-3.5 h-3.5 text-neutral-950" />
+                      )}
                       <span>Extract with AI</span>
                     </button>
                   </div>
                 </div>
 
+                {/* Preset Prompts Section */}
+                <div className="bg-[#0B0D13] p-4 rounded-2xl border border-white/10">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-bold text-neutral-300">Quick Test Prompts</span>
+                    <span className="text-[10px] text-neutral-500">Click to load & extract</span>
+                  </div>
+                  <div className="space-y-2">
+                    {SAMPLE_VOICE_PROMPTS.slice(0, 3).map((preset) => (
+                      <button
+                        key={preset.id}
+                        onClick={() => handleSelectPreset(preset)}
+                        className={`w-full text-left p-3 rounded-xl border transition-all cursor-pointer ${
+                          selectedPreset?.id === preset.id && !voiceText
+                            ? 'bg-white/10 border-sky-400/50 text-white'
+                            : 'bg-[#10131A] border-white/5 text-neutral-300 hover:border-white/20'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-xs font-semibold text-white">{preset.title}</span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-neutral-400">
+                            {preset.language}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-neutral-400 font-mono line-clamp-1 italic">
+                          "{preset.transcript}"
+                        </p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
-
-
             {activeMode === 'form' && (
-              <div className="space-y-4 bg-brand-50 p-4 rounded-xl border border-brand-200">
+              <div className="space-y-4 bg-[#0B0D13] p-5 rounded-2xl border border-white/10">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-brand-700 font-medium">Quick Minimal Tap Form</span>
-                  <span className="text-brand-400">Offline Fallback</span>
+                  <span className="text-neutral-300 font-bold">Quick Manual Tap Form</span>
+                  <span className="text-neutral-500">Structured Fallback</span>
                 </div>
 
                 {/* Target Module Tabs */}
@@ -521,10 +578,10 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     <button
                       key={mod}
                       onClick={() => setFormModule(mod)}
-                      className={`py-1.5 px-2 rounded-lg text-xs font-medium capitalize transition-colors ${
+                      className={`py-2 px-3 rounded-full text-xs font-bold capitalize transition-all cursor-pointer ${
                         formModule === mod
-                          ? 'bg-brand-800 text-white shadow-xs'
-                          : 'bg-white border border-brand-200 text-brand-600 hover:text-brand-900'
+                          ? 'bg-white text-neutral-950 shadow-md'
+                          : 'bg-white/5 border border-white/10 text-neutral-400 hover:text-white'
                       }`}
                     >
                       {mod}
@@ -535,41 +592,51 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 {formModule === 'labour' && (
                   <div className="space-y-3 text-xs">
                     <div>
-                      <label className="block text-brand-600 font-medium mb-1">Select Trade</label>
+                      <label className="block text-neutral-300 font-semibold mb-1.5">Select Trade</label>
                       <select
                         value={formTrade}
                         onChange={(e) => setFormTrade(e.target.value)}
-                        className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                       >
-                        {trades.map(t => <option key={t.trade} value={t.trade}>{t.trade}</option>)}
+                        {(trades.length > 0 ? trades : [
+                          { trade: 'Mason' },
+                          { trade: 'Helper' },
+                          { trade: 'Carpenter' },
+                          { trade: 'Barbender' },
+                          { trade: 'Electrician' },
+                        ]).map((t: any) => (
+                          <option key={t.trade} value={t.trade} className="bg-[#10131A] text-white">
+                            {t.trade}
+                          </option>
+                        ))}
                       </select>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Present Count</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Present</label>
                         <input
                           type="number"
                           value={formPresent}
                           onChange={(e) => setFormPresent(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Absent Count</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Absent</label>
                         <input
                           type="number"
                           value={formAbsent}
                           onChange={(e) => setFormAbsent(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Overtime Hours</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">OT Hours</label>
                         <input
                           type="number"
                           value={formOT}
                           onChange={(e) => setFormOT(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                     </div>
@@ -579,41 +646,41 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 {formModule === 'resource' && (
                   <div className="space-y-3 text-xs">
                     <div>
-                      <label className="block text-brand-600 font-medium mb-1">Material Name</label>
+                      <label className="block text-neutral-300 font-semibold mb-1.5">Material Name</label>
                       <input
                         type="text"
                         value={formMaterial}
                         onChange={(e) => setFormMaterial(e.target.value)}
-                        className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Received (Bags/MT)</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Received</label>
                         <input
                           type="number"
                           value={formMatReceived}
                           onChange={(e) => setFormMatReceived(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Consumed Today</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Consumed</label>
                         <input
                           type="number"
                           value={formMatConsumed}
                           onChange={(e) => setFormMatConsumed(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-brand-600 font-medium mb-1">Vendor Invoice #</label>
+                      <label className="block text-neutral-300 font-semibold mb-1.5">Vendor Invoice #</label>
                       <input
                         type="text"
                         value={formInvoice}
                         onChange={(e) => setFormInvoice(e.target.value)}
-                        className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                       />
                     </div>
                   </div>
@@ -622,31 +689,31 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 {formModule === 'equipment' && (
                   <div className="space-y-3 text-xs">
                     <div>
-                      <label className="block text-brand-600 font-medium mb-1">Equipment Name</label>
+                      <label className="block text-neutral-300 font-semibold mb-1.5">Equipment Name</label>
                       <input
                         type="text"
                         value={formEquip}
                         onChange={(e) => setFormEquip(e.target.value)}
-                        className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Working Hours</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Working Hours</label>
                         <input
                           type="number"
                           value={formWorkingHours}
                           onChange={(e) => setFormWorkingHours(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                       <div>
-                        <label className="block text-brand-600 font-medium mb-1">Idle Hours</label>
+                        <label className="block text-neutral-300 font-semibold mb-1.5">Idle Hours</label>
                         <input
                           type="number"
                           value={formIdleHours}
                           onChange={(e) => setFormIdleHours(parseInt(e.target.value) || 0)}
-                          className="w-full bg-white border border-brand-200 rounded-lg p-2 text-brand-900 focus:outline-brand-800"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
                         />
                       </div>
                     </div>
@@ -656,9 +723,9 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <button
                   onClick={handleProcessQuickForm}
                   disabled={isProcessing}
-                  className="w-full mt-2 py-2 bg-brand-800 hover:bg-brand-900 text-white font-medium rounded-lg text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-2 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-white/10"
                 >
-                  <Sparkles className="w-4 h-4 text-brand-200" />
+                  <Sparkles className="w-4 h-4 text-neutral-950" />
                   <span>Structure & Auto-Route with AI</span>
                 </button>
               </div>
@@ -666,86 +733,89 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
           </div>
 
           {/* Right Column: AI Extraction & Module Auto-Routing Result */}
-          <div className="lg:col-span-5 flex flex-col bg-brand-50/90 rounded-xl border border-brand-200 p-4">
-            <div className="flex items-center justify-between pb-3 border-b border-brand-200">
+          <div className="lg:col-span-5 flex flex-col bg-[#0B0D13] rounded-2xl border border-white/10 p-5">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-brand-800"></span>
-                <span className="text-xs font-semibold text-brand-900 uppercase tracking-wider">LLaMA 3.3 Extraction</span>
+                <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span className="text-xs font-bold text-white uppercase tracking-wider">
+                  LLaMA 3.3 Extraction
+                </span>
               </div>
               {extractedResult && (
-                <span className="px-2 py-0.5 bg-brand-100 text-brand-800 text-[10px] font-mono font-bold rounded border border-brand-200">
+                <span className="px-2.5 py-0.5 bg-sky-500/10 text-sky-400 text-[10px] font-mono font-bold rounded-full border border-sky-500/20">
                   {Math.round(extractedResult.confidence * 100)}% Match
                 </span>
               )}
             </div>
 
             {isProcessing ? (
-              <div className="flex-1 flex flex-col items-center justify-center py-12 text-brand-500 text-xs">
-                <RefreshCw className="w-7 h-7 animate-spin text-brand-700 mb-3" />
-                <p className="font-semibold text-brand-800">Parsing Multilingual Audio & Documents...</p>
-                <p className="text-[11px] text-brand-500 mt-1">Groq Whisper Transcription → LLaMA 3.3 Structuring</p>
+              <div className="flex-1 flex flex-col items-center justify-center py-12 text-neutral-400 text-xs">
+                <RefreshCw className="w-8 h-8 animate-spin text-sky-400 mb-3" />
+                <p className="font-bold text-white">Parsing Multilingual Audio & Documents...</p>
+                <p className="text-[11px] text-neutral-400 mt-1">Groq Whisper Transcription → LLaMA 3.3 Structuring</p>
               </div>
             ) : extractedResult ? (
               <div className="flex-1 flex flex-col justify-between pt-3 space-y-3">
                 <div className="space-y-3">
                   {/* Routed Module Badge */}
-                  <div className="flex items-center justify-between bg-white p-2.5 rounded-lg border border-brand-200">
-                    <span className="text-[11px] text-brand-500">Target Module Routing:</span>
-                    <span className="px-2 py-1 bg-brand-800 text-white text-xs font-medium rounded uppercase flex items-center gap-1.5">
+                  <div className="flex items-center justify-between bg-[#10131A] p-3 rounded-xl border border-white/10">
+                    <span className="text-[11px] text-neutral-400">Target Module Routing:</span>
+                    <span className="px-3 py-1 bg-white/10 text-sky-400 border border-sky-500/30 text-xs font-bold rounded-full uppercase flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5" />
                       <span>Module {extractedResult.module.toUpperCase()}</span>
                     </span>
                   </div>
 
-                  {/* ── Auto-Sync Banner ───────────────────────────────── */}
+                  {/* Auto-Sync Banner */}
                   {syncSummary && !syncSummary.error && (
-                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 space-y-1.5">
-                      <div className="flex items-center gap-2 text-emerald-700">
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 space-y-1.5">
+                      <div className="flex items-center gap-2 text-emerald-400">
                         <CheckCircle2 className="w-4 h-4 shrink-0" />
                         <span className="text-xs font-bold uppercase tracking-wide">Auto-Synced to Site Modules</span>
                       </div>
-                      <p className="text-[11px] text-emerald-600 pl-6">
-                        Data from this voice report was automatically populated across the relevant modules — no re-entry needed!
+                      <p className="text-[11px] text-neutral-300 pl-6">
+                        Data from this voice report was automatically populated across the relevant modules.
                       </p>
                       <div className="pl-6 flex flex-wrap gap-2 text-[11px]">
                         {(syncSummary.labour_rows?.length ?? 0) > 0 && (
-                          <span className="px-2 py-0.5 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-full font-semibold">
-                            👷 Labour: {syncSummary.labour_rows!.length} trade row{syncSummary.labour_rows!.length > 1 ? 's' : ''} added
+                          <span className="px-2.5 py-0.5 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-full font-semibold">
+                            Labour: {syncSummary.labour_rows!.length} trade row{syncSummary.labour_rows!.length > 1 ? 's' : ''} added
                           </span>
                         )}
                         {(syncSummary.material_rows?.length ?? 0) > 0 && (
-                          <span className="px-2 py-0.5 bg-emerald-100 border border-emerald-200 text-emerald-700 rounded-full font-semibold">
-                            📦 Materials: {syncSummary.material_rows!.length} item{syncSummary.material_rows!.length > 1 ? 's' : ''} updated
+                          <span className="px-2.5 py-0.5 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-full font-semibold">
+                            Materials: {syncSummary.material_rows!.length} item{syncSummary.material_rows!.length > 1 ? 's' : ''} updated
                           </span>
                         )}
                       </div>
                     </div>
                   )}
+
                   {syncSummary?.error && (
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 text-[11px] text-amber-700">
-                      ⚠️ Module sync ran into an issue — DPR was saved but Labour/Material modules may need manual update.
+                    <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-[11px] text-amber-300">
+                      Module sync note: DPR was recorded; live tables can be verified in respective tabs.
                     </div>
                   )}
 
                   {/* Intent & Language */}
-                  <div className="text-xs space-y-1">
-                    <p className="text-brand-500">
-                      Language Detected: <strong className="text-brand-800">{extractedResult.languageDetected}</strong>
+                  <div className="text-xs space-y-1 bg-[#10131A] p-3 rounded-xl border border-white/10">
+                    <p className="text-neutral-400">
+                      Language: <strong className="text-white font-medium">{extractedResult.languageDetected}</strong>
                     </p>
-                    <p className="text-brand-500">
-                      Intent: <span className="text-brand-800">{extractedResult.intent}</span>
+                    <p className="text-neutral-400">
+                      Intent: <span className="text-sky-400 font-medium">{extractedResult.intent}</span>
                     </p>
                   </div>
 
                   {/* Parsed Actionable Changes */}
                   <div>
-                    <p className="text-[11px] font-semibold text-brand-700 uppercase tracking-wider mb-1.5">
+                    <p className="text-[11px] font-bold text-neutral-300 uppercase tracking-wider mb-2">
                       Structured Fields to Sync:
                     </p>
                     <div className="space-y-1.5">
                       {extractedResult.actionSummary.map((act, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs bg-white p-2 rounded-lg border border-brand-200 text-brand-900">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-brand-700 mt-0.5 shrink-0" />
+                        <div key={i} className="flex items-start gap-2 text-xs bg-[#10131A] p-2.5 rounded-xl border border-white/10 text-neutral-200">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 mt-0.5 shrink-0" />
                           <span>{act}</span>
                         </div>
                       ))}
@@ -753,7 +823,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   </div>
 
                   {/* Raw JSON Preview */}
-                  <div className="bg-white p-2.5 rounded-lg border border-brand-200 font-mono text-[10px] text-brand-700 max-h-28 overflow-y-auto">
+                  <div className="bg-[#10131A] p-3 rounded-xl border border-white/10 font-mono text-[10px] text-neutral-400 max-h-28 overflow-y-auto">
                     <pre>{JSON.stringify(extractedResult.parsedFields, null, 2)}</pre>
                   </div>
                 </div>
@@ -762,19 +832,19 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <button
                   id="apply-ai-extraction-btn"
                   onClick={handleApply}
-                  className="w-full py-2.5 bg-brand-800 hover:bg-brand-900 text-white font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                  className="w-full py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs flex items-center justify-center gap-2 shadow-xl shadow-white/10 transition-all cursor-pointer mt-4"
                 >
-                  <Check className="w-4 h-4 text-brand-200" />
+                  <Check className="w-4 h-4 text-neutral-950" />
                   <span>Apply & Sync to Live Site Database</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </button>
               </div>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center py-10 text-brand-400 text-xs text-center px-4">
-                <Sparkles className="w-8 h-8 text-brand-300 mb-2" />
-                <p className="font-medium text-brand-600">No input processed yet</p>
-                <p className="text-[11px] text-brand-400 mt-1">
-                  Speak into the mic, choose an audio preset, scan a challan photo, or enter tap form to see structured output here.
+              <div className="flex-1 flex flex-col items-center justify-center py-10 text-neutral-400 text-xs text-center px-4">
+                <Sparkles className="w-8 h-8 text-neutral-600 mb-2" />
+                <p className="font-bold text-neutral-300">No input processed yet</p>
+                <p className="text-[11px] text-neutral-500 mt-1">
+                  Speak into the mic, choose a test prompt, or enter quick form to see structured output here.
                 </p>
               </div>
             )}

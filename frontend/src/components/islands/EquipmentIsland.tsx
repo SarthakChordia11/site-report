@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Building2 } from 'lucide-react';
 import { useStore } from '@nanostores/react';
 import { $isLoggedIn } from '../../stores/authStore';
 import { $currentSite } from '../../stores/siteStore';
@@ -108,8 +109,14 @@ export default function EquipmentIsland() {
 
   if (!currentSite) {
     return (
-      <div className="flex items-center justify-center h-[60vh]">
-        <p className="text-[#6B7280]">Select a site to view equipment data.</p>
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-6">
+        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl flex flex-col items-center">
+          <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400 mb-4">
+            <Building2 className="w-6 h-6" />
+          </div>
+          <h3 className="text-base font-bold text-white mb-1">No Site Selected</h3>
+          <p className="text-xs text-neutral-400">Select or create a site from the header to view plant and machinery logs.</p>
+        </div>
       </div>
     );
   }

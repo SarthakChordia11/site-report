@@ -156,9 +156,9 @@ export default function DashboardIsland() {
 
   if (!currentSite) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh] gap-6 text-center">
-        <div className="w-20 h-20 rounded-2xl bg-orange-50 border border-orange-200 flex items-center justify-center">
-          <svg className="w-10 h-10 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center p-8 bg-[#10131A] border border-white/10 rounded-3xl animate-in fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -168,19 +168,23 @@ export default function DashboardIsland() {
           </svg>
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-[#0E0E0E] mb-2">No Sites Found</h2>
-          <p className="text-[#6B7280] max-w-sm">Create your first site to get started.</p>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white mb-2">No Sites Found</h2>
+          <p className="text-sm text-neutral-400 max-w-sm">Create your first site portfolio to get started.</p>
         </div>
         <button
           onClick={() => setIsAddSiteModalOpen(true)}
-          className="px-6 py-3 bg-[#FF6A00] hover:bg-orange-600 text-white font-bold rounded-xl transition-colors cursor-pointer"
+          className="px-8 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full transition-all cursor-pointer shadow-xl text-sm"
         >
           + Add First Site
         </button>
         <AddSiteModal
           isOpen={isAddSiteModalOpen}
           onClose={() => setIsAddSiteModalOpen(false)}
-          onSiteCreated={(newSite) => setSites([...sites, newSite])}
+          onSiteCreated={(newSite) => {
+            const next = [...sites, newSite];
+            setSites(next);
+            setCurrentSite(newSite);
+          }}
         />
       </div>
     );
@@ -220,7 +224,10 @@ export default function DashboardIsland() {
       <AddSiteModal
         isOpen={isAddSiteModalOpen}
         onClose={() => setIsAddSiteModalOpen(false)}
-        onSiteCreated={(newSite) => setSites([...sites, newSite])}
+        onSiteCreated={(newSite) => {
+          setSites([...sites, newSite]);
+          setCurrentSite(newSite);
+        }}
       />
     </>
   );
