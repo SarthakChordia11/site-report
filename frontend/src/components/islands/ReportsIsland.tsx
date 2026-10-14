@@ -13,6 +13,7 @@ export default function ReportsIsland() {
   const currentSite = useStore($currentSite);
   const [reports, setReports] = useState<SiteReport[]>([]);
   const [aiModalOpen, setAiModalOpen] = useState(false);
+  const [isRollingUp, setIsRollingUp] = useState(false);
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -44,6 +45,24 @@ export default function ReportsIsland() {
     }
   };
 
+  const handleTriggerRollup = async (type: 'Weekly' | 'Monthly') => {
+    if (!currentSite) return;
+    setIsRollingUp(true);
+    try {
+      const res = await reportsApi.triggerRollup(currentSite.id, type);
+      if (res.reports && res.reports.length > 0) {
+        setReports(res.reports);
+      } else {
+        await loadReports();
+      }
+    } catch (err) {
+      console.error('Failed to trigger rollup:', err);
+      await loadReports();
+    } finally {
+      setIsRollingUp(false);
+    }
+  };
+
   if (!currentSite) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-6">
@@ -65,6 +84,8 @@ export default function ReportsIsland() {
         currentSite={currentSite}
         onOpenAIModal={() => setAiModalOpen(true)}
         onAddReport={handleAddReport}
+        onTriggerRollup={handleTriggerRollup}
+        isRollingUp={isRollingUp}
       />
       <GlobalAIModal
         isOpen={aiModalOpen}
@@ -72,7 +93,7 @@ export default function ReportsIsland() {
         onClose={() => setAiModalOpen(false)}
         onApplyExtraction={async (_data: ExtractedAIData) => {
           setAiModalOpen(false);
-          loadReports();
+          await loadReports();
         }}
         onModulesSynced={() => loadReports()}
         trades={[]}

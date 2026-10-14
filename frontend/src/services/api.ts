@@ -298,4 +298,14 @@ export const reportsApi = {
     method: 'POST', body: JSON.stringify(unmapReport(report)),
   })),
   delete: (id: string) => req<{ ok: boolean }>(`/reports/${id}`, { method: 'DELETE' }),
+  triggerRollup: async (siteId: string, rollupType: string = 'Weekly') => {
+    const res = await req<{ success: boolean; rollup_result: any; reports: any[] }>(
+      `/reports/trigger-rollup?site_id=${encodeURIComponent(siteId)}&rollup_type=${encodeURIComponent(rollupType)}`,
+      { method: 'POST' }
+    );
+    return {
+      ...res,
+      reports: (res.reports || []).map(mapReport),
+    };
+  },
 };

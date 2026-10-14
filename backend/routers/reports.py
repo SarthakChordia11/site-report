@@ -32,17 +32,35 @@ class ReportIn(BaseModel):
 
 
 def serialize(report: SiteReport) -> dict:
+    rep_type = getattr(report, "report_type", "Daily") or "Daily"
     return {
-        "id": report.id, "site_id": report.site_id, "name": report.name,
-        "project_name": report.project_name, "date": report.report_date,
-        "report_type": getattr(report, "report_type", "Daily"),
-        "status": report.status, "author": report.author, "summary": report.summary,
+        "id": report.id,
+        "site_id": report.site_id,
+        "siteId": report.site_id,
+        "name": report.name,
+        "project_name": report.project_name,
+        "projectName": report.project_name,
+        "date": report.report_date,
+        "report_date": report.report_date,
+        "report_type": rep_type,
+        "reportType": rep_type,
+        "status": report.status,
+        "author": report.author,
+        "summary": report.summary,
         "trades_present_count": report.trades_present_count,
+        "tradesPresentCount": report.trades_present_count,
         "critical_issues_count": report.critical_issues_count,
+        "criticalIssuesCount": report.critical_issues_count,
         "materials_received_summary": report.materials_received_summary,
+        "materialsReceivedSummary": report.materials_received_summary,
         "equipment_uptime_percent": report.equipment_uptime_percent,
-        "evm_status": report.evm_status, "voice_transcript": report.voice_transcript,
+        "equipmentUptimePercent": report.equipment_uptime_percent,
+        "evm_status": report.evm_status,
+        "evmStatus": report.evm_status,
+        "voice_transcript": report.voice_transcript,
         "extracted_data": report.extracted_data,
+        "extractedData": report.extracted_data,
+        "created_at": report.created_at.isoformat() if report.created_at else None,
     }
 
 
@@ -63,7 +81,7 @@ def create_report(data: ReportIn, current_user: User = Depends(get_current_user)
     db.add(report)
     db.commit()
     db.refresh(report)
-    
+
     # Sync to modules
     try:
         if report.extracted_data and "fullReport" in report.extracted_data:
@@ -84,6 +102,37 @@ def create_report(data: ReportIn, current_user: User = Depends(get_current_user)
         print("Rollup error:", e)
 
     return serialize(report)
+
+
+@router.post("/trigger-rollup")
+def trigger_rollup_endpoint(
+    site_id: str,
+    rollup_type: str = "Weekly",
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Manually triggers generation of a Weekly or Monthly progress report
+    from existing daily records.
+    """
+    from services.rollup import trigger_rollups
+    force_w = rollup_type in ("Weekly", "All")
+    force_m = rollup_type in ("Monthly", "All")
+    result = trigger_rollups(
+        site_id=site_id,
+        db=db,
+        current_user_id=current_user.id,
+        author_name=current_user.name or "Site Engineer",
+        force_weekly=force_w,
+        force_monthly=force_m,
+    )
+    # Return updated list of reports
+    rows = db.query(SiteReport).filter(SiteReport.site_id == site_id).order_by(SiteReport.created_at.desc()).all()
+    return {
+        "success": True,
+        "rollup_result": result,
+        "reports": [serialize(row) for row in rows],
+    }
 
 
 @router.delete("/{report_id}")
