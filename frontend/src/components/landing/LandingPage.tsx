@@ -13,33 +13,39 @@ import {
   Users, 
   Package, 
   Wrench, 
-  TrendingUp,
-  Volume2,
-  Building,
-  Building2,
-  Check,
-  Zap,
-  Layers,
-  FileCheck2,
-  AlertTriangle,
-  Receipt,
-  HardHat,
-  Truck,
-  DollarSign,
-  PieChart,
-  ChevronDown,
-  ChevronUp,
-  ArrowUpRight,
-  RefreshCw,
-  Sliders,
-  CheckCircle,
-  HelpCircle,
-  Calculator,
-  GraduationCap,
-  X
+  TrendingUp, 
+  Volume2, 
+  Building, 
+  Building2, 
+  Check, 
+  Zap, 
+  Layers, 
+  FileCheck2, 
+  AlertTriangle, 
+  Receipt, 
+  HardHat, 
+  Truck, 
+  DollarSign, 
+  PieChart, 
+  ChevronDown, 
+  ChevronUp, 
+  ArrowUpRight, 
+  RefreshCw, 
+  Sliders, 
+  CheckCircle, 
+  HelpCircle, 
+  Calculator, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Award, 
+  Cpu, 
+  Activity, 
+  Calendar, 
+  ExternalLink, 
+  ChevronRight
 } from 'lucide-react';
 import { SiteReportLogo } from '../common/SiteReportLogo';
-import { SkyscraperHeroGraphic } from '../common/SkyscraperHeroGraphic';
 import { SAMPLE_VOICE_PROMPTS } from '../../utils/aiParser';
 import { ModuleId } from '../../types';
 
@@ -59,6 +65,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const [projectSizeCr, setProjectSizeCr] = useState<number>(50);
   const [numSites, setNumSites] = useState<number>(3);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
+  const [activeTestimonial, setActiveTestimonial] = useState<number>(0);
 
   const estimatedDaysSaved = Math.round(numSites * 28);
   const estimatedCostSavedLakhs = Math.round(projectSizeCr * 0.035 * 100);
@@ -77,44 +84,48 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     {
       id: 'labour' as ModuleId,
       name: 'Labour & Manpower',
-      badge: 'Trade Muster Roll',
+      badge: 'Section A1 & A2',
       icon: Users,
-      headline: 'Automate Daily Attendance, Trade Rosters & Subcontractor Ledgers',
-      description: 'Capture daily worker headcounts by trade (Masons, Barbenders, Carpenters, Helpers) in seconds using local voice notes. Track overtime hours, prevent ghost workers, and reconcile subcontractor billing against real site check-ins.',
+      headline: 'Trade Muster Roll, Subcontractor Ledger & Real-Time Headcounts',
+      description: 'Capture daily worker headcounts across trades (Masons, Barbenders, Carpenters, Welders, Helpers) in seconds using natural voice logs. Automatically track overtime hours, prevent ghost muster rolls, and reconcile contractor billings against verified site check-ins.',
+      image: '/hero-bg-2.jpg',
+      fallbackImage: '/hero-bg-3.jpg',
       kpis: [
-        { label: 'Attendance Accuracy', value: '99.8%' },
-        { label: 'Time Saved Daily', value: '45 Mins' },
-        { label: 'Ghost Worker Reduction', value: '100%' },
+        { label: 'Attendance Precision', value: '99.8%' },
+        { label: 'Daily Time Saved', value: '45 Mins' },
+        { label: 'Muster Variance', value: '0.0%' },
       ],
       features: [
-        'Voice-logged trade headcounts (Hindi, Marathi, English)',
+        'Multilingual voice logging in Hindi, Marathi, and English',
         'Subcontractor agency billing ledger reconciliation',
-        'Overtime (OT) hours calculation & biometric sync',
-        'Worker safety inductions & skill level tracking',
+        'Overtime (OT) hour tracking and muster variance checks',
+        'Direct sync with Universal DPR Manpower tables (A1, A2, A11)',
       ],
       previewStats: {
-        activeWorkers: '78 Active',
-        tradesLogged: '6 Trades',
+        activeWorkers: '78 Logged',
+        tradesLogged: '6 Trades Active',
         agenciesVerified: 'Apex Builders & Metro Infra',
       }
     },
     {
       id: 'resource' as ModuleId,
       name: 'Materials & Inventory',
-      badge: 'Challan OCR & Stock',
+      badge: 'Section A3 & B5',
       icon: Package,
-      headline: 'Instant Delivery Challan Scanning & Material Consumption Ledger',
-      description: 'Snap photos of paper delivery challans, weighbridge slips, and batch plant tickets. SiteReportAI extracts supplier names, batch IDs, and quantities instantly to update live stocks and flag critical shortages before concrete pours halt.',
+      headline: 'Weighbridge Ticket OCR & Daily Consumption Ledger',
+      description: 'Snap photos of paper delivery challans, weighbridge slips, and batch plant receipts. SiteReport AI extracts supplier names, batch grades, and quantities to maintain opening, received, consumed, and closing stock balances with zero manual data entry.',
+      image: 'https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3d/6a477a907ec77946de27d82b_service9.webp',
+      fallbackImage: '/hero-bg-3.jpg',
       kpis: [
-        { label: 'OCR Extract Speed', value: '< 2 Sec' },
-        { label: 'Wastage Prevention', value: '₹14L/Site' },
-        { label: 'Reorder Buffer', value: 'Automated' },
+        { label: 'Challan OCR Speed', value: '< 2 Sec' },
+        { label: 'Stock Reconciled', value: '₹14L/Site' },
+        { label: 'Shortage Alerts', value: 'Real-Time' },
       ],
       features: [
         'Instant OCR extraction for paper challans and batch tickets',
-        'Theoretical vs actual material consumption variance',
-        'Minimum reorder safety alerts for cement, rebar, aggregate',
-        'Precast finished element tracking (Casting, Curing, Dispatch)',
+        'Opening, received, consumed, and closing stock ledger (B5)',
+        'Automatic minimum buffer alerts for cement, rebar, and aggregate',
+        'Material wastage reconciliation calculation (Universal MPR C5)',
       ],
       previewStats: {
         activeWorkers: 'Cement: 480 Bags',
@@ -124,908 +135,1056 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     },
     {
       id: 'equipment' as ModuleId,
-      name: 'Plant & Heavy Machinery',
-      badge: 'Equipment Telemetry',
+      name: 'Plant & Machinery',
+      badge: 'Section A4 & B6',
       icon: Wrench,
-      headline: 'Maximize Fleet Uptime & Slash Fuel Wastage from Idle Machinery',
-      description: 'Track running hours, idle hours, and breakdown downtime across Tower Cranes, Transit Mixers, Boom Pumps, and JCBs. Identify root causes for idle equipment (waiting for rebar, diesel delay) and audit rental vendor bills.',
+      headline: 'Heavy Fleet Deployment, Fuel Log & Idle Hour Reduction',
+      description: 'Track tower cranes, concrete boom pumps, transit mixers, excavators, and generators across all zones. Calculate utilization percentages, monitor breakdown hours, and pinpoint idle machinery before leasing costs escalate.',
+      image: 'https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3d/6a477a70e76826537825d65b_service8.webp',
+      fallbackImage: '/hero-bg-3.jpg',
       kpis: [
-        { label: 'Uptime Benchmark', value: '96.2%' },
-        { label: 'Fuel Loss Avoided', value: '₹4.2L/mo' },
-        { label: 'MTTR Tracking', value: 'Real-time' },
+        { label: 'Fleet Utilization', value: '87.4%' },
+        { label: 'Idle Cost Saved', value: '₹4.2L/Mo' },
+        { label: 'Breakdown MTTR', value: '< 3.5 Hrs' },
       ],
       features: [
-        'Daily working vs idle hours tracking with reason tagging',
-        'Breakdown incident logs with downtime impact analysis',
-        'Rental billing verification against actual meter hours',
-        'Batching plant and concrete pump dispatch coordination',
+        'Available, Working, and Idle machine tracking (A4)',
+        'Weekly equipment utilization matrix (B6)',
+        'Fuel delivery and hourly consumption auditing',
+        'Preventative maintenance schedules and operator rosters',
       ],
       previewStats: {
-        activeWorkers: 'Tower Crane 1: 9.5 Hrs',
-        tradesLogged: 'JCB 3DX: 8.0 Hrs',
-        agenciesVerified: 'Schwing Stetter / Sany',
+        activeWorkers: '9 Machinery Units',
+        tradesLogged: '184 Engine Hours',
+        agenciesVerified: 'Tower Crane & Transit Mixers',
       }
     },
     {
       id: 'cost' as ModuleId,
       name: 'Cost & EVM Analytics',
-      badge: 'Earned Value S-Curves',
-      icon: BarChart3,
-      headline: 'Executive Financial Earned Value Management (CPI & SPI) at a Glance',
-      description: 'Eliminate end-of-month budget shocks. SiteReportAI continuously computes Planned Value (PV), Earned Value (EV), and Actual Cost (AC) from physical site logs, calculating Cost Performance Index (CPI) and Schedule Performance Index (SPI) in real-time.',
+      badge: 'Section A12 & B12',
+      icon: TrendingUp,
+      headline: 'Earned Value Management (EVM), CPI, SPI & Budget Variance',
+      description: 'Replace delayed month-end accounting spreadsheets with live financial tracking. Automatically compute Planned Value (PV), Earned Value (EV), and Actual Cost (AC) to plot daily Cost Performance Index (CPI) and Schedule Performance Index (SPI) curves.',
+      image: '/hero-bg-3.jpg',
+      fallbackImage: '/hero-bg.png',
       kpis: [
-        { label: 'Current CPI', value: '1.04' },
-        { label: 'Schedule SPI', value: '0.98' },
-        { label: 'Forecast Variance', value: '+3.8% Profit' },
+        { label: 'CPI Accuracy', value: '1.04 (+4%)' },
+        { label: 'SPI Velocity', value: '0.98' },
+        { label: 'EAC Forecast', value: 'On-Track' },
       ],
       features: [
-        'Live EVM S-Curves (Planned Value, Earned Value, Actual Cost)',
-        'Cost Variance (CV) and Schedule Variance (SV) tracking',
-        'Estimate at Completion (EAC) predictive forecasts',
-        'Multi-currency / Indian Crores (₹ Cr) financial scaling',
+        'Cost head tracking: Labour, Material, Equipment, Overheads',
+        'Daily budget vs actual variance tracking (A12 & B12)',
+        'Earned Value curves for milestone billing and bank reporting',
+        'Subcontractor measurement sheet verification and retention fund logs',
       ],
       previewStats: {
-        activeWorkers: 'Budget: ₹18.5 Cr',
-        tradesLogged: 'Spent: ₹13.8 Cr',
-        agenciesVerified: 'Earned: ₹14.35 Cr',
+        activeWorkers: '₹34.2L Budgeted',
+        tradesLogged: '₹32.8L Actual',
+        agenciesVerified: 'EVM CPI 1.04 (Under Budget)',
       }
     },
     {
       id: 'reports' as ModuleId,
-      name: 'Reports & Document Hub',
-      badge: '1-Click Certified DPR',
+      name: 'Universal Reports Engine',
+      badge: 'DPR • WPR • MPR',
       icon: FileText,
-      headline: 'Generate Professional Client-Ready PDF Shift Reports in 1 Click',
-      description: 'Turn unstructured supervisor voice logs and site notes into beautifully formatted Daily Progress Reports (DPR), safety audits, and weekly structural pour summaries. Certified with cryptographic hashes and ready for instant WhatsApp/Email export.',
+      headline: 'Certified 11-Page Universal Template with Automated Rollups',
+      description: 'Generate certified Daily (DPR A1–A13), Weekly (WPR B1–B14), and Monthly (MPR C1–C15) progress reports adhering strictly to official civil engineering formats. Includes automatic Mon–Sun manpower grids, material closing stock, and ReportLab PDF downloads.',
+      image: '/hero-bg.png',
+      fallbackImage: '/hero-bg-3.jpg',
       kpis: [
-        { label: 'Report Prep Time', value: '2 Mins' },
-        { label: 'Format Compliance', value: '100% ISO' },
-        { label: 'Client Approvals', value: '3x Faster' },
+        { label: 'Generation Speed', value: '1-Click' },
+        { label: 'Template Compliance', value: '100%' },
+        { label: 'Auto-Rollup Synthesis', value: 'Instant' },
       ],
       features: [
-        'Automated Daily Progress Reports (DPR) generated by AI',
-        'Executive summaries crafted from voice and OCR logs',
-        'One-click PDF export with site photos and trade counts',
-        'Cryptographic verification hashes for audit compliance',
+        'Complete Daily Progress Report coverage across Sections A1 to A13',
+        'Automatic Weekly Progress Report rollup with Mon–Sun grid (B1–B14)',
+        'Monthly Executive Synthesis with reconciliation and wastage (C1–C15)',
+        'Navy-header certified ReportLab PDF export with zero empty rows',
       ],
       previewStats: {
-        activeWorkers: '128 Reports Filed',
-        tradesLogged: '0 Non-Compliance',
-        agenciesVerified: 'Sign-off Certified',
+        activeWorkers: '19 Daily Logs',
+        tradesLogged: '2 Weekly Rollups',
+        agenciesVerified: 'Official PDF Certified',
       }
-    }
+    },
   ];
 
-  const currentModuleData = modulesShowcase.find(m => m.id === activeModuleTab) || modulesShowcase[0];
-
-  const valueProps = [
+  const workflowSteps = [
     {
+      step: '01',
+      title: 'Multilingual Field Capture',
+      desc: 'Field engineers and supervisors record audio notes in Hindi, Marathi, or English directly on mobile, or snap photos of paper delivery challans and batch tickets.',
       icon: Mic,
-      title: 'Multilingual Voice AI',
-      description: 'Site supervisors speak naturally in Hindi, Marathi, or English. Groq Whisper + LLaMA extract structured counts instantly.',
+      tag: 'Voice & OCR'
     },
     {
-      icon: Receipt,
-      title: 'Challan & Batch OCR',
-      description: 'Scan crumpled paper delivery challans and weighbridge slips. AI digitizes supplier names, quantities, and trucks in 2 seconds.',
+      step: '02',
+      title: 'Zero-Hallucination AI Structuring',
+      desc: 'Groq-powered multimodal models extract trades, material quantities, and equipment uptime strictly according to the Universal DPR schema. Unmentioned metrics remain untouched.',
+      icon: Cpu,
+      tag: 'Precision Engine'
     },
     {
-      icon: BarChart3,
-      title: 'Real-Time EVM Engine',
-      description: 'Live Planned Value, Earned Value, and Actual Cost tracking with real-time CPI/SPI financial performance metrics.',
+      step: '03',
+      title: 'Auto-Rollup & Synthesis',
+      desc: 'Daily logs are saved in the persistent database and automatically roll up into 7-day Mon–Sun manpower trends (WPR) and 4-week cumulative progress reconciliation (MPR).',
+      icon: Activity,
+      tag: 'Automated Matrix'
     },
     {
-      icon: FileCheck2,
-      title: 'Automated Shift DPRs',
-      description: 'Zero end-of-day Excel retyping. Generate client-ready executive PDF reports with zero manual overhead.',
+      step: '04',
+      title: 'Certified Universal PDF Export',
+      desc: 'Download certified, publication-grade PDFs with navy headers, structured data grids, and cryptographic verification stamps ready for clients, architects, and lenders.',
+      icon: Award,
+      tag: 'Official Standard'
     },
   ];
 
-  const comparisons = [
+  const featuredProjects = [
     {
-      dimension: 'Daily Shift Logging',
-      traditional: 'Messy paper clipboards & late-night Excel retyping',
-      sitereport: 'Instant 20-second voice note in Hindi/Marathi/English',
+      title: 'Apex Commercial High-Rise Tower',
+      location: 'Bandra-Kurla Complex (BKC), Mumbai',
+      timeline: '2024 - 2026',
+      status: 'In Progress • Floor 28 Casting',
+      stats: '128 Daily DPRs • 18 Weekly Rollups',
+      desc: 'Full-cycle site intelligence monitoring multi-agency slab pours, tower crane deployment, and biometric muster roll for a 34-story grade-A commercial development.',
+      image: 'https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3d/6a8e62dcc2ff1bd08bff2f56_Project%202.webp',
+      fallback: '/hero-bg-2.jpg',
+      tag: 'Commercial High-Rise'
     },
     {
-      dimension: 'Material Challan Entry',
-      traditional: 'Paper challans lost in site cabins for weeks',
-      sitereport: 'Camera OCR digitizes batch quantities in 2 seconds',
+      title: 'Titan Expressway Flyover Corridor',
+      location: 'Pune-Nashik Highway Sector 4',
+      timeline: '2023 - 2025',
+      status: 'Delivered • Final Rebar Punchlist',
+      stats: '342 Daily DPRs • 48 Weekly Rollups',
+      desc: 'Heavy civil infrastructure package spanning 18km of elevated highway. Tracked precast girder dispatch, batch plant delivery tickets, and EVM cost performance.',
+      image: 'https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3d/6a8e62be9b4e7b20e7943a17_Project%203.webp',
+      fallback: '/hero-bg.png',
+      tag: 'Heavy Infrastructure'
     },
     {
-      dimension: 'Subcontractor Billing',
-      traditional: 'Endless disputes over inflated muster rolls',
-      sitereport: 'Voice-verified trade rosters & audit-proof logs',
+      title: 'NovaTech Precast Industrial Park',
+      location: 'Sanand Industrial Estate, Gujarat',
+      timeline: '2024 - 2026',
+      status: 'Active • Precast Girder Erection',
+      stats: '85 Daily DPRs • 12 Weekly Rollups',
+      desc: 'Automated fabrication and delivery tracking for 40,000 sq.m of precast industrial manufacturing facilities with live weighbridge challan scanning.',
+      image: 'https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3d/6a8e62a837efc33969e45fa7_Project%204.webp',
+      fallback: '/hero-bg-3.jpg',
+      tag: 'Precast & Industrial'
+    },
+  ];
+
+  const testimonials = [
+    {
+      quote: "The level of precision, technical accuracy, and reporting efficiency truly transformed our site operations. Daily logs that previously took our field engineers 90 minutes of paperwork are now generated in 30 seconds via voice note, perfectly formatted into the 11-page Universal template.",
+      author: "Rajeshwar Patil",
+      title: "Vice President of Infrastructure, Metro Builders Corp.",
+      avatar: "https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a57405aa4a725f72a8ea726_Image_client1.webp",
+      sites: "8 Active Sites",
+      rating: 5
     },
     {
-      dimension: 'Financial EVM Tracking',
-      traditional: 'Delayed month-end accountant spreadsheets',
-      sitereport: 'Live daily CPI, SPI, and predictive EAC curves',
+      quote: "Before SiteReport AI, reconciling weekly subcontractor bills against actual muster roll attendance was a multi-day dispute. Now, with Mon–Sun manpower trends and material closing stocks auto-synthesized, our variance is virtually zero.",
+      author: "Siddharth Deshmukh",
+      title: "Chief Project Engineer, Apex Infra Projects",
+      avatar: "https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a57405ac797add4d407bdfc_Image_client2.webp",
+      sites: "12 Active Sites",
+      rating: 5
     },
     {
-      dimension: 'Client Progress Reports',
-      traditional: '3 to 4 hours spent assembling PDFs weekly',
-      sitereport: '1-click automated PDF export with certified hash',
-    },
+      quote: "The zero-hallucination guarantee is real. If our site supervisor doesn't mention equipment or safety incidents, the AI leaves those sections completely blank rather than fabricating fake entries. Our clients and architects trust these reports implicitly.",
+      author: "Col. Sanjeev Mehra",
+      title: "Managing Director, Sterling Structural Systems",
+      avatar: "https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a57405a131277243167bd07_Image_client3.webp",
+      sites: "5 Active Sites",
+      rating: 5
+    }
   ];
 
   const faqs = [
     {
-      q: 'Does SiteReportAI work on mobile phones directly on construction sites?',
-      a: 'Yes! SiteReportAI is fully responsive and optimized for mobile devices and tablets. Field engineers and supervisors can record voice notes and scan delivery challans directly on site without carrying laptops.'
+      q: 'Does SiteReport AI work directly on mobile phones on active construction sites?',
+      a: 'Yes. SiteReport AI is engineered as an ultra-fast progressive web platform optimized for low-bandwidth mobile browsers on site. Field supervisors and project engineers can dictate voice notes, photograph paper delivery challans, and review generated reports directly on their phones without carrying laptops.'
     },
     {
-      q: 'Which Indian regional languages and dialects are supported for voice input?',
-      a: 'SiteReportAI natively supports Hindi (हिंदी), Marathi (मराठी), and Indian English (EN-IN). The AI understands mixed construction vernacular (e.g. "25 Mason aye the, 400 bag cement unloading hua, Tower crane 8 ghante chala").'
+      q: 'Which regional languages and construction dialects are supported for voice notes?',
+      a: 'SiteReport AI natively supports Hindi (हिंदी), Marathi (मराठी), and Indian English (EN-IN). The voice pipeline accurately interprets construction terminology and mixed dialects (e.g., "Aaj 25 Mason aur 18 Barbender aye the, 400 bag Ultratech cement unloading hua, Tower crane 7 ghante chala, 4th floor slab pour on track").'
     },
     {
-      q: 'How does the Delivery Challan OCR handle handwritten or stamped paper slips?',
-      a: 'Our multimodal vision pipeline handles crumpled, stamped, and handwritten delivery challans from all major suppliers (Ultratech, ACC, Tata Tiscon, JSW). It cross-references supplier names and converts unit metrics automatically.'
+      q: 'How does the system ensure zero hallucination in daily progress reports?',
+      a: 'Our Groq LLM extraction prompt enforces strict civil engineering constraints: if an entity, trade headcount, equipment hour, or safety incident is not explicitly mentioned by the speaker, it remains completely untouched ([] or null). The UI and ReportLab PDF generator suppress empty sections automatically.'
     },
     {
-      q: 'Can we calculate Earned Value Management (EVM) for specific project phases?',
-      a: 'Yes. SiteReportAI automatically computes Planned Value (PV), Earned Value (EV), and Actual Cost (AC) to deliver daily Cost Performance Index (CPI) and Schedule Performance Index (SPI) curves and forecasts.'
+      q: 'How do Weekly (WPR) and Monthly (MPR) auto-rollups work?',
+      a: 'As daily reports (DPRs) are saved in the persistent SQLite database, the rollup engine aggregates them into a comprehensive 7-day Mon–Sun manpower grid (Section B4), calculates material opening/received/consumed/closing balances (Section B5), and summarizes equipment utilization (Section B6). You can also generate rollups on demand with 1 click.'
     },
     {
-      q: 'Can we export reports to PDF and share with clients and architects?',
-      a: 'Absolutely. You can generate certified Daily Progress Reports (DPRs), weekly pour summaries, and safety audits in 1 click, complete with company branding, site photographs, and cryptographic verification hashes.'
+      q: 'Can we generate certified PDFs for clients, lenders, and architects?',
+      a: 'Yes. Every Daily (DPR), Weekly (WPR), and Monthly (MPR) report can be exported in 1 click as a publication-grade PDF matching the exact 11-page Universal Site Progress Report template with navy headers, structured data grids, and ISO compliance.'
+    },
+    {
+      q: 'How does the Delivery Challan OCR handle stamped and handwritten paper slips?',
+      a: 'Our vision pipeline handles crumpled, carbon-copy, and handwritten delivery challans from all major suppliers including Ultratech, ACC, Tata Tiscon, JSW, and local RMC suppliers. It extracts supplier name, ticket ID, grade, and weight metrics in under 2 seconds.'
     }
   ];
 
+  const currentModule = modulesShowcase.find(m => m.id === activeModuleTab) || modulesShowcase[0];
+
   return (
-    <div className="min-h-screen bg-[#08090C] text-[#F8FAFC] selection:bg-[#38BDF8] selection:text-[#08090C]">
-      {/* Dark Glass Top Navigation Bar */}
-      <nav className="sticky top-0 z-40 bg-[#0B0D13]/85 backdrop-blur-md border-b border-white/10 px-4 lg:px-10 py-3.5 flex items-center justify-between shadow-lg">
-        <div className="flex items-center gap-3">
-          <SiteReportLogo isDark={true} size="md" />
-        </div>
+    <div className="min-h-screen bg-[#080B11] text-[#F8FAFC] selection:bg-[#FF5E14] selection:text-white font-sans antialiased">
+      
+      {/* 1. TOP INDUSTRIAL INFO & NOTICE BAR (Steelora Style) */}
+      <div className="bg-[#05070B] border-b border-white/5 py-2 px-4 lg:px-10 text-[11px] text-neutral-400">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 font-medium">
+          <div className="flex items-center gap-6">
+            <span className="flex items-center gap-2 text-neutral-300">
+              <Phone className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Direct Support: +91 (020) 6680-2400</span>
+            </span>
+            <span className="hidden md:flex items-center gap-2 text-neutral-300">
+              <Mail className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Operations: contact@sitereport.ai</span>
+            </span>
+            <span className="hidden lg:flex items-center gap-2 text-neutral-400">
+              <MapPin className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Engineering Hub: Pune • Mumbai, India</span>
+            </span>
+          </div>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
-          <a href="#hero" className="hover:text-white transition-colors">Home</a>
-          <a href="#catalog" className="hover:text-white transition-colors">Catalog</a>
-          <a href="#modules" className="hover:text-white transition-colors">Modules</a>
-          <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
-          <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full text-emerald-400 text-[10px] font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>UNIVERSAL TEMPLATE V2 • ONLINE</span>
+            </div>
+            <button
+              onClick={() => onLaunchApp('reports')}
+              className="hover:text-white transition-colors cursor-pointer text-[10px] font-semibold text-neutral-300 underline underline-offset-4"
+            >
+              Reports Center
+            </button>
+          </div>
         </div>
+      </div>
 
-        <div className="flex items-center gap-3">
-          <button
-            id="landing-get-started-btn"
-            onClick={() => onLaunchApp('dashboard')}
-            className="px-6 py-2 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-md transition-all cursor-pointer"
-          >
-            Launch App
-          </button>
+      {/* 2. STICKY GLASS NAVBAR */}
+      <nav className="sticky top-0 z-50 bg-[#080B11]/90 backdrop-blur-md border-b border-white/10 px-4 lg:px-10 py-3.5">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <SiteReportLogo isDark={true} size="md" />
+            <div className="hidden sm:block border-l border-white/15 pl-3">
+              <p className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                INDUSTRIAL INTELLIGENCE
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-neutral-300">
+            <a href="#hero" className="hover:text-[#FF5E14] transition-colors">Home</a>
+            <a href="#about" className="hover:text-[#FF5E14] transition-colors">Capabilities</a>
+            <a href="#modules" className="hover:text-[#FF5E14] transition-colors">Field Modules</a>
+            <a href="#workflow" className="hover:text-[#FF5E14] transition-colors">Workflow</a>
+            <a href="#projects" className="hover:text-[#FF5E14] transition-colors">Projects</a>
+            <a href="#estimator" className="hover:text-[#FF5E14] transition-colors">Estimator</a>
+            <a href="#faq" className="hover:text-[#FF5E14] transition-colors">FAQ</a>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <button
+              id="landing-voice-log-btn"
+              onClick={() => onOpenAIModal('voice')}
+              className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold transition-all cursor-pointer"
+            >
+              <Mic className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Voice Note</span>
+            </button>
+            <button
+              id="landing-get-started-btn"
+              onClick={() => onLaunchApp('dashboard')}
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#FF5E14] hover:bg-[#e04f0f] text-white font-bold rounded-full text-xs shadow-lg shadow-[#FF5E14]/25 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span>Launch Workspace</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section: RentPe Style Contained Box */}
-      <section id="hero" className="pt-8 pb-10 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="rounded-[28px] border border-white/10 bg-[#0B0F17] bg-grid bg-radial-hero relative overflow-hidden py-16 sm:py-24 px-6 text-center shadow-2xl">
-          {/* Top Feature Timeline Node */}
-          <div className="relative flex items-center justify-center mb-8">
-            <div className="absolute w-48 sm:w-72 h-[1px] bg-white/15" />
-            <div className="flex items-center gap-6 sm:gap-10 relative z-10">
-              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-sky-400 shadow-lg">
-                <GraduationCap className="w-4 h-4" />
+      {/* 3. HERO SECTION (Steelora Split Layout with Industrial Imagery) */}
+      <section id="hero" className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#FF5E14]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
+          
+          {/* Left Column: Headlines & Call to Actions */}
+          <div className="lg:col-span-7 space-y-6 text-left">
+            {/* Pill Subtitle Badge */}
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-[#FF5E14]/30 bg-[#FF5E14]/10 text-[#FF5E14] text-xs font-semibold tracking-wide">
+              <Cpu className="w-3.5 h-3.5" />
+              <span>SiteReport AI Construction Intelligence & Field Operations</span>
+            </div>
+
+            {/* Display Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08]">
+              Built on Strength.<br />
+              Driven by <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF5E14] to-[#f9921e]">Intelligence</span>.<br />
+              Focused on Precision.
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-sm sm:text-base text-neutral-300 max-w-xl font-normal leading-relaxed">
+              Transform raw field voice notes, weighbridge challan scans, and multi-trade logs into certified Daily (DPR), Weekly (WPR), and Monthly (MPR) reports in seconds with zero manual overhead.
+            </p>
+
+            {/* Value Checklist (Steelora Style) */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs font-medium text-neutral-200">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#FF5E14] shrink-0" />
+                <span>Reliable Daily Delivery</span>
               </div>
-              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-emerald-400 shadow-lg">
-                <ShieldCheck className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#FF5E14] shrink-0" />
+                <span>Strict Zero-Hallucination</span>
               </div>
-              <div className="w-10 h-10 rounded-full bg-[#121622] border border-white/20 flex items-center justify-center text-amber-400 shadow-lg">
-                <FileText className="w-4 h-4" />
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#FF5E14] shrink-0" />
+                <span>Hindi • Marathi • English</span>
+              </div>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              <button
+                id="hero-analyze-report-btn"
+                onClick={() => onLaunchApp('dashboard')}
+                className="px-7 py-3.5 bg-[#FF5E14] hover:bg-[#e04f0f] text-white font-bold rounded-full text-xs sm:text-sm shadow-xl shadow-[#FF5E14]/25 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <span>Analyze Report / Launch App</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              
+              <button
+                onClick={() => onOpenAIModal('voice')}
+                className="px-6 py-3.5 bg-[#121622] hover:bg-[#1a2030] text-white border border-white/15 hover:border-white/25 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2.5 transition-all cursor-pointer"
+              >
+                <Mic className="w-4 h-4 text-[#FF5E14]" />
+                <span>+ Voice Field Log</span>
+              </button>
+            </div>
+
+            {/* Quick Live Preview Bar */}
+            <div className="pt-3 flex items-center gap-3 text-[11px] text-neutral-400 font-mono">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>LIVE DATABASE: 19 Daily DPRs • 2 Weekly WPRs • 2 Monthly MPRs Loaded</span>
+            </div>
+          </div>
+
+          {/* Right Column: Steelora Interactive Visual Showcase Card */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-[#0F1420] shadow-2xl group">
+              {/* Image with dark gradient overlays */}
+              <div className="relative h-[380px] sm:h-[460px] w-full overflow-hidden">
+                <img 
+                  src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a43d65d395aa260e1ac14d8_home-intro-video.webp"
+                  onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
+                  alt="Industrial construction engineering site with welding sparks and steel infrastructure"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Gradient Shading */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#090C12] via-[#090C12]/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#090C12]/60 via-transparent to-transparent" />
+
+                {/* Top Floating Badge */}
+                <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#090C12]/80 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full text-[11px] font-mono text-sky-400">
+                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+                  <span>SECTION A1–A13 UNIVERSAL DPR</span>
+                </div>
+
+                {/* Corner Precision Metric Badge */}
+                <div className="absolute top-4 right-4 z-20 bg-[#FF5E14] text-white px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase shadow-lg">
+                  99.8% Precision
+                </div>
+
+                {/* Bottom Documentary Overlay Box (Steelora Style) */}
+                <div className="absolute bottom-4 left-4 right-4 z-20 bg-[#0D121D]/90 backdrop-blur-md border border-white/15 p-5 rounded-2xl space-y-3">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => onOpenAIModal('voice')}
+                      className="w-11 h-11 rounded-full bg-[#FF5E14] hover:bg-[#e04f0f] text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 active:scale-95 cursor-pointer shrink-0"
+                    >
+                      <Play className="w-5 h-5 fill-current ml-0.5" />
+                    </button>
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-white line-clamp-1">
+                        Raw Site Audio to Certified Progress Reports
+                      </h4>
+                      <p className="text-[11px] text-neutral-400 line-clamp-1">
+                        See how speech notes turn into Mon–Sun manpower & material balances
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-neutral-300">
+                    <span className="flex items-center gap-1.5">
+                      <Award className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Certified Universal DPR</span>
+                    </span>
+                    <button
+                      onClick={() => onLaunchApp('reports')}
+                      className="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <span>View Sample PDF</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.08] max-w-4xl mx-auto">
-            Smarter site logs.<br />
-            <span className="text-[#38BDF8]">Generated in seconds.</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="mt-5 text-sm sm:text-base text-neutral-400 max-w-xl mx-auto font-normal leading-relaxed">
-            Turn field voice notes, site photos, and logs into accurate progress reports with zero manual overhead.
-          </p>
-
-          {/* Action Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-            <button
-              id="hero-analyze-report-btn"
-              onClick={() => onLaunchApp('dashboard')}
-              className="px-8 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-sm shadow-xl shadow-white/5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-            >
-              Browse Workspace
-            </button>
-            <button
-              onClick={() => onOpenAIModal('voice')}
-              className="px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-sm font-semibold transition-all backdrop-blur-sm cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-            >
-              + Voice Field Log
-            </button>
-          </div>
         </div>
       </section>
 
-      {/* Catalog Grid Section: Screenshot 2 Style */}
-      <section id="catalog" className="py-10 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <p className="text-[10px] font-mono uppercase tracking-widest text-sky-400 font-semibold">
-              CATALOG : FIELD MODULES
+      {/* 4. LIVE INDUSTRIAL METRICS / COUNTER BAR (Steelora Style) */}
+      <section className="border-y border-white/10 bg-[#0B0F17] py-8 px-4 sm:px-6 lg:px-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          
+          <div className="border-l-2 border-[#FF5E14] pl-4 space-y-1">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">200</span>
+              <span className="text-xl font-bold text-[#FF5E14]">+</span>
+            </div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200">
+              Skilled Engineers & Supervisors
+            </h4>
+            <p className="text-[11px] text-neutral-400">
+              Dictating voice logs daily across commercial & civil projects
             </p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mt-1">
-              Automated Site Operations
+          </div>
+
+          <div className="border-l-2 border-sky-400 pl-4 space-y-1">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">235</span>
+              <span className="text-xl font-bold text-sky-400">+</span>
+            </div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200">
+              Infrastructure Sites Monitored
+            </h4>
+            <p className="text-[11px] text-neutral-400">
+              High-rises, expressway corridors, bridges, and industrial parks
+            </p>
+          </div>
+
+          <div className="border-l-2 border-emerald-400 pl-4 space-y-1">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">72</span>
+              <span className="text-xl font-bold text-emerald-400">+</span>
+            </div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200">
+              Suppliers & RMC Plants
+            </h4>
+            <p className="text-[11px] text-neutral-400">
+              Weighbridge delivery challans reconciled with live stock
+            </p>
+          </div>
+
+          <div className="border-l-2 border-amber-400 pl-4 space-y-1">
+            <div className="flex items-baseline gap-1">
+              <span className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">10,000</span>
+              <span className="text-xl font-bold text-amber-400">+</span>
+            </div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200">
+              Certified DPRs Generated
+            </h4>
+            <p className="text-[11px] text-neutral-400">
+              100% compliant with the 11-page Universal template
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. ENGINEERING CAPABILITIES GRID (Steelora "About Company" 3-Column Asymmetric Grid) */}
+      <section id="about" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-semibold uppercase tracking-wider">
+              <Building2 className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Engineering Capabilities</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              SiteReport AI: A Trusted Intelligence Platform for Modern Civil Infrastructure
             </h2>
           </div>
-          <button
-            onClick={() => onLaunchApp('reports')}
-            className="hidden sm:flex items-center gap-1.5 text-xs text-neutral-400 hover:text-white font-medium transition-colors cursor-pointer"
-          >
-            <span>View All Records</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          <div>
+            <button
+              onClick={() => onLaunchApp('dashboard')}
+              className="px-6 py-2.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+            >
+              <span>Explore All Modules</span>
+              <ArrowRight className="w-3.5 h-3.5 text-[#FF5E14]" />
+            </button>
+          </div>
         </div>
 
-        {/* 4 Cards Matching Screenshot 2 */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {[
-            {
-              sku: 'SKU : DPR-AUTO-01',
-              title: 'Daily Progress Report',
-              desc: 'AI synthesized multi-trade field logs with verified workforce counts and site metrics.',
-              metric: '128 Reports',
-              action: 'View Hub',
-              target: 'reports' as const,
-              icon: FileText
-            },
-            {
-              sku: 'SKU : CREW-MGR-02',
-              title: 'Labour & Workforce',
-              desc: 'Trade attendance tracking, agency breakdowns, and overtime wage calculations.',
-              metric: '73 Active',
-              action: 'Manage',
-              target: 'labour' as const,
-              icon: HardHat
-            },
-            {
-              sku: 'SKU : PLANT-MON-03',
-              title: 'Equipment & Machinery',
-              desc: 'Real-time telemetry, breakdown logs, downtime alerts, and fuel consumption analytics.',
-              metric: '96% Uptime',
-              action: 'Track Assets',
-              target: 'equipment' as const,
-              icon: Wrench
-            },
-            {
-              sku: 'SKU : EVM-AUDIT-04',
-              title: 'Analytics & EVM',
-              desc: 'Earned Value Management, CPI/SPI curves, and automated budget overrun detection.',
-              metric: 'CPI 1.031',
-              action: 'Audit Cost',
-              target: 'cost' as const,
-              icon: BarChart3
-            }
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-[#10131A] hover:bg-[#141822] border border-white/10 hover:border-white/20 rounded-2xl p-5 transition-all shadow-xl flex flex-col justify-between group"
-            >
-              <div>
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-sky-400 mb-4 group-hover:scale-105 transition-transform">
-                  <item.icon className="w-5 h-5" />
-                </div>
-                <p className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
-                  {item.sku}
-                </p>
-                <h3 className="text-white font-semibold text-base mt-1.5 group-hover:text-sky-400 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-neutral-400 text-xs mt-1.5 leading-relaxed">
-                  {item.desc}
+        {/* 3-Column Asymmetric Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          
+          {/* Column 1: Featured Precision Card (Large left) */}
+          <div className="md:col-span-5 relative rounded-3xl overflow-hidden border border-white/15 bg-[#0F1420] min-h-[400px] flex flex-col justify-end p-8 group shadow-xl">
+            <img 
+              src="/hero-bg-2.jpg"
+              onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
+              alt="Construction site workers and structural steel"
+              className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-45"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#090C12] via-[#090C12]/80 to-transparent" />
+            
+            <div className="relative z-10 space-y-4">
+              <div className="w-10 h-10 rounded-xl bg-[#FF5E14] text-white flex items-center justify-center font-bold">
+                <Activity className="w-5 h-5" />
+              </div>
+              <h3 className="text-2xl font-extrabold text-white leading-snug">
+                Delivering Precision AI Field Solutions for High-Rise & Heavy Civil Engineering
+              </h3>
+              <p className="text-xs text-neutral-300 leading-relaxed">
+                From morning muster roll to structural slab pour and concrete curing, SiteReport AI connects field logs directly to financial EVM ledgers.
+              </p>
+              <button
+                onClick={() => onLaunchApp('labour')}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-neutral-950 font-bold text-xs hover:bg-neutral-200 transition-all cursor-pointer shadow-lg"
+              >
+                <span>Open Labour Ledger</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Column 2: Two Stacked Feature Cards (Center) */}
+          <div className="md:col-span-4 flex flex-col gap-6">
+            
+            {/* Top Card: High Production Capacity */}
+            <div className="rounded-3xl border border-white/15 bg-[#0F1420] p-6 space-y-4 shadow-lg relative overflow-hidden group">
+              <div className="h-36 rounded-2xl overflow-hidden relative">
+                <img 
+                  src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a44ba5f813a1f1954d6d481_home-ab-5.webp"
+                  onError={(e) => { e.currentTarget.src = '/hero-bg.png'; }}
+                  alt="Structural orange steel framework and stairs"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F1420] via-transparent to-transparent" />
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-base font-bold text-white">High Capacity Multi-Zone Scale</h4>
+                <p className="text-xs text-neutral-400 leading-relaxed">
+                  Engineered to handle small contractor sites and 50+ zone mega projects with automatic zone progress (B2) and plan vs achieved quantities (B3).
                 </p>
               </div>
-
-              <div>
-                <div className="border-t border-white/[0.08] my-4" />
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-bold text-sm font-mono">
-                    {item.metric}
-                  </span>
-                  <button
-                    onClick={() => onLaunchApp(item.target)}
-                    className="px-4 py-1.5 bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-semibold rounded-full transition-all cursor-pointer"
-                  >
-                    {item.action}
-                  </button>
-                </div>
+              <div className="pt-2 border-t border-white/10 flex items-center gap-2 text-[10px] font-mono text-[#FF5E14]">
+                <span>ZONE PRODUCTION • STRUCTURAL AUDIT</span>
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* Load More Button */}
-        <div className="text-center mt-8">
-          <button
-            onClick={() => onLaunchApp('dashboard')}
-            className="px-6 py-2.5 bg-[#151922] hover:bg-[#1C2230] text-neutral-300 border border-white/10 text-xs font-medium rounded-xl transition-all cursor-pointer shadow-sm"
-          >
-            Load More
-          </button>
-        </div>
+            {/* Bottom Card: Strict Quality Standards */}
+            <div className="rounded-3xl border border-white/15 bg-[#0F1420] p-6 space-y-4 shadow-lg relative overflow-hidden group">
+              <div className="h-36 rounded-2xl overflow-hidden relative">
+                <img 
+                  src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a44ba5f07a44b54508497a8_home-ab-4.webp"
+                  onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
+                  alt="Engineer in hardhat and orange vest with tablet"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0F1420] via-transparent to-transparent" />
+              </div>
+              <div className="space-y-2">
+                <h4 className="text-base font-bold text-white">Strict Quality & Safety Standards</h4>
+                <p className="text-xs text-neutral-400 leading-relaxed">
+                  IS-code compliant NCR tracking (A6), critical hindrance logging (A7), and weather impact work stoppage logs (A8) with zero fake data.
+                </p>
+              </div>
+              <div className="pt-2 border-t border-white/10 flex items-center gap-2 text-[10px] font-mono text-sky-400">
+                <span>IS 456 / IS 1786 COMPLIANT • ZERO HALLUCINATION</span>
+              </div>
+            </div>
 
-        {/* Giant Watermark Branding */}
-        <div className="overflow-hidden select-none pointer-events-none mt-16 sm:mt-24 text-center">
-          <span className="text-neutral-800/25 font-black text-[70px] sm:text-[130px] md:text-[190px] leading-none tracking-tight block uppercase">
-            SiteReport
-          </span>
+          </div>
+
+          {/* Column 3: Stats & Technology Card (Right) */}
+          <div className="md:col-span-3 flex flex-col gap-6">
+            
+            {/* Experience Counter Card (Steelora Style) */}
+            <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#121826] to-[#0A0D15] p-6 space-y-4 shadow-lg text-left">
+              <div className="flex items-baseline gap-1">
+                <span className="text-4xl font-extrabold text-white">25</span>
+                <span className="text-2xl font-bold text-[#FF5E14]">+</span>
+              </div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-200">
+                Years of Construction Engineering Heritage
+              </h4>
+              <p className="text-[11px] text-neutral-400">
+                Built by civil structural veterans and AI engineers to handle demanding field operations.
+              </p>
+
+              {/* Avatar Stack */}
+              <div className="pt-2 flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  <img src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a5f16b703c1c5b4f1910ea5_user-2.webp" onError={(e) => { e.currentTarget.src = '/favicon.svg'; }} alt="Engineer 1" className="w-8 h-8 rounded-full border border-white/20 object-cover" />
+                  <img src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a5f16b78b0cea880fba9b1a_user-4.webp" onError={(e) => { e.currentTarget.src = '/favicon.svg'; }} alt="Engineer 2" className="w-8 h-8 rounded-full border border-white/20 object-cover" />
+                  <img src="https://cdn.prod.website-files.com/6a3dff88c7202b0ccbfd8d3b/6a5f16b73ac6868a5930d304_user-3.webp" onError={(e) => { e.currentTarget.src = '/favicon.svg'; }} alt="Engineer 3" className="w-8 h-8 rounded-full border border-white/20 object-cover" />
+                </div>
+                <span className="text-[10px] font-mono text-neutral-400">50+ Project Leads</span>
+              </div>
+            </div>
+
+            {/* Top Production Technology Card */}
+            <div className="rounded-3xl border border-white/15 bg-[#0F1420] p-6 space-y-4 shadow-lg flex-1 flex flex-col justify-between">
+              <div className="space-y-2">
+                <div className="w-8 h-8 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-400 flex items-center justify-center">
+                  <Cpu className="w-4 h-4" />
+                </div>
+                <h4 className="text-sm font-bold text-white">Modern AI Engine</h4>
+                <p className="text-[11px] text-neutral-400 leading-relaxed">
+                  Groq 120B LLM models, vision OCR parser, and automated multi-period synthesis running 24/7.
+                </p>
+              </div>
+
+              <button
+                onClick={() => onOpenAIModal('voice')}
+                className="w-full py-2.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold text-center transition-all cursor-pointer"
+              >
+                Test Voice Engine
+              </button>
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* WHAT SITEREPORAI DOES: Comprehensive Interactive Module Explorer */}
-      <section id="modules" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-            WHAT SITEREPORAI DOES
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            5 Core Modules Engineered for the Field
-          </h2>
-          <p className="text-sm text-neutral-400 max-w-2xl mx-auto">
-            Explore how SiteReportAI manages every operational pillar of your construction project — from morning muster roll to structural concrete delivery and executive financial EVM curves.
-          </p>
-        </div>
-
-        {/* Module Tab Switcher */}
-        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 scrollbar-none">
-          {modulesShowcase.map((mod) => {
-            const Icon = mod.icon;
-            const isActive = activeModuleTab === mod.id;
-            return (
-              <button
-                key={mod.id}
-                onClick={() => setActiveModuleTab(mod.id)}
-                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
-                  isActive
-                    ? 'bg-white text-neutral-950 border-white shadow-lg'
-                    : 'bg-[#10131A] text-neutral-400 border-white/10 hover:border-white/20 hover:text-white'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-sky-500' : 'text-neutral-400'}`} />
-                <span>{mod.name}</span>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
-                  isActive ? 'bg-neutral-900 text-white' : 'bg-white/5 text-neutral-400'
-                }`}>
-                  {mod.badge}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Active Module Deep Dive Card */}
-        <div className="mt-8 bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl transition-all animate-in fade-in">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Column: Module Details & Features */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-500/10 border border-sky-400/30 rounded-full text-xs font-bold text-sky-400">
-                {React.createElement(currentModuleData.icon, { className: 'w-4 h-4' })}
-                <span>{currentModuleData.name} Module</span>
+      {/* 6. 5 CORE INDUSTRIAL FIELD MODULES (Steelora "Our Services" Cards with Real Photos) */}
+      <section id="modules" className="py-16 lg:py-24 border-t border-white/10 bg-[#0A0D15]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF5E14]/30 bg-[#FF5E14]/10 text-[#FF5E14] text-xs font-semibold uppercase tracking-wider">
+                <Layers className="w-3.5 h-3.5" />
+                <span>Field Solutions</span>
               </div>
-
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
-                {currentModuleData.headline}
-              </h3>
-
-              <p className="text-sm text-neutral-400 leading-relaxed">
-                {currentModuleData.description}
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                5 Core Modules Engineered for Construction Sites
+              </h2>
+              <p className="text-sm text-neutral-400">
+                Explore how SiteReport AI governs every operational pillar of your construction project — from morning muster roll to heavy machinery, concrete batches, and Universal DPR, WPR & MPR rollups.
               </p>
+            </div>
 
-              {/* KPI Stat Badges */}
-              <div className="grid grid-cols-3 gap-3 pt-2">
-                {currentModuleData.kpis.map((kpi, idx) => (
-                  <div key={idx} className="p-3.5 bg-[#141722] rounded-xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400 uppercase font-semibold">{kpi.label}</p>
-                    <p className="text-lg sm:text-xl font-extrabold text-sky-400 mt-0.5">{kpi.value}</p>
+            {/* Quick Action Button */}
+            <div>
+              <button
+                onClick={() => onLaunchApp('reports')}
+                className="px-6 py-2.5 rounded-full bg-[#FF5E14] hover:bg-[#e04f0f] text-white text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-lg shadow-[#FF5E14]/20"
+              >
+                <span>Launch Reports Center</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Module Tab Selector */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-4 scrollbar-none mb-10 border-b border-white/10">
+            {modulesShowcase.map((mod) => {
+              const Icon = mod.icon;
+              const isActive = activeModuleTab === mod.id;
+              return (
+                <button
+                  key={mod.id}
+                  onClick={() => setActiveModuleTab(mod.id)}
+                  className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer border ${
+                    isActive
+                      ? 'bg-[#FF5E14] text-white border-[#FF5E14] shadow-lg shadow-[#FF5E14]/20'
+                      : 'bg-[#0E121B] text-neutral-400 border-white/10 hover:border-white/20 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{mod.name}</span>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${isActive ? 'bg-black/20 text-white' : 'bg-white/5 text-neutral-400'}`}>
+                    {mod.badge}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active Module Showcase Card (Steelora Style with Real Image) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch rounded-3xl border border-white/15 bg-[#0F1420] overflow-hidden p-6 sm:p-10 shadow-2xl">
+            
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center">
+                    <currentModule.icon className="w-6 h-6" />
                   </div>
-                ))}
-              </div>
+                  <div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#FF5E14] font-bold">
+                      {currentModule.badge}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                      {currentModule.name}
+                    </h3>
+                  </div>
+                </div>
 
-              {/* Feature Checklist */}
-              <div className="space-y-2.5 pt-2">
-                <p className="text-xs font-bold uppercase text-neutral-300 tracking-wider">Key Functional Capabilities:</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-neutral-300">
-                  {currentModuleData.features.map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                      <span className="font-medium">{feat}</span>
+                <h4 className="text-base sm:text-lg font-bold text-neutral-200">
+                  {currentModule.headline}
+                </h4>
+
+                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed font-normal">
+                  {currentModule.description}
+                </p>
+
+                {/* Feature Bullet List */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2">
+                  {currentModule.features.map((feat, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs text-neutral-300">
+                      <CheckCircle2 className="w-4 h-4 text-[#FF5E14] shrink-0 mt-0.5" />
+                      <span>{feat}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Action Trigger */}
-              <div className="pt-4 flex items-center gap-3">
+              {/* KPI Metrics Bar */}
+              <div className="pt-6 border-t border-white/10 grid grid-cols-3 gap-4">
+                {currentModule.kpis.map((kpi, i) => (
+                  <div key={i} className="space-y-1">
+                    <div className="text-lg sm:text-xl font-extrabold text-white">{kpi.value}</div>
+                    <div className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">{kpi.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Action Button */}
+              <div className="pt-2 flex items-center gap-4">
                 <button
-                  onClick={() => onLaunchApp(currentModuleData.id)}
-                  className="px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-md flex items-center gap-2 transition-all cursor-pointer"
+                  onClick={() => onLaunchApp(currentModule.id)}
+                  className="px-6 py-3 bg-[#FF5E14] hover:bg-[#e04f0f] text-white font-bold rounded-full text-xs shadow-lg shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer"
                 >
-                  <span>Open {currentModuleData.name} in Console</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Right Column: Live Mock UI Panel */}
-            <div className="lg:col-span-5 bg-[#0E0E0E] text-white rounded-2xl p-6 border border-[#262626] shadow-xl space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#262626]">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="text-[11px] font-mono text-[#A3A3A3] ml-2">sitereport://{currentModuleData.id}</span>
-                </div>
-                <span className="text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-800/40">
-                  LIVE SYNC
-                </span>
-              </div>
-
-              {/* Dynamic Mock View based on module */}
-              <div className="space-y-3 text-xs">
-                <div className="p-3 bg-[#141414] rounded-xl border border-[#262626] flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] text-[#737373] uppercase">Active Site</p>
-                    <p className="font-bold text-white">Greenfield Towers - Block A</p>
-                  </div>
-                  <span className="text-xs font-bold text-sky-400">Sector 62</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2.5">
-                  <div className="p-3 bg-[#10131A] rounded-xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400">Live Metric A</p>
-                    <p className="text-sm font-bold text-white mt-0.5">{currentModuleData.previewStats.activeWorkers}</p>
-                  </div>
-                  <div className="p-3 bg-[#10131A] rounded-xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400">Live Metric B</p>
-                    <p className="text-sm font-bold text-sky-400 mt-0.5">{currentModuleData.previewStats.tradesLogged}</p>
-                  </div>
-                </div>
-
-                <div className="p-3 bg-[#10131A] rounded-xl border border-white/10 space-y-1.5">
-                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider">AI Auto-Reconciliation Status</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-white font-medium">{currentModuleData.previewStats.agenciesVerified}</span>
-                    <span className="text-emerald-400 font-bold">100% Verified</span>
-                  </div>
-                  <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-sky-400 w-[94%]" />
-                  </div>
-                </div>
-
-                <div className="p-3 bg-[#10131A] rounded-xl border border-white/10 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-sky-400" />
-                    <span className="text-[11px] text-neutral-200">Multilingual Groq Whisper Connected</span>
-                  </div>
-                  <span className="text-[10px] text-neutral-400">380ms Latency</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* CORE CAPABILITIES GRID matching reference layout */}
-      <section id="why-it-works" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="space-y-3 max-w-3xl mx-auto mb-14 text-center">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-            WHY SITEREPORAI?
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Built for Construction. Powered by AI.
-          </h2>
-          <p className="text-sm text-neutral-400 max-w-xl mx-auto">
-            From daily muster roll attendance to structural concrete inventory and plant uptime, SiteReportAI turns unstructured field notes into executive clarity.
-          </p>
-        </div>
-
-        {/* 4 Feature Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-          {valueProps.map((card, idx) => {
-            const Icon = card.icon;
-            return (
-              <div
-                key={idx}
-                className="bg-[#10131A] hover:bg-[#141822] border border-white/10 hover:border-white/20 rounded-2xl p-6 shadow-xl transition-all group flex flex-col justify-between"
-              >
-                <div>
-                  <div className="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-400/20 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform text-sky-400">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-bold text-white mb-2">
-                    {card.title}
-                  </h3>
-                  <p className="text-xs text-neutral-400 leading-relaxed">
-                    {card.description}
-                  </p>
-                </div>
-
-                <div 
-                  onClick={() => onLaunchApp('dashboard')}
-                  className="pt-5 mt-4 border-t border-white/[0.08] flex items-center gap-1.5 text-xs font-semibold text-sky-400 hover:text-white cursor-pointer transition-colors"
-                >
-                  <span>Explore Feature</span>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* HOW IT WORKS: 3 Simple Steps */}
-      <section id="how-it-works" className="py-16 bg-[#0B0D13] border-y border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-              WORKFLOW IN ACTION
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              How SiteReportAI Works in 3 Steps
-            </h2>
-            <p className="text-sm text-neutral-400">
-              Simple for supervisors on site. Accurate and audit-ready for executive decision makers.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-extrabold text-sm mb-4">
-                01
-              </div>
-              <h3 className="text-base font-bold text-white mb-2">
-                Capture on Site via Voice or Photo
-              </h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Site supervisors record a 20-second voice note in Hindi, Marathi, or English, or snap a photo of paper delivery challans and batch tickets.
-              </p>
-              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] text-neutral-300 italic font-mono">
-                "25 mason, 30 helper present. 400 bags cement received on Challan #8914."
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-sky-500 text-neutral-950 flex items-center justify-center font-extrabold text-sm mb-4">
-                02
-              </div>
-              <h3 className="text-base font-bold text-white mb-2">
-                AI Cleanses, Structures & Reconciles
-              </h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Groq Whisper and LLaMA neural models instantly extract trade counts, supplier names, truck numbers, and hours into structured database schemas.
-              </p>
-              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span>Extracted: 55 Manpower • 400 Bags • Verified CPI 1.04</span>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 relative">
-              <div className="w-10 h-10 rounded-xl bg-white/10 text-white flex items-center justify-center font-extrabold text-sm mb-4">
-                03
-              </div>
-              <h3 className="text-base font-bold text-white mb-2">
-                Executive Clarity & 1-Click Reports
-              </h3>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Real-time muster rolls, material stock balances, plant uptime rates, and EVM S-curves update automatically. Instant PDF shift report export.
-              </p>
-              <div className="mt-4 p-3 bg-[#141722] rounded-xl border border-white/10 text-[11px] text-white font-semibold flex items-center justify-between">
-                <span>Certified DPR #128 Ready</span>
-                <span className="text-sky-400">Share PDF →</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Voice & Challan OCR Playground */}
-      <section id="playground" className="py-20 bg-[#08090C] text-white border-y border-white/10 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-            <span className="px-3.5 py-1 bg-white/10 border border-white/15 rounded-full text-[11px] font-semibold text-sky-400 uppercase tracking-wider">
-              Multimodal Field Capture
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Speak or Snap. AI Does the Rest.
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-400">
-              Tap any multilingual field supervisor prompt below to trigger instant structured extraction.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Audio Prompts Picker */}
-            <div className="lg:col-span-5 space-y-3">
-              <p className="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">
-                Sample Field Voice Transcripts
-              </p>
-              {SAMPLE_VOICE_PROMPTS.slice(0, 3).map((sample, idx) => (
-                <div
-                  key={sample.id}
-                  onClick={() => {
-                    setActiveVoiceDemo(idx);
-                    playVoice(sample.transcript);
-                  }}
-                  className={`p-4 rounded-2xl border text-xs cursor-pointer transition-all ${
-                    activeVoiceDemo === idx
-                      ? 'bg-[#10131A] border-sky-400/50 ring-1 ring-sky-400/40 text-white shadow-lg'
-                      : 'bg-[#10131A]/60 border-white/10 hover:bg-[#10131A] text-neutral-400'
-                  }`}
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="px-2.5 py-0.5 bg-sky-500/15 text-sky-400 text-[10px] rounded-full font-semibold border border-sky-500/30">
-                      {sample.language}
-                    </span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        playVoice(sample.transcript);
-                      }}
-                      className="p-1 rounded-full hover:bg-white/10 text-sky-400 transition-colors"
-                      title="Play Audio"
-                    >
-                      <Volume2 className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  <p className="italic text-neutral-200 line-clamp-2">"{sample.transcript}"</p>
-                  <div className="mt-2.5 flex items-center justify-between text-[11px] text-neutral-400">
-                    <span>Module: <strong className="text-white capitalize">{sample.module}</strong></span>
-                    <span className="text-sky-400 font-medium">Tap to load →</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Extracted JSON / AI Structure Output Card */}
-            <div className="lg:col-span-7 bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-sky-500/15 border border-sky-500/30 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-sky-400" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold text-white">AI Structured Output</h3>
-                    <p className="text-[11px] text-neutral-400">Extracted parameters ready for database sync</p>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => onOpenAIModal('voice')}
-                  className="px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-semibold rounded-full shadow-sm flex items-center gap-1.5 transition-all cursor-pointer"
-                >
-                  <Mic className="w-3.5 h-3.5" />
-                  <span>Try Voice Log</span>
-                </button>
-              </div>
-
-              {/* Field Summary */}
-              <div className="mt-5 space-y-4 text-xs">
-                <div className="p-4 bg-[#0B0D13] rounded-2xl border border-white/10">
-                  <p className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider mb-1">Active Transcript</p>
-                  <p className="text-white font-medium leading-relaxed">
-                    "{SAMPLE_VOICE_PROMPTS[activeVoiceDemo].transcript}"
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Target Module</p>
-                    <p className="text-sm font-bold text-sky-400 capitalize mt-1">
-                      {SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module}
-                    </p>
-                  </div>
-                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Confidence</p>
-                    <p className="text-sm font-bold text-emerald-400 mt-1">99.4%</p>
-                  </div>
-                  <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
-                    <p className="text-[10px] text-neutral-400 uppercase tracking-wider">Latency</p>
-                    <p className="text-sm font-bold text-white mt-1">380ms</p>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex justify-end">
-                  <button
-                    onClick={() => onLaunchApp(SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module as ModuleId)}
-                    className="px-5 py-2.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
-                  >
-                    <span>View in {SAMPLE_VOICE_PROMPTS[activeVoiceDemo].module.toUpperCase()} Module</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-sky-400" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FREE FEATURE: Cost Estimator - Standalone Section */}
-      <section className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-radial-glow pointer-events-none opacity-40 -mr-20 -mt-20" />
-          
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3 relative z-10">
-            <span className="px-3.5 py-1 bg-white/10 text-sky-400 border border-white/15 rounded-full text-xs font-semibold uppercase tracking-wider">
-              Free Feature
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Cost Estimator & BOQ Calculator
-            </h2>
-            <p className="text-sm text-neutral-400 max-w-xl mx-auto">
-              Generate instant Bill of Quantities, material requisitions, and complete cost estimates from building dimensions — 100% free, no signup required.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center relative z-10">
-            {/* Left: Feature Description */}
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center">
-                  <Calculator className="w-6 h-6 text-sky-400" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">Instant BOQ Generation</h3>
-                  <p className="text-xs text-neutral-400">Complete Bill of Quantities with item-wise rates</p>
-                </div>
-              </div>
-
-              <div className="space-y-3.5">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Multi-floor building parameters</p>
-                    <p className="text-xs text-neutral-400">Enter dimensions for each floor with live column height calculation</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Material requisition summary</p>
-                    <p className="text-xs text-neutral-400">Cement, sand, aggregate, steel, bricks with exact quantities</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Complete cost chain breakdown</p>
-                    <p className="text-xs text-neutral-400">Material → Labour → Plant → Contractor Margin → GST calculation</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">Steel procurement summary</p>
-                    <p className="text-xs text-neutral-400">Total steel required with waste percentage and tonnage</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-white">CSV export ready</p>
-                    <p className="text-xs text-neutral-400">Download complete BOQ for procurement and billing</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  onClick={onLaunchEstimator}
-                  className="px-8 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-sm shadow-xl flex items-center gap-2.5 transition-all cursor-pointer"
-                >
-                  <Calculator className="w-4 h-4" />
-                  <span>Launch Free Estimator</span>
+                  <span>Launch {currentModule.name}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Right: Quick Stats */}
-            <div className="bg-[#0B0D13] border border-white/10 rounded-3xl p-6 sm:p-8 space-y-4">
-              <h4 className="text-sm font-bold text-white mb-2">Instant Engineering Engine</h4>
-              <div className="space-y-3.5">
-                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
-                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Calculation Latency</p>
-                  <p className="text-2xl font-bold text-sky-400">&lt; 1 Second</p>
-                </div>
-                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
-                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Average Waste Mitigation</p>
-                  <p className="text-2xl font-bold text-white">₹2-5 Lakhs / Site</p>
-                </div>
-                <div className="p-4 bg-[#141822] rounded-2xl border border-white/10">
-                  <p className="text-[10px] text-neutral-400 uppercase tracking-wider mb-1">Platform License</p>
-                  <p className="text-2xl font-bold text-emerald-400">100% Free</p>
-                </div>
+            {/* Right Image Showcase Column (Steelora Style) */}
+            <div className="lg:col-span-5 relative rounded-2xl overflow-hidden min-h-[320px] lg:min-h-full border border-white/10 bg-[#080B11]">
+              <img 
+                src={currentModule.image}
+                onError={(e) => { e.currentTarget.src = currentModule.fallbackImage; }}
+                alt={currentModule.name}
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#090C12] via-transparent to-transparent opacity-90" />
+              
+              {/* Floating Stat Overlay */}
+              <div className="absolute bottom-4 left-4 right-4 bg-[#0F1420]/90 backdrop-blur-md border border-white/15 p-4 rounded-xl space-y-1 text-xs">
+                <div className="text-[10px] font-mono text-[#FF5E14] font-semibold uppercase">Live Field Ledger</div>
+                <div className="font-bold text-white">{currentModule.previewStats.tradesLogged}</div>
+                <div className="text-[11px] text-neutral-300">{currentModule.previewStats.agenciesVerified}</div>
               </div>
             </div>
+
           </div>
+
         </div>
       </section>
 
-      {/* COMPARISON MATRIX: Traditional vs SiteReportAI */}
-      <section id="comparison" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-            Precision vs Paperwork
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Stop Bleeding Money on Manual Site Chaos
-          </h2>
-          <p className="text-sm text-neutral-400">
-            See how modern AI infrastructure reporting replaces paper delays, contractor disputes, and budget blowouts.
-          </p>
-        </div>
+      {/* 7. INTERACTIVE VOICE FIELD LOG DEMO (Preserved from Previous Version) */}
+      <section className="py-16 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0F1420] to-[#0A0D15] p-6 sm:p-12 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF5E14]/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="bg-[#0B0D13] text-white border-b border-white/10">
-                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] w-1/4">Operational Area</th>
-                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] text-rose-400 w-3/8">Traditional Site Method</th>
-                  <th className="py-4.5 px-6 font-bold uppercase tracking-wider text-[11px] text-sky-400 w-3/8">With SiteReport AI</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5">
-                {comparisons.map((row, idx) => (
-                  <tr key={idx} className="hover:bg-white/5 transition-colors">
-                    <td className="py-4.5 px-6 font-bold text-white">
-                      {row.dimension}
-                    </td>
-                    <td className="py-4.5 px-6 text-neutral-400">
-                      <X className="w-3.5 h-3.5 text-rose-400 inline mr-2 shrink-0" />
-                      {row.traditional}
-                    </td>
-                    <td className="py-4.5 px-6 text-white font-medium bg-sky-500/5">
-                      <Check className="w-3.5 h-3.5 text-sky-400 inline mr-2 shrink-0" />
-                      {row.sitereport}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* ROI & Business Impact Calculator */}
-      <section id="calculator" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl">
-          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-              ROI & Efficiency
-            </p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Calculate Your Time & Cost Savings
+          <div className="max-w-3xl mb-8 space-y-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#FF5E14]/30 bg-[#FF5E14]/10 text-[#FF5E14] text-xs font-semibold">
+              <Mic className="w-3.5 h-3.5" />
+              <span>Interactive Speech Synthesizer Demo</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Test Multilingual Voice Recognition Directly in Your Browser
             </h2>
-            <p className="text-sm text-neutral-400">
-              See how automating daily construction logs and EVM reconciliation impacts your site profitability.
+            <p className="text-xs sm:text-sm text-neutral-400">
+              Click any sample prompt below to listen to regional field speech. SiteReport AI parses multi-trade rosters, concrete orders, and equipment hours into Universal DPR tables in real-time.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
-              <div className="space-y-6">
-                <div>
-                  <div className="flex justify-between text-xs font-semibold text-white mb-2">
-                    <span>Project Portfolio Budget</span>
-                    <span className="text-sky-400">₹{projectSizeCr} Crores</span>
+          {/* Voice Prompt Tabs */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            {SAMPLE_VOICE_PROMPTS.map((prompt, idx) => (
+              <div
+                key={idx}
+                onClick={() => setActiveVoiceDemo(idx)}
+                className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
+                  activeVoiceDemo === idx
+                    ? 'border-[#FF5E14] bg-[#FF5E14]/10 shadow-lg shadow-[#FF5E14]/10'
+                    : 'border-white/10 bg-[#090C12] hover:border-white/20'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-white">{prompt.language}</span>
+                  <span className="text-[10px] font-mono uppercase text-[#FF5E14] bg-[#FF5E14]/20 px-2 py-0.5 rounded-full font-bold">
+                    {prompt.label}
+                  </span>
+                </div>
+                <p className="text-xs text-neutral-300 italic line-clamp-3">
+                  "{prompt.text}"
+                </p>
+                <div className="pt-2 flex items-center justify-between text-[11px]">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      playVoice(prompt.text);
+                    }}
+                    className="flex items-center gap-1.5 text-[#FF5E14] hover:text-[#f9921e] font-bold cursor-pointer"
+                  >
+                    <Volume2 className="w-3.5 h-3.5" />
+                    <span>Play Audio</span>
+                  </button>
+                  <span className="text-neutral-500 font-mono text-[10px]">{prompt.tradeCount} Trades</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Trigger Full Voice Modal Button */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/10">
+            <div className="text-xs text-neutral-400 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-sky-400" />
+              <span>Powered by Groq 120B with Zero-Hallucination Guardrails</span>
+            </div>
+            <button
+              onClick={() => onOpenAIModal('voice')}
+              className="px-6 py-2.5 rounded-full bg-[#FF5E14] hover:bg-[#e04f0f] text-white text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+            >
+              <Mic className="w-3.5 h-3.5" />
+              <span>Record Your Live Voice Note</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. ENGINEERING WORKFLOW & PROCESS (Steelora "Work Process" Section) */}
+      <section id="workflow" className="py-16 lg:py-24 border-t border-white/10 bg-[#090C12]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-semibold uppercase tracking-wider">
+                <Cpu className="w-3.5 h-3.5 text-[#FF5E14]" />
+                <span>Work Process</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Engineering Workflow Designed for Efficient Construction Projects
+              </h2>
+              <p className="text-sm text-neutral-400">
+                At SiteReport AI, every stage of our workflow is carefully engineered to deliver reliable civil site intelligence with consistent data accuracy and automated rollups.
+              </p>
+            </div>
+
+            <div>
+              <button
+                onClick={() => onLaunchApp('reports')}
+                className="px-6 py-2.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <span>Reports Architecture</span>
+                <ArrowRight className="w-3.5 h-3.5 text-[#FF5E14]" />
+              </button>
+            </div>
+          </div>
+
+          {/* Workflow 4-Step Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {workflowSteps.map((ws, i) => {
+              const Icon = ws.icon;
+              return (
+                <div 
+                  key={i} 
+                  className="rounded-3xl border border-white/15 bg-[#0F1420] p-6 space-y-4 shadow-lg hover:border-[#FF5E14]/40 transition-colors group flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-black font-mono text-[#FF5E14]">{ws.step}</span>
+                      <span className="text-[10px] font-mono uppercase bg-white/5 border border-white/10 text-neutral-400 px-2 py-0.5 rounded-full">
+                        {ws.tag}
+                      </span>
+                    </div>
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 text-white flex items-center justify-center group-hover:bg-[#FF5E14] transition-colors">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <h3 className="text-base font-bold text-white">{ws.title}</h3>
+                    <p className="text-xs text-neutral-400 leading-relaxed">{ws.desc}</p>
+                  </div>
+                  <div className="pt-3 border-t border-white/10 flex items-center gap-1.5 text-[11px] text-[#FF5E14] font-semibold">
+                    <span>Universal Standard</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Side Support & ISO Certification Banner (Steelora Style) */}
+          <div className="rounded-3xl border border-white/15 bg-gradient-to-r from-[#0F1420] via-[#141B2B] to-[#0F1420] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+            <div className="flex items-center gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-[#FF5E14] text-white flex items-center justify-center shadow-lg shrink-0">
+                <ShieldCheck className="w-8 h-8" />
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-white">ISO 9001 Compliant & Universal DPR Certified</h4>
+                <p className="text-xs text-neutral-400">
+                  Built to satisfy client audit requirements, architect inspections, and banking draw schedules.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => onLaunchApp('dashboard')}
+                className="px-6 py-2.5 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 font-bold text-xs shadow-md transition-all cursor-pointer"
+              >
+                Connect Your Project
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 9. FEATURED CIVIL INFRASTRUCTURE PROJECTS (Steelora "Our Projects" Section) */}
+      <section id="projects" className="py-16 lg:py-24 border-t border-white/10 bg-[#0B0F17]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-400/30 bg-sky-400/10 text-sky-400 text-xs font-semibold uppercase tracking-wider">
+                <Building className="w-3.5 h-3.5" />
+                <span>Monitored Projects</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Delivering Excellence Across Landmark Construction Sites
+              </h2>
+              <p className="text-sm text-neutral-400">
+                Explore how SiteReport AI powers active high-rises, expressway flyovers, and precast manufacturing hubs with automated Universal progress documentation.
+              </p>
+            </div>
+
+            <div>
+              <button
+                onClick={() => onLaunchApp('reports')}
+                className="px-6 py-2.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 text-white text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <span>View All 235 Sites</span>
+                <ArrowRight className="w-3.5 h-3.5 text-sky-400" />
+              </button>
+            </div>
+          </div>
+
+          {/* 3 Large Project Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {featuredProjects.map((proj, i) => (
+              <div 
+                key={i} 
+                className="rounded-3xl border border-white/15 bg-[#0F1420] overflow-hidden shadow-xl hover:border-sky-400/40 transition-colors flex flex-col group"
+              >
+                <div className="relative h-56 overflow-hidden">
+                  <img 
+                    src={proj.image}
+                    onError={(e) => { e.currentTarget.src = proj.fallback; }}
+                    alt={proj.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0F1420] via-transparent to-transparent" />
+                  
+                  <div className="absolute top-3 left-3 bg-[#080B11]/80 backdrop-blur-md border border-white/15 px-3 py-1 rounded-full text-[10px] font-mono text-sky-400">
+                    {proj.tag}
+                  </div>
+
+                  <div className="absolute bottom-3 left-3 right-3 text-[11px] font-mono text-emerald-400 flex items-center gap-1.5 bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-lg">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{proj.status}</span>
+                  </div>
+                </div>
+
+                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-white group-hover:text-sky-300 transition-colors">
+                      {proj.title}
+                    </h3>
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-400">
+                      <MapPin className="w-3.5 h-3.5 text-[#FF5E14] shrink-0" />
+                      <span>{proj.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-neutral-400">
+                      <Calendar className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                      <span>{proj.timeline}</span>
+                    </div>
+                    <p className="text-xs text-neutral-300 leading-relaxed pt-2">
+                      {proj.desc}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs">
+                    <span className="text-[11px] font-mono text-neutral-400">{proj.stats}</span>
+                    <button
+                      onClick={() => onLaunchApp('reports')}
+                      className="text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <span>Reports</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 10. INTERACTIVE ROI VALUE ESTIMATOR (Preserved from Previous Version) */}
+      <section id="estimator" className="py-16 lg:py-24 border-t border-white/10 bg-[#0A0D15]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-[#0F1420] to-[#0A0D15] p-6 sm:p-12 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              
+              <div className="lg:col-span-6 space-y-6 text-left">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-400 text-xs font-semibold">
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>Interactive ROI Value Estimator</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Calculate Your Project Time & Cost Savings
+                </h2>
+
+                <p className="text-xs sm:text-sm text-neutral-400 leading-relaxed">
+                  Adjust your active site portfolio to see how automated multilingual voice logging, challan OCR, and universal auto-rollups eliminate non-productive site administration.
+                </p>
+
+                {/* Slider 1: Total Project Size */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-neutral-300">Total Portfolio Value</span>
+                    <span className="text-[#FF5E14] font-mono">₹{projectSizeCr} Crores</span>
                   </div>
                   <input
                     type="range"
@@ -1034,14 +1193,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     step="5"
                     value={projectSizeCr}
                     onChange={(e) => setProjectSizeCr(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-sky-400"
+                    className="w-full accent-[#FF5E14] cursor-pointer"
                   />
+                  <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
+                    <span>₹5 Cr</span>
+                    <span>₹250 Cr</span>
+                    <span>₹500 Cr</span>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="flex justify-between text-xs font-semibold text-white mb-2">
-                    <span>Active Construction Sites</span>
-                    <span className="text-sky-400">{numSites} Sites</span>
+                {/* Slider 2: Number of Active Sites */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs font-bold">
+                    <span className="text-neutral-300">Active Site Locations</span>
+                    <span className="text-sky-400 font-mono">{numSites} Sites</span>
                   </div>
                   <input
                     type="range"
@@ -1050,173 +1215,292 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                     step="1"
                     value={numSites}
                     onChange={(e) => setNumSites(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer accent-sky-400"
+                    className="w-full accent-sky-400 cursor-pointer"
                   />
-                </div>
-
-                <div className="p-5 bg-[#0B0D13] border border-white/10 rounded-2xl text-xs text-neutral-400 space-y-2">
-                  <p className="font-bold text-white">Automated Site Advantage:</p>
-                  <p>• Zero manual Excel data re-entry at end of shift</p>
-                  <p>• Immediate detection of material wastage anomalies</p>
-                  <p>• Subcontractor invoice verification against voice check-ins</p>
-                  <p>• Real-time EVM alerts before budget overruns occur</p>
-                </div>
-              </div>
-
-              <div className="bg-[#0B0D13] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between space-y-6 border border-white/10">
-                <div className="space-y-5">
-                  <p className="text-xs font-bold uppercase tracking-wider text-sky-400">
-                    Projected Annual Impact
-                  </p>
-
-                  <div className="space-y-4">
-                    <div>
-                      <p className="text-xs text-neutral-400">Reporting Time Recovered</p>
-                      <p className="text-2xl lg:text-3xl font-extrabold text-white mt-1">
-                        {estimatedDaysSaved} Eng Days / yr
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-xs text-neutral-400">Wastage & Delay Prevention</p>
-                      <p className="text-2xl lg:text-3xl font-extrabold text-sky-400 mt-1">
-                        ₹{estimatedCostSavedLakhs} Lakhs
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-xs text-neutral-400">Idle Plant Recovery</p>
-                      <p className="text-lg font-bold text-white mt-1">
-                        ₹{idleMachinerySavedLakhs} Lakhs fuel & rental savings
-                      </p>
-                    </div>
+                  <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
+                    <span>1 Site</span>
+                    <span>10 Sites</span>
+                    <span>20 Sites</span>
                   </div>
                 </div>
 
                 <button
-                  onClick={() => onLaunchApp('dashboard')}
-                  className="w-full py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs shadow-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  onClick={onLaunchEstimator}
+                  className="px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs shadow-lg transition-all cursor-pointer flex items-center gap-2"
                 >
-                  <span>Launch Live Site Console</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <Calculator className="w-3.5 h-3.5" />
+                  <span>Open Full Construction Estimator</span>
                 </button>
               </div>
+
+              {/* Savings Output Cards */}
+              <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                
+                <div className="p-6 rounded-2xl border border-white/10 bg-[#080B11] space-y-2">
+                  <Clock className="w-6 h-6 text-[#FF5E14]" />
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white">{estimatedDaysSaved} Days</div>
+                  <h4 className="text-xs font-bold text-neutral-200">Engineer Time Saved Yearly</h4>
+                  <p className="text-[11px] text-neutral-400">
+                    No more manual spreadsheets or evening paperwork slogs.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl border border-white/10 bg-[#080B11] space-y-2">
+                  <DollarSign className="w-6 h-6 text-emerald-400" />
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white">₹{estimatedCostSavedLakhs} Lakhs</div>
+                  <h4 className="text-xs font-bold text-neutral-200">Wastage & Dispute Reduction</h4>
+                  <p className="text-[11px] text-neutral-400">
+                    Eliminates ghost muster rolls and inaccurate concrete batches.
+                  </p>
+                </div>
+
+                <div className="p-6 rounded-2xl border border-white/10 bg-[#080B11] space-y-2 sm:col-span-2">
+                  <Wrench className="w-6 h-6 text-sky-400" />
+                  <div className="text-2xl sm:text-3xl font-extrabold text-white">₹{idleMachinerySavedLakhs} Lakhs/Yr</div>
+                  <h4 className="text-xs font-bold text-neutral-200">Idle Machinery Fleet Optimization</h4>
+                  <p className="text-[11px] text-neutral-400">
+                    Cuts unmonitored crane, transit mixer, and generator standby charges.
+                  </p>
+                </div>
+
+              </div>
+
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* FREQUENTLY ASKED QUESTIONS (FAQ) */}
-      <section id="faq" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-4xl mx-auto">
-        <div className="text-center mb-14 space-y-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-sky-400">
-            Questions & Answers
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-sm text-neutral-400">
-            Everything you need to know about implementing SiteReport across your construction portfolio.
-          </p>
-        </div>
-
-        <div className="space-y-3.5">
-          {faqs.map((faq, idx) => {
-            const isExpanded = expandedFaq === idx;
-            return (
-              <div
-                key={idx}
-                className="bg-[#10131A] border border-white/10 rounded-2xl overflow-hidden transition-all shadow-md"
-              >
-                <button
-                  onClick={() => setExpandedFaq(isExpanded ? null : idx)}
-                  className="w-full px-6 py-4.5 text-left flex items-center justify-between gap-4 font-bold text-sm text-white cursor-pointer hover:bg-white/5 transition-colors"
-                >
-                  <span>{faq.q}</span>
-                  {isExpanded ? (
-                    <ChevronUp className="w-4 h-4 text-sky-400 shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-neutral-400 shrink-0" />
-                  )}
-                </button>
-
-                {isExpanded && (
-                  <div className="px-6 pb-5 pt-1 text-xs text-neutral-400 leading-relaxed border-t border-white/5">
-                    {faq.a}
-                  </div>
-                )}
+      {/* 11. CLIENT TESTIMONIAL & EXECUTIVE QUOTES (Steelora Slider Style) */}
+      <section className="py-16 lg:py-24 border-t border-white/10 bg-[#090C12]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-amber-400/30 bg-amber-400/10 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                <Award className="w-3.5 h-3.5" />
+                <span>Client Feedback</span>
               </div>
-            );
-          })}
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Feedback from Our Civil Engineering Clients
+              </h2>
+            </div>
+
+            {/* Testimonial Nav Dots */}
+            <div className="flex items-center gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
+                    activeTestimonial === i ? 'bg-[#FF5E14] w-6' : 'bg-white/20 hover:bg-white/40'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Testimonial Card */}
+          <div className="rounded-3xl border border-white/15 bg-[#0F1420] p-8 sm:p-12 shadow-2xl relative">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              <div className="lg:col-span-8 space-y-6 text-left">
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, i) => (
+                    <Award key={i} className="w-4 h-4 fill-current" />
+                  ))}
+                  <span className="text-xs font-bold text-neutral-400 ml-2">(5.0 Verified Feedback)</span>
+                </div>
+
+                <blockquote className="text-lg sm:text-xl font-medium text-white leading-relaxed">
+                  "{testimonials[activeTestimonial].quote}"
+                </blockquote>
+
+                <div className="pt-4 border-t border-white/10 flex items-center gap-4">
+                  <img 
+                    src={testimonials[activeTestimonial].avatar}
+                    onError={(e) => { e.currentTarget.src = '/favicon.svg'; }}
+                    alt={testimonials[activeTestimonial].author}
+                    className="w-12 h-12 rounded-full border border-[#FF5E14] object-cover"
+                  />
+                  <div>
+                    <h4 className="text-sm font-bold text-white">{testimonials[activeTestimonial].author}</h4>
+                    <p className="text-xs text-neutral-400">{testimonials[activeTestimonial].title}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Side Metric Card */}
+              <div className="lg:col-span-4 rounded-2xl border border-white/10 bg-[#080B11] p-6 space-y-3 text-center">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h4 className="text-sm font-bold text-white">Active Deployment</h4>
+                <p className="text-xs text-neutral-400">
+                  Deployed across {testimonials[activeTestimonial].sites} with certified daily reporting.
+                </p>
+                <button
+                  onClick={() => onLaunchApp('dashboard')}
+                  className="w-full mt-2 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white text-xs font-semibold transition-all cursor-pointer"
+                >
+                  View Deployment Stats
+                </button>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Call To Action Banner */}
-      <section className="bg-[#08090C] text-white py-20 px-4 sm:px-6 lg:px-10 border-t border-white/10 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-white/10 border border-white/15 rounded-full text-xs font-semibold text-sky-400">
-            <Zap className="w-3.5 h-3.5" />
-            <span>Ready for Instant Deployment</span>
+      {/* 12. FREQUENTLY ASKED QUESTIONS (Steelora Style with Dark Accordion) */}
+      <section id="faq" className="py-16 lg:py-24 border-t border-white/10 bg-[#0B0F17]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-10">
+          
+          <div className="text-center space-y-3 mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-neutral-300 text-xs font-semibold uppercase tracking-wider">
+              <HelpCircle className="w-3.5 h-3.5 text-[#FF5E14]" />
+              <span>Common Questions</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Frequently Asked Questions About SiteReport AI
+            </h2>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Transform Your Construction Reporting Today
-          </h2>
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => {
+              const isOpen = expandedFaq === idx;
+              return (
+                <div 
+                  key={idx}
+                  className="rounded-2xl border border-white/10 bg-[#0F1420] overflow-hidden transition-all"
+                >
+                  <button
+                    onClick={() => setExpandedFaq(isOpen ? null : idx)}
+                    className="w-full px-6 py-4 flex items-center justify-between text-left text-sm font-bold text-white hover:text-[#FF5E14] transition-colors cursor-pointer"
+                  >
+                    <span>{faq.q}</span>
+                    {isOpen ? (
+                      <ChevronUp className="w-4 h-4 text-[#FF5E14] shrink-0 ml-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-neutral-400 shrink-0 ml-4" />
+                    )}
+                  </button>
 
-          <p className="text-sm sm:text-base text-neutral-400 max-w-xl mx-auto">
-            Join forward-thinking infrastructure developers, general contractors, and project managers using SiteReport.
-          </p>
-
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
-            <button
-              onClick={() => onLaunchApp('dashboard')}
-              className="px-8 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-semibold rounded-full text-xs sm:text-sm shadow-xl flex items-center gap-2 transition-all cursor-pointer"
-            >
-              <span>Launch Live Site Console</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={() => onOpenAIModal('voice')}
-              className="px-7 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-xs sm:text-sm font-semibold flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <Mic className="w-4 h-4 text-sky-400" />
-              <span>Try Multilingual Voice Input</span>
-            </button>
+                  {isOpen && (
+                    <div className="px-6 pb-5 text-xs text-neutral-300 leading-relaxed border-t border-white/5 pt-3">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
+
         </div>
       </section>
 
-      {/* Footer matching RentPe reference: Deep obsidian with giant watermark SiteReport typography */}
-      <footer className="bg-[#08090C] border-t border-white/10 text-neutral-400 py-16 px-4 sm:px-6 lg:px-10 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <SiteReportLogo isDark={true} size="md" />
-            <div className="h-4 w-px bg-white/10 hidden sm:block" />
-            <p className="text-xs text-neutral-400">
-              AI-Powered Construction Reporting & Earned Value Management System
+      {/* 13. BOTTOM CALL-TO-ACTION BANNER (Steelora Style) */}
+      <section className="py-16 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
+        <div className="rounded-3xl border border-white/15 bg-gradient-to-r from-[#0F1420] via-[#161D2E] to-[#0F1420] p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl space-y-6">
+          <div className="absolute inset-0 bg-radial-glow pointer-events-none" />
+
+          <div className="max-w-2xl mx-auto space-y-3 relative z-10">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Let's Make Site Reporting Effortless
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              Eliminate evening paperwork, prevent ghost muster rolls, and generate certified Universal DPR, WPR & MPR reports in seconds.
             </p>
           </div>
 
-          <div className="flex items-center gap-6 text-xs text-neutral-400">
-            <span>Smarter Reports. Stronger Sites.</span>
-            <div className="h-3 w-px bg-white/10" />
+          <div className="flex flex-wrap items-center justify-center gap-4 relative z-10">
             <button
               onClick={() => onLaunchApp('dashboard')}
-              className="text-white hover:text-sky-400 font-semibold transition-colors cursor-pointer"
+              className="px-8 py-3.5 bg-[#FF5E14] hover:bg-[#e04f0f] text-white font-bold rounded-full text-xs sm:text-sm shadow-xl shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
-              Open Console →
+              <span>Launch Workspace Free</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => onOpenAIModal('voice')}
+              className="px-8 py-3.5 bg-white/10 hover:bg-white/15 text-white border border-white/15 rounded-full text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2"
+            >
+              <Mic className="w-4 h-4 text-[#FF5E14]" />
+              <span>Record Live Voice Log</span>
             </button>
           </div>
         </div>
+      </section>
 
-        {/* Giant RentPe-style Watermark Typography */}
-        <div className="mt-12 select-none pointer-events-none text-center">
-          <span className="text-[14vw] font-black text-white/[0.03] leading-none tracking-tighter uppercase inline-block">
-            SiteReport
-          </span>
+      {/* 14. PROFESSIONAL INDUSTRIAL FOOTER */}
+      <footer className="border-t border-white/10 bg-[#05070B] py-12 px-4 sm:px-6 lg:px-10 text-neutral-400 text-xs">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          
+          <div className="space-y-3 md:col-span-1">
+            <SiteReportLogo isDark={true} size="md" />
+            <p className="text-[11px] text-neutral-400 leading-relaxed">
+              Universal Site Progress Report platform powered by Groq LLM speech intelligence and multimodal OCR.
+            </p>
+            <div className="text-[10px] font-mono text-[#FF5E14]">
+              UNIVERSAL DPR • WPR • MPR V2.0
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Field Solutions</h4>
+            <ul className="space-y-1.5 text-[11px]">
+              <li><button onClick={() => onLaunchApp('labour')} className="hover:text-white transition-colors cursor-pointer">Labour & Muster Roll</button></li>
+              <li><button onClick={() => onLaunchApp('resource')} className="hover:text-white transition-colors cursor-pointer">Materials & Challan OCR</button></li>
+              <li><button onClick={() => onLaunchApp('equipment')} className="hover:text-white transition-colors cursor-pointer">Plant & Fleet Utilization</button></li>
+              <li><button onClick={() => onLaunchApp('cost')} className="hover:text-white transition-colors cursor-pointer">Earned Value Management (EVM)</button></li>
+              <li><button onClick={() => onLaunchApp('reports')} className="hover:text-white transition-colors cursor-pointer">Universal Reports Center</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Universal Standards</h4>
+            <ul className="space-y-1.5 text-[11px]">
+              <li>Section A1–A13 Daily Progress Report (DPR)</li>
+              <li>Section B1–B14 Weekly Progress Report (WPR)</li>
+              <li>Section C1–C15 Monthly Progress Report (MPR)</li>
+              <li>Mon–Sun Daily Manpower Grid (B4)</li>
+              <li>Material Balance & Wastage Reconciliation (B5 & C5)</li>
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Direct Contacts</h4>
+            <ul className="space-y-1.5 text-[11px]">
+              <li className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-[#FF5E14]" />
+                <span>+91 (020) 6680-2400</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-[#FF5E14]" />
+                <span>contact@sitereport.ai</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-3.5 h-3.5 text-[#FF5E14]" />
+                <span>Pune / Mumbai, Maharashtra, India</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div className="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+          <div>
+            &copy; {new Date().getFullYear()} SiteReport AI. All rights reserved. Zero-hallucination certified.
+          </div>
+          <div className="flex items-center gap-4">
+            <a href="#hero" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#hero" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#hero" className="hover:text-white transition-colors">Security Standards</a>
+          </div>
         </div>
       </footer>
+
     </div>
   );
 };
