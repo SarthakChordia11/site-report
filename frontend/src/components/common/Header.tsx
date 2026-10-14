@@ -70,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setSiteMenuOpen(!siteMenuOpen)}
               className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition-colors cursor-pointer"
             >
-              <Building2 className="w-3.5 h-3.5 text-sky-400" />
+              <Building2 className="w-3.5 h-3.5 text-[#FF5E14]" />
               <span className="max-w-[180px] lg:max-w-[240px] truncate">
                 {currentSite ? currentSite.name : 'No Site Selected'}
               </span>
@@ -91,10 +91,10 @@ export const Header: React.FC<HeaderProps> = ({
                       setSiteMenuOpen(false);
                     }}
                     className={`w-full text-left px-3 py-2.5 rounded-xl text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
-                      s.id === currentSite?.id ? 'bg-sky-500/15 border border-sky-500/30 text-white font-bold' : 'text-neutral-300 hover:bg-white/5'
+                      s.id === currentSite?.id ? 'bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-white font-bold' : 'text-neutral-300 hover:bg-white/5'
                     }`}
                   >
-                    <Building2 className={`w-4 h-4 mt-0.5 ${s.id === currentSite?.id ? 'text-sky-400' : 'text-neutral-400'}`} />
+                    <Building2 className={`w-4 h-4 mt-0.5 ${s.id === currentSite?.id ? 'text-[#FF5E14]' : 'text-neutral-400'}`} />
                     <div className="flex-1 min-w-0">
                       <p className="truncate font-semibold">{s.name}</p>
                       <p className={`text-[10px] ${s.id === currentSite?.id ? 'text-neutral-300' : 'text-neutral-500'}`}>
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({
                       setSiteMenuOpen(false);
                       onAddSite?.();
                     }}
-                    className="w-full text-left px-3 py-2 hover:bg-white/5 text-sky-400 rounded-xl transition-colors flex items-center gap-2 cursor-pointer font-semibold text-xs"
+                    className="w-full text-left px-3 py-2 hover:bg-white/5 text-[#FF5E14] rounded-xl transition-colors flex items-center gap-2 cursor-pointer font-semibold text-xs"
                   >
                     <Plus className="w-4 h-4" />
                     <span>Create New Site</span>
@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({
               title="Notifications"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-sky-400" />
+              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#FF5E14]" />
             </button>
 
             {notificationsOpen && (
@@ -165,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={() => setUserMenuOpen(!userMenuOpen)}
               className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors cursor-pointer"
             >
-              <div className="w-6 h-6 rounded-full bg-sky-500/20 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-xs">
+              <div className="w-6 h-6 rounded-full bg-[#FF5E14]/20 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14] font-bold text-xs">
                 {currentUser?.name?.charAt(0)?.toUpperCase() || 'U'}
               </div>
               <span className="hidden sm:inline text-xs font-semibold text-white">{currentUser?.name || 'User'}</span>
@@ -192,7 +192,7 @@ export const Header: React.FC<HeaderProps> = ({
                     onBackToLanding();
                     setUserMenuOpen(false);
                   }}
-                  className="w-full text-left px-3 py-2 hover:bg-white/5 text-sky-400 rounded-xl transition-colors cursor-pointer font-medium"
+                  className="w-full text-left px-3 py-2 hover:bg-white/5 text-[#FF5E14] rounded-xl transition-colors cursor-pointer font-medium"
                 >
                   Exit to Landing
                 </button>

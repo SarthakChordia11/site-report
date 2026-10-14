@@ -97,7 +97,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                         isActive 
                           ? 'bg-neutral-950 text-white' 
-                          : 'bg-white/10 text-sky-400 border border-white/10'
+                          : 'bg-white/10 text-[#FF5E14] border border-white/10'
                       }`}
                     >
                       {item.badge}
@@ -111,7 +111,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         <div className="p-5 border-t border-white/10 space-y-3">
           <div className="p-3 rounded-2xl bg-[#10131A] border border-white/10 flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-sky-500/20 border border-sky-500/30 flex items-center justify-center font-bold text-sky-400 text-xs uppercase">
+            <div className="w-8 h-8 rounded-full bg-[#FF5E14]/20 border border-[#FF5E14]/30 flex items-center justify-center font-bold text-[#FF5E14] text-xs uppercase">
               {currentUser?.name?.charAt(0) || 'U'}
             </div>
             <div className="flex-1 min-w-0">
