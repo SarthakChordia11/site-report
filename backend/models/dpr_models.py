@@ -489,3 +489,6 @@ class DPRFullReport(BaseModel):
     # Optional nested Weekly (WPR) and Monthly (MPR) structures if report_type is Weekly/Monthly
     wpr_data: Optional[UniversalWPRReport] = None
     mpr_data: Optional[UniversalMPRReport] = None
+
+
+UniversalDPRReport = DPRFullReport
