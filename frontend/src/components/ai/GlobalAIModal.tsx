@@ -15,7 +15,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { 
+import type { 
   InputMode, 
   ModuleId, 
   ExtractedAIData, 
@@ -27,8 +27,8 @@ import {
   SAMPLE_VOICE_PROMPTS, 
   SAMPLE_CHALLANS, 
   parseVoiceOrTextInput, 
-  VoicePreset, 
-  SampleChallan 
+  type VoicePreset, 
+  type SampleChallan 
 } from '../../utils/aiParser';
 import { aiApi, dprApi } from '../../services/api';
 
@@ -334,17 +334,17 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
-      <div className="bg-[#10131A] border border-white/10 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
+      <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
         {/* Modal Header */}
         <div className="px-6 py-4 bg-[#0B0D13] border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white tracking-tight">AI Site Operations Assistant</h3>
-                <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-sky-500/10 text-sky-400 rounded-full border border-sky-500/20">
+                <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-[#FF5E14]/15 text-[#FF5E14] rounded-full border border-[#FF5E14]/30">
                   Groq Whisper + LLaMA 3.3
                 </span>
               </div>
@@ -367,7 +367,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
               onClick={() => { setActiveMode('voice'); setExtractedResult(null); }}
               className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'voice'
-                  ? 'bg-white text-neutral-950 shadow-md font-bold'
+                  ? 'bg-[#FF5E14] text-white shadow-md font-bold'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -379,7 +379,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
               onClick={() => { setActiveMode('form'); setExtractedResult(null); }}
               className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'form'
-                  ? 'bg-white text-neutral-950 shadow-md font-bold'
+                  ? 'bg-[#FF5E14] text-white shadow-md font-bold'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -404,7 +404,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <div className="bg-[#0B0D13] p-5 rounded-2xl border border-white/10 text-center relative">
                   <div className="flex items-center justify-between mb-4 text-xs">
                     <span className="text-neutral-300 font-semibold">Spoken Audio Stream</span>
-                    <span className="text-sky-400 font-mono text-[11px] bg-sky-500/10 px-2 py-0.5 rounded-full border border-sky-500/20">
+                    <span className="text-[#FF5E14] font-mono text-[11px] bg-[#FF5E14]/15 px-2 py-0.5 rounded-full border border-[#FF5E14]/30">
                       Hindi / Marathi / English
                     </span>
                   </div>
@@ -415,10 +415,10 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     {!isRecording && !isPaused && (
                       <button
                         onClick={startRecording}
-                        className="w-16 h-16 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-white/10 cursor-pointer bg-white hover:bg-neutral-200 text-neutral-950"
+                        className="w-16 h-16 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-[#FF5E14]/20 cursor-pointer bg-[#FF5E14] hover:bg-[#E04F0F] text-white"
                         title="Click to start recording"
                       >
-                        <Mic className="w-7 h-7 text-neutral-950" />
+                        <Mic className="w-7 h-7 text-white" />
                       </button>
                     )}
 
@@ -451,7 +451,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <button
                           onClick={resumeRecording}
                           title="Resume recording"
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-sky-500 hover:bg-sky-600 text-white ring-4 ring-sky-500/30"
+                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-[#FF5E14] hover:bg-[#E04F0F] text-white ring-4 ring-[#FF5E14]/30"
                         >
                           <Mic className="w-6 h-6 text-white" />
                         </button>
@@ -468,7 +468,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     <p className="mt-3 text-xs font-medium text-neutral-300 flex items-center justify-center">
                       {isRecording ? (
                         <>
-                          <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping inline-block mr-2" />
+                          <span className="w-2 h-2 rounded-full bg-[#FF5E14] animate-ping inline-block mr-2" />
                           <span>Listening... Click Pause or Done when finished</span>
                         </>
                       ) : isPaused ? (
@@ -483,7 +483,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   </div>
 
                   {/* Transcript Display & Editable Input */}
-                  <div className="mt-3 text-left bg-[#10131A] p-3.5 rounded-xl border border-white/10">
+                  <div className="mt-3 text-left bg-[#161A24] p-3.5 rounded-xl border border-white/10">
                     <div className="flex items-center justify-between mb-1.5">
                       <span className="text-[10px] text-neutral-400 font-semibold uppercase tracking-wider">
                         Live Transcript (Editable):
@@ -513,19 +513,19 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       disabled={isPlayingAudio || (!voiceText && !selectedPreset?.transcript)}
                       className="flex items-center gap-2 px-3.5 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-40 border border-white/10 rounded-full text-xs font-semibold text-neutral-300 transition-colors cursor-pointer"
                     >
-                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-sky-400 animate-bounce' : 'text-neutral-400'}`} />
+                      <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-[#FF5E14] animate-bounce' : 'text-neutral-400'}`} />
                       <span>{isPlayingAudio ? 'Playing Audio...' : 'Hear Spoken Voice'}</span>
                     </button>
 
                     <button
                       onClick={() => handleProcessVoice()}
                       disabled={isProcessing || isRecording || (!voiceText.trim() && !selectedPreset?.transcript)}
-                      className="flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs transition-all shadow-lg shadow-white/10 cursor-pointer disabled:opacity-40"
+                      className="flex items-center gap-2 px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs transition-all shadow-lg shadow-[#FF5E14]/20 cursor-pointer disabled:opacity-40"
                     >
                       {isProcessing ? (
-                        <RefreshCw className="w-3.5 h-3.5 animate-spin text-neutral-950" />
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin text-white" />
                       ) : (
-                        <Sparkles className="w-3.5 h-3.5 text-neutral-950" />
+                        <Sparkles className="w-3.5 h-3.5 text-white" />
                       )}
                       <span>Extract with AI</span>
                     </button>
@@ -545,7 +545,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         onClick={() => handleSelectPreset(preset)}
                         className={`w-full text-left p-3 rounded-xl border transition-all cursor-pointer ${
                           selectedPreset?.id === preset.id && !voiceText
-                            ? 'bg-white/10 border-sky-400/50 text-white'
+                            ? 'bg-white/10 border-[#FF5E14]/50 text-white'
                             : 'bg-[#10131A] border-white/5 text-neutral-300 hover:border-white/20'
                         }`}
                       >
@@ -580,7 +580,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       onClick={() => setFormModule(mod)}
                       className={`py-2 px-3 rounded-full text-xs font-bold capitalize transition-all cursor-pointer ${
                         formModule === mod
-                          ? 'bg-white text-neutral-950 shadow-md'
+                          ? 'bg-[#FF5E14] text-white shadow-md'
                           : 'bg-white/5 border border-white/10 text-neutral-400 hover:text-white'
                       }`}
                     >
@@ -596,7 +596,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       <select
                         value={formTrade}
                         onChange={(e) => setFormTrade(e.target.value)}
-                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       >
                         {(trades.length > 0 ? trades : [
                           { trade: 'Mason' },
@@ -618,7 +618,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formPresent}
                           onChange={(e) => setFormPresent(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                       <div>
@@ -627,7 +627,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formAbsent}
                           onChange={(e) => setFormAbsent(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                       <div>
@@ -636,7 +636,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formOT}
                           onChange={(e) => setFormOT(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                     </div>
@@ -651,7 +651,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         type="text"
                         value={formMaterial}
                         onChange={(e) => setFormMaterial(e.target.value)}
-                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -661,7 +661,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formMatReceived}
                           onChange={(e) => setFormMatReceived(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                       <div>
@@ -670,7 +670,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formMatConsumed}
                           onChange={(e) => setFormMatConsumed(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                     </div>
@@ -680,7 +680,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         type="text"
                         value={formInvoice}
                         onChange={(e) => setFormInvoice(e.target.value)}
-                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
                     </div>
                   </div>
@@ -694,7 +694,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         type="text"
                         value={formEquip}
                         onChange={(e) => setFormEquip(e.target.value)}
-                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                        className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -704,7 +704,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formWorkingHours}
                           onChange={(e) => setFormWorkingHours(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                       <div>
@@ -713,7 +713,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           type="number"
                           value={formIdleHours}
                           onChange={(e) => setFormIdleHours(parseInt(e.target.value) || 0)}
-                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-sky-400"
+                          className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
                     </div>
@@ -723,9 +723,9 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <button
                   onClick={handleProcessQuickForm}
                   disabled={isProcessing}
-                  className="w-full mt-2 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-white/10"
+                  className="w-full mt-2 py-3 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#FF5E14]/20"
                 >
-                  <Sparkles className="w-4 h-4 text-neutral-950" />
+                  <Sparkles className="w-4 h-4 text-white" />
                   <span>Structure & Auto-Route with AI</span>
                 </button>
               </div>
@@ -736,13 +736,13 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
           <div className="lg:col-span-5 flex flex-col bg-[#0B0D13] rounded-2xl border border-white/10 p-5">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-[#FF5E14] animate-pulse"></span>
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   LLaMA 3.3 Extraction
                 </span>
               </div>
               {extractedResult && (
-                <span className="px-2.5 py-0.5 bg-sky-500/10 text-sky-400 text-[10px] font-mono font-bold rounded-full border border-sky-500/20">
+                <span className="px-2.5 py-0.5 bg-[#FF5E14]/15 text-[#FF5E14] text-[10px] font-mono font-bold rounded-full border border-[#FF5E14]/30">
                   {Math.round(extractedResult.confidence * 100)}% Match
                 </span>
               )}
@@ -750,7 +750,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 
             {isProcessing ? (
               <div className="flex-1 flex flex-col items-center justify-center py-12 text-neutral-400 text-xs">
-                <RefreshCw className="w-8 h-8 animate-spin text-sky-400 mb-3" />
+                <RefreshCw className="w-8 h-8 animate-spin text-[#FF5E14] mb-3" />
                 <p className="font-bold text-white">Parsing Multilingual Audio & Documents...</p>
                 <p className="text-[11px] text-neutral-400 mt-1">Groq Whisper Transcription → LLaMA 3.3 Structuring</p>
               </div>
@@ -760,7 +760,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   {/* Routed Module Badge */}
                   <div className="flex items-center justify-between bg-[#10131A] p-3 rounded-xl border border-white/10">
                     <span className="text-[11px] text-neutral-400">Target Module Routing:</span>
-                    <span className="px-3 py-1 bg-white/10 text-sky-400 border border-sky-500/30 text-xs font-bold rounded-full uppercase flex items-center gap-1.5">
+                    <span className="px-3 py-1 bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30 text-xs font-bold rounded-full uppercase flex items-center gap-1.5">
                       <Layers className="w-3.5 h-3.5" />
                       <span>Module {extractedResult.module.toUpperCase()}</span>
                     </span>
@@ -803,7 +803,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       Language: <strong className="text-white font-medium">{extractedResult.languageDetected}</strong>
                     </p>
                     <p className="text-neutral-400">
-                      Intent: <span className="text-sky-400 font-medium">{extractedResult.intent}</span>
+                      Intent: <span className="text-[#FF5E14] font-medium">{extractedResult.intent}</span>
                     </p>
                   </div>
 
@@ -815,7 +815,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     <div className="space-y-1.5">
                       {extractedResult.actionSummary.map((act, i) => (
                         <div key={i} className="flex items-start gap-2 text-xs bg-[#10131A] p-2.5 rounded-xl border border-white/10 text-neutral-200">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 mt-0.5 shrink-0" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#FF5E14] mt-0.5 shrink-0" />
                           <span>{act}</span>
                         </div>
                       ))}
@@ -832,9 +832,9 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <button
                   id="apply-ai-extraction-btn"
                   onClick={handleApply}
-                  className="w-full py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs flex items-center justify-center gap-2 shadow-xl shadow-white/10 transition-all cursor-pointer mt-4"
+                  className="w-full py-3.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs flex items-center justify-center gap-2 shadow-xl shadow-[#FF5E14]/20 transition-all cursor-pointer mt-4"
                 >
-                  <Check className="w-4 h-4 text-neutral-950" />
+                  <Check className="w-4 h-4 text-white" />
                   <span>Apply & Sync to Live Site Database</span>
                   <ArrowRight className="w-3.5 h-3.5 ml-1" />
                 </button>

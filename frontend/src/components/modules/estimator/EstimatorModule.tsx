@@ -517,7 +517,7 @@ export const EstimatorModule: React.FC = () => {
           type={type}
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-full px-3.5 py-2.5 border border-white/10 rounded-xl bg-[#0B0D13] font-mono text-sm text-white focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+          className="w-full px-3.5 py-2.5 border border-white/10 rounded-xl bg-[#0B0D13] font-mono text-sm text-white focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
         />
         {suffix && <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-neutral-500 pointer-events-none">{suffix}</span>}
       </div>
@@ -525,9 +525,9 @@ export const EstimatorModule: React.FC = () => {
   );
 
   const planBadgeStyles: Record<PlanType, string> = {
-    floor: 'bg-sky-500/10 text-sky-400 border-sky-500/20',
-    foundation: 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
-    roof: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    floor: 'bg-[#FF5E14]/15 text-[#FF5E14] border-[#FF5E14]/30',
+    foundation: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30',
+    roof: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
     other: 'bg-white/5 text-neutral-400 border-white/10',
   };
 
@@ -536,8 +536,8 @@ export const EstimatorModule: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
-          <Calculator className="w-5 h-5 text-sky-400" />
+        <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
+          <Calculator className="w-5 h-5 text-[#FF5E14]" />
         </div>
         <div>
           <h1 className="text-xl font-bold text-white tracking-tight">Estimator</h1>
@@ -545,9 +545,9 @@ export const EstimatorModule: React.FC = () => {
         </div>
       </div>
 
-      <section className="bg-[#10131A] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-8 h-8 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">
             <ImageIcon className="w-4 h-4" />
           </span>
           <div>
@@ -576,7 +576,7 @@ export const EstimatorModule: React.FC = () => {
               e.currentTarget.value = '';
             }}
           />
-          <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-sky-400">
+          <div className="w-12 h-12 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center shrink-0 text-[#FF5E14]">
             <Upload className="w-5 h-5" />
           </div>
           <div className="min-w-0">
@@ -588,17 +588,17 @@ export const EstimatorModule: React.FC = () => {
         {plans.length > 0 && (
           <div className="space-y-3">
             {plans.map((plan) => (
-              <div key={plan.id} className="border border-gray-200 rounded-xl p-4 bg-[#FAFAFA] flex flex-col gap-4 sm:flex-row sm:items-start">
+              <div key={plan.id} className="border border-white/10 rounded-2xl p-4 bg-[#0B0D13] flex flex-col gap-4 sm:flex-row sm:items-start">
                 <img
                   src={plan.dataUrl}
                   alt={plan.file.name}
-                  className="w-full sm:w-24 h-44 sm:h-24 object-cover rounded-lg border border-gray-200 bg-white"
+                  className="w-full sm:w-24 h-44 sm:h-24 object-cover rounded-xl border border-white/10 bg-[#161A24]"
                 />
                 <div className="flex-1 min-w-0 space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 justify-between">
                     <div className="min-w-0">
-                      <div className="text-sm font-semibold text-[#0E0E0E] truncate">{plan.file.name}</div>
-                      <div className="text-[11px] text-gray-500 truncate">{Math.round(plan.file.size / 1024)} KB</div>
+                      <div className="text-sm font-semibold text-white truncate">{plan.file.name}</div>
+                      <div className="text-[11px] text-neutral-400 truncate">{Math.round(plan.file.size / 1024)} KB</div>
                     </div>
                     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${planBadgeStyles[plan.type]}`}>
                       <Layers className="w-3 h-3" />
@@ -608,11 +608,11 @@ export const EstimatorModule: React.FC = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs text-gray-500 mb-1">Plan type</label>
+                      <label className="block text-xs text-neutral-400 mb-1">Plan type</label>
                       <select
                         value={plan.type}
                         onChange={(e) => updatePlan(plan.id, { type: e.target.value as PlanType })}
-                        className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm"
+                        className="w-full px-3 py-2 border border-white/10 rounded-xl bg-[#161A24] text-white text-sm focus:outline-none focus:border-[#FF5E14]"
                       >
                         <option value="floor">Floor plan</option>
                         <option value="foundation">Foundation / footing plan</option>
@@ -623,7 +623,7 @@ export const EstimatorModule: React.FC = () => {
 
                     {plan.type === 'floor' && (
                       <div>
-                        <label className="block text-xs text-gray-500 mb-1">Attach to floor</label>
+                        <label className="block text-xs text-neutral-400 mb-1">Attach to floor</label>
                         <select
                           value={plan.floorChoice}
                           onChange={(e) => {
@@ -635,7 +635,7 @@ export const EstimatorModule: React.FC = () => {
                             }
                             updatePlan(plan.id, { floorChoice: nextChoice });
                           }}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white text-sm"
+                          className="w-full px-3 py-2 border border-white/10 rounded-xl bg-[#161A24] text-white text-sm focus:outline-none focus:border-[#FF5E14]"
                         >
                           <option value="new">+ Add as new floor</option>
                           {floors.map(f => (
@@ -646,14 +646,14 @@ export const EstimatorModule: React.FC = () => {
                     )}
                   </div>
 
-                  <p className="text-xs text-gray-500 bg-[#EFF3F6] border border-[#2E4A6B]/10 rounded-lg px-3 py-2">
+                  <p className="text-xs text-neutral-400 bg-white/5 border border-white/10 rounded-xl px-3 py-2">
                     The image is stored as a reference inside the estimator. Fill the numeric floor fields below to drive the BOQ.
                   </p>
                 </div>
 
                 <button
                   onClick={() => removePlan(plan.id)}
-                  className="self-start px-3 py-2 text-xs font-semibold text-[#A8442E] border border-[#A8442E]/20 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+                  className="self-start px-3 py-2 text-xs font-semibold text-rose-400 border border-rose-500/20 rounded-xl hover:bg-rose-500/10 transition-colors cursor-pointer"
                 >
                   <Trash2 className="w-3.5 h-3.5 inline mr-1" />
                   Remove
@@ -665,28 +665,28 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 1: Floors */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">1</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">1</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Building & floors</h2>
-            <p className="text-xs text-gray-500">Add one card per floor. Each floor can have its own footprint.</p>
+            <h2 className="text-sm font-bold text-white">Building & floors</h2>
+            <p className="text-xs text-neutral-400">Add one card per floor. Each floor can have its own footprint.</p>
           </div>
         </div>
 
         <div className="space-y-3">
           {floors.map(f => (
-            <div key={f.id} className="border border-gray-200 rounded-lg p-4 bg-[#FAFAFA]">
+            <div key={f.id} className="border border-white/10 rounded-2xl p-4 bg-[#0B0D13]">
               <div className="flex items-center justify-between mb-3">
                 <input
                   value={f.label}
                   onChange={e => updateFloor(f.id, 'label', e.target.value)}
-                  className="font-bold text-sm text-white bg-transparent border-b border-dashed border-white/20 focus:outline-none focus:border-sky-400 px-0 py-0.5 max-w-[200px]"
+                  className="font-bold text-sm text-white bg-transparent border-b border-dashed border-white/20 focus:outline-none focus:border-[#FF5E14] px-0 py-0.5 max-w-[200px]"
                 />
                 {floors.length > 1 && (
                   <button
                     onClick={() => removeFloor(f.id)}
-                    className="px-2.5 py-1 text-xs font-medium text-[#A8442E] border border-[#A8442E]/30 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+                    className="px-2.5 py-1 text-xs font-medium text-rose-400 border border-rose-500/30 rounded-xl hover:bg-rose-500/10 transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-3 h-3 inline mr-1" />
                     Remove
@@ -707,7 +707,7 @@ export const EstimatorModule: React.FC = () => {
 
         <button
           onClick={addFloor}
-          className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#2E4A6B] border border-[#2E4A6B]/30 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white bg-white/5 hover:bg-[#FF5E14] hover:text-white border border-white/10 rounded-xl transition-colors cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           Add another floor
@@ -715,12 +715,12 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 2: Foundation */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">2</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">2</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Foundation / footing</h2>
-            <p className="text-xs text-gray-500">One-time trench footing: PCC bedding then RCC footing above it.</p>
+            <h2 className="text-sm font-bold text-white">Foundation / footing</h2>
+            <p className="text-xs text-neutral-400">One-time trench footing: PCC bedding then RCC footing above it.</p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -735,12 +735,12 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 3: Columns */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">3</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">3</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Columns</h2>
-            <p className="text-xs text-gray-500">RCC columns from footing to roof. Height is summed from floor heights above.</p>
+            <h2 className="text-sm font-bold text-white">Columns</h2>
+            <p className="text-xs text-neutral-400">RCC columns from footing to roof. Height is summed from floor heights above.</p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -749,8 +749,8 @@ export const EstimatorModule: React.FC = () => {
           <Field label="Concrete ratio" value={columns.ratio} onChange={v => setColumns(p => ({ ...p, ratio: v }))} type="text" />
           <Field label="Steel in columns (kg/m³)" value={columns.steel} onChange={v => setColumns(p => ({ ...p, steel: parseFloat(v) || 0 }))} />
           <div>
-            <label className="block text-xs text-gray-500 mb-1.5 font-mono text-[#2E4A6B]">Total column height</label>
-            <div className="px-3 py-2.5 font-mono text-sm text-[#2E4A6B] font-bold">
+            <label className="block text-xs text-neutral-400 mb-1.5 font-mono">Total column height</label>
+            <div className="px-3 py-2.5 font-mono text-sm text-[#FF5E14] font-bold">
               {totalColumnHeight} ft (across {floors.length} floor{floors.length > 1 ? 's' : ''})
             </div>
           </div>
@@ -758,12 +758,12 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 4: Slab */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">4</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">4</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Roof / slab</h2>
-            <p className="text-xs text-gray-500">RCC slab cast over the full footprint of every floor.</p>
+            <h2 className="text-sm font-bold text-white">Roof / slab</h2>
+            <p className="text-xs text-neutral-400">RCC slab cast over the full footprint of every floor.</p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -774,12 +774,12 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 5: Finishing */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">5</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">5</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Wall mortar, plaster, flooring & paint</h2>
-            <p className="text-xs text-gray-500">Finishing quantities across the whole building.</p>
+            <h2 className="text-sm font-bold text-white">Wall mortar, plaster, flooring & paint</h2>
+            <p className="text-xs text-neutral-400">Finishing quantities across the whole building.</p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -792,12 +792,12 @@ export const EstimatorModule: React.FC = () => {
       </section>
 
       {/* Stage 6: Rates */}
-      <section className="bg-white border border-gray-200 rounded-xl p-5 space-y-4">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
-          <span className="w-7 h-7 rounded-full border border-[#2E4A6B] text-[#2E4A6B] flex items-center justify-center text-xs font-mono font-bold shrink-0">6</span>
+          <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">6</span>
           <div>
-            <h2 className="text-sm font-bold text-[#0E0E0E]">Rates, overheads & costing</h2>
-            <p className="text-xs text-gray-500">Unit rates for the BOQ + overhead chain: Labour → T&P → Profit → GST.</p>
+            <h2 className="text-sm font-bold text-white">Rates, overheads & costing</h2>
+            <p className="text-xs text-neutral-400">Unit rates for the BOQ + overhead chain: Labour → T&P → Profit → GST.</p>
           </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
@@ -810,7 +810,7 @@ export const EstimatorModule: React.FC = () => {
           <Field label="Flooring (₹/sqft)" value={rates.flooring} onChange={v => setRates(p => ({ ...p, flooring: parseFloat(v) || 0 }))} />
           <Field label="Painting (₹/litre applied)" value={rates.paint} onChange={v => setRates(p => ({ ...p, paint: parseFloat(v) || 0 }))} />
         </div>
-        <p className="text-xs text-gray-500 mt-1">Overhead % chain (each applied on the running subtotal above it):</p>
+        <p className="text-xs text-neutral-400 mt-1">Overhead % chain (each applied on the running subtotal above it):</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           <Field label="Labour (% of material cost)" value={rates.pctLabour} onChange={v => setRates(p => ({ ...p, pctLabour: parseFloat(v) || 0 }))} />
           <Field label="T&P (% of material+labour)" value={rates.pctTnp} onChange={v => setRates(p => ({ ...p, pctTnp: parseFloat(v) || 0 }))} />
@@ -824,9 +824,9 @@ export const EstimatorModule: React.FC = () => {
       <div className="flex items-center gap-4">
         <button
           onClick={calculate}
-          className="flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full transition-all cursor-pointer shadow-xl shadow-white/10 active:scale-95 text-xs sm:text-sm"
+          className="flex items-center gap-2 px-6 py-3.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full transition-all cursor-pointer shadow-xl shadow-[#FF5E14]/20 active:scale-95 text-xs sm:text-sm"
         >
-          <Calculator className="w-4 h-4 text-neutral-950" />
+          <Calculator className="w-4 h-4 text-white" />
           <span>Calculate BOQ & cost</span>
         </button>
         <span className="text-xs text-neutral-400">Adjust any input above and recalculate at any time.</span>
@@ -834,7 +834,7 @@ export const EstimatorModule: React.FC = () => {
 
       {/* Results */}
       {results && boq && (
-        <div ref={resultsRef} className="bg-[#10131A] border border-white/10 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
+        <div ref={resultsRef} className="bg-[#161A24] border border-white/10 text-white rounded-3xl p-6 sm:p-8 space-y-6 shadow-2xl">
           {/* Material Requisition */}
           <div>
             <h2 className="text-lg font-bold">Material requisition</h2>
@@ -883,7 +883,7 @@ export const EstimatorModule: React.FC = () => {
                   { title: 'Roof / slab (all floors)', data: results.breakdown.slab },
                 ].map(({ title, data }) => (
                   <div key={title}>
-                    <h3 className="text-xs font-bold text-[#4C6E93] mb-1">{title}</h3>
+                    <h3 className="text-xs font-bold text-[#FF5E14] mb-1">{title}</h3>
                     <div className="space-y-0.5 text-xs text-gray-300">
                       <div className="flex justify-between"><span>Cement</span><span className="font-mono">{fmt(data.cementBags, 1)} bags</span></div>
                       <div className="flex justify-between"><span>Sand</span><span className="font-mono">{fmt(data.sandM3 * M3_TO_CFT)} cft</span></div>
@@ -894,7 +894,7 @@ export const EstimatorModule: React.FC = () => {
                   </div>
                 ))}
                 <div>
-                  <h3 className="text-xs font-bold text-[#4C6E93] mb-1">Walls (all floors)</h3>
+                  <h3 className="text-xs font-bold text-[#FF5E14] mb-1">Walls (all floors)</h3>
                   <div className="space-y-0.5 text-xs text-gray-300">
                     <div className="flex justify-between"><span>Bricks</span><span className="font-mono">{fmt(results.breakdown.brickCount)} nos</span></div>
                     <div className="flex justify-between"><span>Mortar cement</span><span className="font-mono">{fmt(results.breakdown.wallMortar.cementBags, 1)} bags</span></div>
@@ -902,7 +902,7 @@ export const EstimatorModule: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-[#4C6E93] mb-1">Plaster (all floors)</h3>
+                  <h3 className="text-xs font-bold text-[#FF5E14] mb-1">Plaster (all floors)</h3>
                   <div className="space-y-0.5 text-xs text-gray-300">
                     <div className="flex justify-between"><span>Internal cement</span><span className="font-mono">{fmt(results.breakdown.internalPlaster.cementBags, 1)} bags</span></div>
                     <div className="flex justify-between"><span>Internal sand</span><span className="font-mono">{fmt(results.breakdown.internalPlaster.sandM3 * M3_TO_CFT)} cft</span></div>
@@ -911,7 +911,7 @@ export const EstimatorModule: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xs font-bold text-[#4C6E93] mb-1">Finishing (all floors)</h3>
+                  <h3 className="text-xs font-bold text-[#FF5E14] mb-1">Finishing (all floors)</h3>
                   <div className="space-y-0.5 text-xs text-gray-300">
                     <div className="flex justify-between"><span>Flooring</span><span className="font-mono">{fmt(results.breakdown.flooringSqft)} sqft</span></div>
                     <div className="flex justify-between"><span>Paint</span><span className="font-mono">{fmt(results.breakdown.paintLitres)} litres</span></div>
@@ -928,7 +928,7 @@ export const EstimatorModule: React.FC = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-700 text-xs text-[#4C6E93] uppercase tracking-wider">
+                  <tr className="border-b border-gray-700 text-xs text-[#FF5E14] uppercase tracking-wider">
                     <th className="text-left py-2 pr-2">Sr</th>
                     <th className="text-left py-2 pr-2">Item description</th>
                     <th className="text-right py-2 pr-2">Qty</th>
@@ -1019,9 +1019,9 @@ export const EstimatorModule: React.FC = () => {
           <div className="border-t border-white/10 pt-4">
             <button
               onClick={downloadCSV}
-              className="flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold text-xs rounded-full shadow-lg shadow-white/10 transition-all cursor-pointer active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold text-xs rounded-full shadow-lg shadow-[#FF5E14]/20 transition-all cursor-pointer active:scale-95"
             >
-              <Download className="w-4 h-4 text-neutral-950" />
+              <Download className="w-4 h-4 text-white" />
               <span>Download BOQ (CSV, opens in Excel)</span>
             </button>
           </div>

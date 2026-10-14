@@ -156,8 +156,8 @@ export default function DashboardIsland() {
 
   if (!currentSite) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center p-8 bg-[#10131A] border border-white/10 rounded-3xl animate-in fade-in">
-        <div className="w-16 h-16 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6 text-center p-8 bg-[#161A24] border border-white/10 rounded-3xl animate-in fade-in">
+        <div className="w-16 h-16 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
           <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               strokeLinecap="round"
@@ -173,7 +173,7 @@ export default function DashboardIsland() {
         </div>
         <button
           onClick={() => setIsAddSiteModalOpen(true)}
-          className="px-8 py-3 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full transition-all cursor-pointer shadow-xl text-sm"
+          className="px-8 py-3 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full transition-all cursor-pointer shadow-xl shadow-[#FF5E14]/20 text-sm"
         >
           + Add First Site
         </button>

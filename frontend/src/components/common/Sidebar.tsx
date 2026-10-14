@@ -11,7 +11,7 @@ import {
   FolderKanban,
   Files
 } from 'lucide-react';
-import { ModuleId } from '../../types';
+import type { ModuleId } from '../../types';
 import { SiteReportLogo } from './SiteReportLogo';
 import { authHelpers } from '../../services/api';
 
@@ -54,9 +54,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
         />
       )}
 
-      {/* Sidebar Container: Deep Obsidian #08090C matching RentPe aesthetic */}
+      {/* Sidebar Container: Deep Industrial Slate #0B0E17 */}
       <aside 
-        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#08090C] border-r border-white/10 flex flex-col justify-between transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#0B0E17] border-r border-white/10 flex flex-col justify-between transition-transform duration-200 lg:translate-x-0 ${
           isOpenMobile ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -110,7 +110,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <div className="p-5 border-t border-white/10 space-y-3">
-          <div className="p-3 rounded-2xl bg-[#10131A] border border-white/10 flex items-center gap-3">
+          <div className="p-3 rounded-2xl bg-[#161A24] border border-white/10 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#FF5E14]/20 border border-[#FF5E14]/30 flex items-center justify-center font-bold text-[#FF5E14] text-xs uppercase">
               {currentUser?.name?.charAt(0) || 'U'}
             </div>

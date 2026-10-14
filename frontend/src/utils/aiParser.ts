@@ -1,4 +1,4 @@
-import { ExtractedAIData, ModuleId, TradeType } from '../types';
+import type { ExtractedAIData, ModuleId, TradeType } from '../types';
 
 export interface VoicePreset {
   id: string;

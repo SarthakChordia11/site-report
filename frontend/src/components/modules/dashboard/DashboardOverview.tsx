@@ -19,7 +19,7 @@ import {
   FileCheck2,
   Calendar
 } from 'lucide-react';
-import { 
+import type { 
   Site, 
   SiteReport, 
   TradeRosterItem, 
@@ -93,16 +93,16 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
       </div>
 
-      {/* 4 Metric KPI Cards with RentPe aesthetic */}
+      {/* 4 Metric KPI Cards with Steelora industrial aesthetic */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Card 1: Total Reports */}
-        <div className="bg-[#10131A] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-sky-400/40 transition-colors">
+        <div className="bg-[#161A24] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-[#FF5E14]/40 transition-colors">
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <FileText className="w-5 h-5" />
             </div>
             {reports.length > 0 && (
-              <span className="inline-flex items-center text-[10px] font-semibold text-sky-400 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
+              <span className="inline-flex items-center text-[10px] font-semibold text-[#FF5E14] bg-[#FF5E14]/15 px-2.5 py-0.5 rounded-full border border-[#FF5E14]/30">
                 Live Data
               </span>
             )}
@@ -114,9 +114,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Card 2: Active Sites */}
-        <div className="bg-[#10131A] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-sky-400/40 transition-colors">
+        <div className="bg-[#161A24] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-[#FF5E14]/40 transition-colors">
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <Building2 className="w-5 h-5" />
             </div>
           </div>
@@ -127,9 +127,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Card 3: Issues Found */}
-        <div className="bg-[#10131A] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-sky-400/40 transition-colors">
+        <div className="bg-[#161A24] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-[#FF5E14]/40 transition-colors">
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <AlertTriangle className="w-5 h-5" />
             </div>
           </div>
@@ -140,9 +140,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Card 4: Reports Generated / Accuracy */}
-        <div className="bg-[#10131A] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-sky-400/40 transition-colors">
+        <div className="bg-[#161A24] border border-white/10 rounded-2xl p-5 shadow-lg hover:border-[#FF5E14]/40 transition-colors">
           <div className="flex items-center justify-between">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <ShieldCheck className="w-5 h-5" />
             </div>
           </div>
@@ -154,10 +154,10 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       </div>
 
       {/* Live Site Quick Actions & AI Input triggers */}
-      <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 shadow-xl">
+      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-6 shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+            <div className="w-9 h-9 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <Sparkles className="w-4.5 h-4.5" />
             </div>
             <div>
@@ -169,9 +169,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           <div className="flex items-center gap-2.5">
             <button
               onClick={() => onOpenAIModal('voice')}
-              className="px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 rounded-full text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-sm"
+              className="px-4 py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white rounded-full text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-md shadow-[#FF5E14]/20"
             >
-              <Mic className="w-3.5 h-3.5 text-neutral-950" />
+              <Mic className="w-3.5 h-3.5 text-white" />
               <span>Voice Note</span>
             </button>
           </div>
@@ -181,46 +181,46 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 text-xs">
           <div 
             onClick={() => onSelectModule('labour')}
-            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-sky-400/30 rounded-2xl cursor-pointer transition-colors"
+            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-[#FF5E14]/30 rounded-2xl cursor-pointer transition-colors"
           >
             <p className="text-neutral-400 text-[11px]">Active Manpower</p>
             <p className="text-base font-bold text-white mt-1">{totalWorkersPresent} Workers</p>
-            <p className="text-[10px] text-sky-400 mt-1.5 font-semibold">View Labour Roster →</p>
+            <p className="text-[10px] text-[#FF5E14] mt-1.5 font-semibold">View Labour Roster →</p>
           </div>
 
           <div 
             onClick={() => onSelectModule('resource')}
-            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-sky-400/30 rounded-2xl cursor-pointer transition-colors"
+            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-[#FF5E14]/30 rounded-2xl cursor-pointer transition-colors"
           >
             <p className="text-neutral-400 text-[11px]">Material Reorders</p>
             <p className="text-base font-bold text-white mt-1">{criticalMaterialAlerts} Alerts</p>
-            <p className="text-[10px] text-sky-400 mt-1.5 font-semibold">View Inventory →</p>
+            <p className="text-[10px] text-[#FF5E14] mt-1.5 font-semibold">View Inventory →</p>
           </div>
 
           <div 
             onClick={() => onSelectModule('equipment')}
-            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-sky-400/30 rounded-2xl cursor-pointer transition-colors"
+            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-[#FF5E14]/30 rounded-2xl cursor-pointer transition-colors"
           >
             <p className="text-neutral-400 text-[11px]">Equipment Operating</p>
             <p className="text-base font-bold text-white mt-1">{activeMachineryCount} Units Active</p>
-            <p className="text-[10px] text-sky-400 mt-1.5 font-semibold">View Plant Status →</p>
+            <p className="text-[10px] text-[#FF5E14] mt-1.5 font-semibold">View Plant Status →</p>
           </div>
 
           <div 
             onClick={() => onSelectModule('cost')}
-            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-sky-400/30 rounded-2xl cursor-pointer transition-colors"
+            className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-[#FF5E14]/30 rounded-2xl cursor-pointer transition-colors"
           >
             <p className="text-neutral-400 text-[11px]">EVM Performance</p>
             <p className="text-base font-bold text-emerald-400 mt-1">
               CPI {costSummary?.costPerformanceIndex != null ? costSummary.costPerformanceIndex.toFixed(2) : '1.03'}
             </p>
-            <p className="text-[10px] text-sky-400 mt-1.5 font-semibold">View Financial EVM →</p>
+            <p className="text-[10px] text-[#FF5E14] mt-1.5 font-semibold">View Financial EVM →</p>
           </div>
         </div>
       </div>
 
-      {/* Recent Reports Table with RentPe card styling */}
-      <div className="bg-[#10131A] border border-white/10 rounded-2xl p-6 shadow-xl">
+      {/* Recent Reports Table with Steelora styling */}
+      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-6 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-lg font-bold text-white">Recent Reports</h2>
@@ -236,7 +236,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                 placeholder="Search reports..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 pr-4 py-2 bg-[#0B0D13] border border-white/10 rounded-full text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-sky-400 transition-colors"
+                className="pl-9 pr-4 py-2 bg-[#0B0D13] border border-white/10 rounded-full text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
               />
             </div>
 
@@ -259,7 +259,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           </div>
         </div>
 
-        {/* Table layout with RentPe styling */}
+        {/* Table layout with Steelora styling */}
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -280,11 +280,11 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                 >
                   <td className="py-4 px-3 font-semibold text-white">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400 shrink-0">
+                      <div className="w-8 h-8 rounded-xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14] shrink-0">
                         <FileText className="w-4 h-4" />
                       </div>
                       <div>
-                        <p className="group-hover:text-sky-400 transition-colors">{report.name}</p>
+                        <p className="group-hover:text-[#FF5E14] transition-colors">{report.name}</p>
                         <p className="text-[11px] text-neutral-400 font-normal">{report.author}</p>
                       </div>
                     </div>
@@ -303,7 +303,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                       className={`inline-flex items-center px-3 py-1 rounded-full text-[11px] font-semibold ${
                         report.status === 'Completed'
                           ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                          : 'bg-sky-500/15 text-sky-400 border border-sky-500/30'
+                          : 'bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30'
                       }`}
                     >
                       {report.status}
@@ -335,10 +335,10 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
 
           <button
             onClick={() => onSelectModule('reports')}
-            className="flex items-center gap-1.5 text-white hover:text-sky-400 font-semibold cursor-pointer transition-colors"
+            className="flex items-center gap-1.5 text-white hover:text-[#FF5E14] font-semibold cursor-pointer transition-colors"
           >
             <span>View All Reports</span>
-            <ArrowRight className="w-3.5 h-3.5 text-sky-400" />
+            <ArrowRight className="w-3.5 h-3.5 text-[#FF5E14]" />
           </button>
         </div>
       </div>
@@ -346,10 +346,10 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       {/* Report Quick Modal Inspector */}
       {selectedReportDetail && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#10131A] border border-white/10 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 text-white">
+          <div className="bg-[#161A24] border border-white/10 rounded-3xl max-w-xl w-full p-6 shadow-2xl space-y-5 animate-in zoom-in-95 text-white">
             <div className="flex items-center justify-between pb-4 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center text-sky-400">
+                <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div>
@@ -361,7 +361,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
               <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                 selectedReportDetail.status === 'Completed'
                   ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-sky-500/15 text-sky-400 border border-sky-500/30'
+                  : 'bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30'
               }`}>
                 {selectedReportDetail.status}
               </span>
@@ -459,7 +459,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                     </div>
                     <div className="p-3.5 bg-[#0B0D13] rounded-2xl border border-white/10">
                       <p className="text-[10px] text-neutral-400 uppercase tracking-wider">EVM Index</p>
-                      <p className="text-xs font-bold text-sky-400 mt-1">{selectedReportDetail.evmStatus}</p>
+                      <p className="text-xs font-bold text-[#FF5E14] mt-1">{selectedReportDetail.evmStatus}</p>
                     </div>
                   </div>
                 </>

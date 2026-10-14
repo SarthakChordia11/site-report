@@ -8,7 +8,6 @@ import {
   Mic, 
   Camera, 
   Sparkles, 
-  Play, 
   CheckCircle2, 
   Users, 
   Package, 
@@ -49,7 +48,7 @@ import {
 } from 'lucide-react';
 import { SiteReportLogo } from '../common/SiteReportLogo';
 import { SAMPLE_VOICE_PROMPTS } from '../../utils/aiParser';
-import { ModuleId } from '../../types';
+import type { ModuleId } from '../../types';
 
 interface LandingPageProps {
   onLaunchApp: (targetModule?: ModuleId) => void;
@@ -176,54 +175,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     <div className="min-h-screen bg-[#F7F4EE] text-[#111624] font-sans antialiased selection:bg-[#FF5E14] selection:text-white">
 
       {/* ============================================================================== */}
-      {/* 1. TOP NOTICE & CONTACT BAR (Matching Screenshot 1)                           */}
+      {/* 1. FLOATING PURE WHITE NAVBAR                                                  */}
       {/* ============================================================================== */}
-      <div className="bg-[#161A22] text-neutral-300 py-2.5 px-4 lg:px-10 border-b border-white/5">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs">
-          
-          {/* Left: Pill-shaped contact items */}
-          <div className="flex flex-wrap items-center gap-3">
-            <a 
-              href="tel:(01)666-24068" 
-              className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <Phone className="w-3.5 h-3.5 text-[#FF5E14]" />
-              <span>Call Us: +(01) 666-240 68</span>
-            </a>
-
-            <a 
-              href="mailto:info@sitereport.ai" 
-              className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 flex items-center gap-2 transition-colors cursor-pointer"
-            >
-              <Mail className="w-3.5 h-3.5 text-[#FF5E14]" />
-              <span>Email Us: info@sitereport.ai</span>
-            </a>
-
-            <div className="hidden md:flex px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-neutral-300 items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-[#FF5E14]" />
-              <span>Visit Us: 231 Madison, NewYork, USA / Pune, India</span>
-            </div>
-          </div>
-
-          {/* Right: Round social icons */}
-          <div className="flex items-center gap-2">
-            {['facebook', 'twitter', 'telegram', 'pinterest'].map((social, i) => (
-              <span 
-                key={i} 
-                className="w-7 h-7 rounded-full bg-white/5 hover:bg-[#FF5E14] hover:text-white border border-white/10 flex items-center justify-center text-neutral-400 transition-all cursor-pointer text-[11px] font-bold"
-              >
-                {social.charAt(0).toUpperCase()}
-              </span>
-            ))}
-          </div>
-
-        </div>
-      </div>
-
-      {/* ============================================================================== */}
-      {/* 2. FLOATING PURE WHITE NAVBAR (Matching Screenshot 1)                          */}
-      {/* ============================================================================== */}
-      <div className="sticky top-0 z-50 py-3 px-4 lg:px-10 bg-[#161A22]/30 backdrop-blur-md">
+      <div className="sticky top-0 z-50 py-4 px-4 lg:px-10 bg-[#161A22]/20 backdrop-blur-md">
         <nav className="max-w-7xl mx-auto bg-white rounded-full px-6 sm:px-8 py-3.5 flex items-center justify-between shadow-xl border border-neutral-200/80">
           
           {/* Logo with Orange Gear */}
@@ -254,9 +208,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </div>
 
       {/* ============================================================================== */}
-      {/* 3. FULL-BLEED DRAMATIC WELDER HERO SECTION (Matching Screenshot 1)             */}
+      {/* 2. FULL-BLEED DRAMATIC WELDER HERO SECTION                                     */}
       {/* ============================================================================== */}
-      <section id="hero" className="relative -mt-[84px] pt-32 pb-24 lg:pt-40 lg:pb-36 min-h-[700px] flex items-center overflow-hidden">
+      <section id="hero" className="relative -mt-[88px] pt-36 pb-24 lg:pt-44 lg:pb-36 min-h-[700px] flex items-center overflow-hidden">
         
         {/* Full-Bleed Dramatic Welder Image Background */}
         <div className="absolute inset-0 z-0">
@@ -266,96 +220,53 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             alt="Welder in protective gear welding inside giant metal tunnel with sparks flying"
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark Overlay matching Steelora Screenshot 1 */}
+          {/* Dark Overlay matching Steelora theme */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/40" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-3xl lg:max-w-4xl space-y-7 text-left">
             
-            {/* Left Column: Headlines & Call to Action */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              
-              {/* Subtitle Badge with Gear */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#161A24]/90 border border-white/20 text-neutral-200 text-xs font-semibold backdrop-blur-sm">
-                <Settings className="w-3.5 h-3.5 text-[#FF5E14] animate-spin" style={{ animationDuration: '8s' }} />
-                <span>SiteReport Manufacturing & Engineering Industry</span>
-              </div>
-
-              {/* Display Headline */}
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
-                Built on Strength<br />
-                Driven by Innovation<br />
-                Focused on Quality
-              </h1>
-
-              {/* Checklist */}
-              <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-medium text-neutral-200">
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-white font-bold" />
-                  <span>Reliable Project Delivery</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-white font-bold" />
-                  <span>Strict Quality Control</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Check className="w-4 h-4 text-white font-bold" />
-                  <span>Expert Team</span>
-                </div>
-              </div>
-
-              {/* Action Button */}
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <button
-                  id="hero-analyze-report-btn"
-                  onClick={() => onLaunchApp('dashboard')}
-                  className="px-8 py-4 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-sm shadow-xl shadow-[#FF5E14]/30 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-                >
-                  <ArrowRight className="w-4 h-4" />
-                  <span>Start A Project With Us</span>
-                </button>
-              </div>
-
+            {/* Subtitle Badge with Gear */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#161A24]/90 border border-white/20 text-neutral-200 text-xs font-semibold backdrop-blur-sm">
+              <Settings className="w-3.5 h-3.5 text-[#FF5E14] animate-spin" style={{ animationDuration: '8s' }} />
+              <span>SiteReport Manufacturing & Engineering Industry</span>
             </div>
 
-            {/* Right Column: Hero Video Documentary Card (Matching Screenshot 1) */}
-            <div className="lg:col-span-5 flex justify-end">
-              <div className="w-full max-w-md rounded-3xl bg-[#161A24]/90 backdrop-blur-md border border-white/15 p-5 shadow-2xl space-y-4 text-left">
-                
-                {/* Thumbnail with Round Play Button */}
-                <div className="relative h-56 rounded-2xl overflow-hidden border border-white/10 group cursor-pointer" onClick={() => onOpenAIModal('voice')}>
-                  <img 
-                    src="/steelora/hero-video.webp"
-                    onError={(e) => { e.currentTarget.src = '/steelora/hero.webp'; }}
-                    alt="Welder welding industrial structure"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                  
-                  {/* Circular White Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-14 h-14 rounded-full bg-white text-[#111624] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 fill-current ml-0.5 text-[#111624]" />
-                    </div>
-                  </div>
-                </div>
+            {/* Display Headline */}
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
+              Built on Strength<br />
+              Driven by Innovation<br />
+              Focused on Quality
+            </h1>
 
-                <div className="space-y-2">
-                  <h3 className="text-base font-bold text-white leading-snug">
-                    Raw Steel to Remarkable Results: The Story Behind Our Manufacturing Excellence
-                  </h3>
-                  <button 
-                    onClick={() => onOpenAIModal('voice')}
-                    className="inline-flex items-center gap-2 text-xs font-semibold text-neutral-300 hover:text-white transition-colors cursor-pointer"
-                  >
-                    <ArrowRight className="w-3.5 h-3.5 text-[#FF5E14]" />
-                    <span>Watch Full Documentary</span>
-                  </button>
-                </div>
-
+            {/* Checklist */}
+            <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-medium text-neutral-200">
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-white font-bold" />
+                <span>Reliable Project Delivery</span>
               </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-white font-bold" />
+                <span>Strict Quality Control</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="w-4 h-4 text-white font-bold" />
+                <span>Expert Team</span>
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
+              <button
+                id="hero-analyze-report-btn"
+                onClick={() => onLaunchApp('dashboard')}
+                className="px-8 py-4 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-sm shadow-xl shadow-[#FF5E14]/30 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <ArrowRight className="w-4 h-4" />
+                <span>Start A Project With Us</span>
+              </button>
             </div>
 
           </div>

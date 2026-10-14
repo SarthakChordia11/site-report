@@ -56,35 +56,35 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#08090C] bg-grid flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0B0E17] bg-grid flex items-center justify-center p-4 relative overflow-hidden">
       {/* Ambient Radial Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-sky-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-400/5 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#FF5E14]/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#FF5E14]/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#FF5E14]/5 rounded-full blur-3xl" />
       </div>
 
       <div className="w-full max-w-md relative z-10">
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center mb-4 shadow-xl shadow-white/10">
-            <Building2 className="w-7 h-7 text-neutral-950" />
+          <div className="w-14 h-14 bg-[#FF5E14] rounded-2xl flex items-center justify-center mb-4 shadow-xl shadow-[#FF5E14]/20">
+            <Building2 className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl font-extrabold text-white tracking-tight">
-            SiteReport<span className="text-sky-400">AI</span>
+            SiteReport<span className="text-[#FF5E14]">AI</span>
           </h1>
           <p className="text-neutral-400 text-sm mt-1">AI-Powered Construction Site Management</p>
         </div>
 
         {/* Card */}
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
+        <div className="bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
           {/* Segmented Pill Tabs */}
           <div className="p-1 bg-[#0B0D13] border border-white/10 rounded-full flex gap-1 mb-6">
             <button
               onClick={() => { setTab('login'); setError(''); }}
               className={`flex-1 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 tab === 'login'
-                  ? 'bg-white text-neutral-950 shadow-md'
+                  ? 'bg-[#FF5E14] text-white shadow-md'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -94,7 +94,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
               onClick={() => { setTab('register'); setError(''); }}
               className={`flex-1 py-2.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                 tab === 'register'
-                  ? 'bg-white text-neutral-950 shadow-md'
+                  ? 'bg-[#FF5E14] text-white shadow-md'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
@@ -120,7 +120,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                     onChange={e => setLoginEmail(e.target.value)}
                     required
                     placeholder="you@example.com"
-                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
                   />
                 </div>
               </div>
@@ -135,7 +135,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                     onChange={e => setLoginPassword(e.target.value)}
                     required
                     placeholder="••••••••"
-                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
                   />
                   <button
                     type="button"
@@ -150,10 +150,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-white hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed text-neutral-950 font-bold py-3.5 rounded-full flex items-center justify-center gap-2 transition-all shadow-lg shadow-white/10 hover:shadow-white/20 active:scale-[0.99] cursor-pointer mt-4 text-sm"
+                className="w-full bg-[#FF5E14] hover:bg-[#E04F0F] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-full flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5E14]/20 active:scale-[0.99] cursor-pointer mt-4 text-sm"
               >
                 {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-neutral-950/30 border-t-neutral-950 rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
                     Sign In <ArrowRight className="w-4 h-4" />
@@ -173,7 +173,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                     onChange={e => setRegName(e.target.value)}
                     required
                     placeholder="Darshan Girase"
-                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
                   />
                 </div>
               </div>
@@ -188,7 +188,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                     onChange={e => setRegEmail(e.target.value)}
                     required
                     placeholder="you@example.com"
-                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
                   />
                 </div>
               </div>
@@ -204,7 +204,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                     required
                     minLength={8}
                     placeholder="At least 8 characters"
-                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                    className="w-full bg-[#0B0D13] border border-white/10 rounded-xl pl-10 pr-10 py-2.5 text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
                   />
                   <button
                     type="button"
@@ -219,10 +219,10 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-white hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed text-neutral-950 font-bold py-3.5 rounded-full flex items-center justify-center gap-2 transition-all shadow-lg shadow-white/10 hover:shadow-white/20 active:scale-[0.99] cursor-pointer mt-4 text-sm"
+                className="w-full bg-[#FF5E14] hover:bg-[#E04F0F] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-full flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5E14]/20 active:scale-[0.99] cursor-pointer mt-4 text-sm"
               >
                 {isLoading ? (
-                  <div className="w-4 h-4 border-2 border-neutral-950/30 border-t-neutral-950 rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <>
                     Create Account <ArrowRight className="w-4 h-4" />
@@ -239,7 +239,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthSuccess }) => {
                 key={f}
                 className="flex items-center gap-1.5 px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[11px] text-neutral-300 font-medium"
               >
-                <Sparkles className="w-3 h-3 text-sky-400" />
+                <Sparkles className="w-3 h-3 text-[#FF5E14]" />
                 {f}
               </span>
             ))}

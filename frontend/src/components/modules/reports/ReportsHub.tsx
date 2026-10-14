@@ -22,7 +22,7 @@ import {
   RefreshCw,
   SlidersHorizontal
 } from 'lucide-react';
-import { SiteReport, Site } from '../../../types';
+import type { SiteReport, Site } from '../../../types';
 import { dprApi } from '../../../services/api';
 
 interface ReportsHubProps {
@@ -129,7 +129,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
             <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Site Progress Reports
             </h1>
-            <span className="px-3 py-1 bg-sky-500/10 text-sky-400 border border-sky-500/20 rounded-full text-xs font-semibold">
+            <span className="px-3 py-1 bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30 rounded-full text-xs font-semibold">
               Universal Template (DPR • WPR • MPR)
             </span>
           </div>
@@ -164,9 +164,9 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
 
           <button
             onClick={() => onOpenAIModal('voice')}
-            className="px-5 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs sm:text-sm shadow-lg shadow-white/10 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
+            className="px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs sm:text-sm shadow-md shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
           >
-            <Mic className="w-4 h-4 text-neutral-950" />
+            <Mic className="w-4 h-4 text-white" />
             <span>Voice DPR Log</span>
           </button>
         </div>
@@ -176,10 +176,10 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left Column: Report Navigation List */}
-        <div className="lg:col-span-4 bg-[#10131A] border border-white/10 rounded-3xl p-5 shadow-2xl space-y-4">
+        <div className="lg:col-span-4 bg-[#161A24] border border-white/10 rounded-3xl p-5 shadow-2xl space-y-4">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-bold text-white flex items-center gap-2">
-              <Layers className="w-4 h-4 text-sky-400" />
+              <Layers className="w-4 h-4 text-[#FF5E14]" />
               <span>Shift & Periodic Reports ({filteredReports.length})</span>
             </h2>
             
@@ -226,7 +226,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
               placeholder="Search reports by name, project, engineer..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-[#0B0D13] border border-white/10 rounded-xl text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+              className="w-full pl-9 pr-4 py-2.5 bg-[#0B0D13] border border-white/10 rounded-xl text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
             />
           </div>
 
@@ -247,7 +247,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                   ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
                   : repType === 'Monthly'
                   ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                  : 'bg-sky-500/10 text-sky-400 border-sky-500/20';
+                  : 'bg-[#FF5E14]/15 text-[#FF5E14] border-[#FF5E14]/30';
 
                 return (
                   <div
@@ -255,14 +255,14 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                     onClick={() => setSelectedReport(report)}
                     className={`p-4 rounded-2xl border text-xs cursor-pointer transition-all ${
                       isSelected
-                        ? 'bg-white/10 border-sky-400/50 shadow-md ring-1 ring-sky-400/30'
+                        ? 'bg-white/10 border-[#FF5E14]/50 shadow-md ring-1 ring-[#FF5E14]/30'
                         : 'bg-[#0B0D13] border-white/5 hover:border-white/20'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex items-center gap-2.5">
                         <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${
-                          isSelected ? 'bg-sky-400 text-neutral-950 font-bold' : 'bg-white/10 text-sky-400'
+                          isSelected ? 'bg-[#FF5E14] text-white font-bold' : 'bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14]'
                         }`}>
                           <FileText className="w-4 h-4" />
                         </div>
@@ -295,13 +295,13 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
         </div>
 
         {/* Right Column: Detailed Universal Document Viewer */}
-        <div className="lg:col-span-8 bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className="lg:col-span-8 bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
           {selectedReport ? (
             <div>
               {/* Document Header & Actions */}
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
@@ -312,7 +312,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                           ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
                           : currentType === 'Monthly'
                           ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                          : 'bg-sky-500/10 text-sky-400 border-sky-500/20'
+                          : 'bg-[#FF5E14]/15 text-[#FF5E14] border-[#FF5E14]/30'
                       }`}>
                         {currentType}
                       </span>
@@ -404,7 +404,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                 <th className="p-3 border-b border-white/10 text-center">Fri</th>
                                 <th className="p-3 border-b border-white/10 text-center">Sat</th>
                                 <th className="p-3 border-b border-white/10 text-center">Sun</th>
-                                <th className="p-3 border-b border-white/10 text-center font-extrabold text-sky-400">Avg</th>
+                                <th className="p-3 border-b border-white/10 text-center font-extrabold text-[#FF5E14]">Avg</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -418,7 +418,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                   <td className="p-3 text-center text-neutral-300">{m.fri}</td>
                                   <td className="p-3 text-center text-neutral-300">{m.sat}</td>
                                   <td className="p-3 text-center text-neutral-300">{m.sun}</td>
-                                  <td className="p-3 text-center font-bold text-sky-400">{m.avg}</td>
+                                  <td className="p-3 text-center font-bold text-[#FF5E14]">{m.avg}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -447,7 +447,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                 <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{mat.material}</td>
                                   <td className="p-3 text-neutral-300">{mat.opening_stock}</td>
-                                  <td className="p-3 text-sky-400">{mat.received_this_week}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{mat.received_this_week}</td>
                                   <td className="p-3 text-neutral-300">{mat.consumed_this_week}</td>
                                   <td className="p-3 font-bold text-emerald-400">{mat.closing_stock}</td>
                                 </tr>
@@ -673,7 +673,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                 <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{mat.material}</td>
                                   <td className="p-3 text-neutral-300">{mat.opening}</td>
-                                  <td className="p-3 text-sky-400">{mat.received_month}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{mat.received_month}</td>
                                   <td className="p-3 text-neutral-300">{mat.consumed_month}</td>
                                   <td className="p-3 font-bold text-emerald-400">{mat.closing_balance}</td>
                                   <td className="p-3 text-neutral-400">{mat.wastage_pct}%</td>
@@ -726,7 +726,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                     {/* DPR Header Table */}
                     <div className="bg-[#0B0D13] border border-white/10 rounded-2xl p-4">
                       <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
-                        <span className="font-bold text-sm text-sky-400 tracking-wide">A. DAILY PROGRESS REPORT (DPR)</span>
+                        <span className="font-bold text-sm text-[#FF5E14] tracking-wide">A. DAILY PROGRESS REPORT (DPR)</span>
                         <span className="text-xs text-neutral-400">{selectedReport.date}</span>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
@@ -762,7 +762,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                   <td className="p-3 text-neutral-500">{a.sr_no || idx + 1}</td>
                                   <td className="p-3 font-medium text-white">{a.agency_team}</td>
                                   <td className="p-3 text-neutral-300">{a.work_location_zone}</td>
-                                  <td className="p-3 text-sky-400 font-semibold">{a.manpower}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{a.manpower}</td>
                                   <td className="p-3 text-neutral-300">{a.activity_description}</td>
                                 </tr>
                               ))}
@@ -791,7 +791,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                               {(universal.a2_manpower_summary || universal.labour || []).map((m: any, idx: number) => (
                                 <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{m.trade}</td>
-                                  <td className="p-3 text-sky-400 font-bold">{m.today ?? m.present ?? 0}</td>
+                                  <td className="p-3 text-[#FF5E14] font-bold">{m.today ?? m.present ?? 0}</td>
                                   <td className="p-3 text-neutral-400">{m.yesterday ?? 0}</td>
                                   <td className="p-3 text-neutral-400">{m.variance ?? 0}</td>
                                   <td className="p-3 text-neutral-400">{m.remarks || m.contractor || m.productivity || '-'}</td>
@@ -822,7 +822,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                               {(universal.a3_materials || []).map((mat: any, idx: number) => (
                                 <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{mat.material}</td>
-                                  <td className="p-3 text-sky-400 font-semibold">{mat.qty_received || '-'}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{mat.qty_received || '-'}</td>
                                   <td className="p-3 text-neutral-400">{mat.unit || '-'}</td>
                                   <td className="p-3 text-neutral-300">{mat.qty_consumed || '-'}</td>
                                   <td className="p-3 text-neutral-400">{mat.remarks || '-'}</td>
@@ -831,7 +831,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                               {(!universal.a3_materials || universal.a3_materials.length === 0) && (universal.materials || []).map((mat: any, idx: number) => (
                                 <tr key={`legacy-${idx}`} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{mat.item}</td>
-                                  <td className="p-3 text-sky-400">{mat.quantity}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{mat.quantity}</td>
                                   <td className="p-3 text-neutral-400">-</td>
                                   <td className="p-3 text-neutral-300">-</td>
                                   <td className="p-3 text-neutral-400">{mat.status}</td>
@@ -1019,7 +1019,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                 <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                                   <td className="p-3 font-medium text-white">{p.work_location_zone}</td>
                                   <td className="p-3 text-neutral-300">{p.planned_activity}</td>
-                                  <td className="p-3 text-sky-400 font-semibold">{p.target_quantity}</td>
+                                  <td className="p-3 text-[#FF5E14] font-semibold">{p.target_quantity}</td>
                                 </tr>
                               ))}
                             </tbody>
@@ -1052,7 +1052,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                                   <td className="p-3 text-neutral-400">{l.absent}</td>
                                   <td className="p-3 text-neutral-300">{l.ot_hours}</td>
                                   <td className="p-3 text-neutral-300">₹{l.wage_rate}</td>
-                                  <td className="p-3 text-sky-400 font-bold">₹{l.amount_payable}</td>
+                                  <td className="p-3 text-[#FF5E14] font-bold">₹{l.amount_payable}</td>
                                 </tr>
                               ))}
                             </tbody>

@@ -12,7 +12,7 @@ import {
   ArrowLeft,
   Plus
 } from 'lucide-react';
-import { Site, ModuleId } from '../../types';
+import type { Site, ModuleId } from '../../types';
 import { SiteReportLogo } from './SiteReportLogo';
 import { authHelpers } from '../../services/api';
 
@@ -45,7 +45,7 @@ export const Header: React.FC<HeaderProps> = ({
   const currentUser = authHelpers.getUser();
 
   return (
-    <header className="sticky top-0 z-30 bg-[#08090C]/90 backdrop-blur-md border-b border-white/10 text-white shadow-sm">
+    <header className="sticky top-0 z-30 bg-[#0B0E17]/90 backdrop-blur-md border-b border-white/10 text-white shadow-sm">
       <div className="px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
         
         {/* Left Section: Mobile Menu & Site Switcher */}
@@ -78,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {siteMenuOpen && (
-              <div className="absolute left-0 mt-2 w-72 bg-[#10131A] border border-white/10 rounded-2xl shadow-2xl z-50 p-2 animate-in fade-in">
+              <div className="absolute left-0 mt-2 w-72 bg-[#161A24] border border-white/10 rounded-2xl shadow-2xl z-50 p-2 animate-in fade-in">
                 <p className="px-3 py-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Select Construction Site</p>
                 {sites.length === 0 && (
                   <p className="px-3 py-2 text-xs text-neutral-500 italic">No sites created yet.</p>
@@ -173,7 +173,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {userMenuOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-[#10131A] border border-white/10 rounded-2xl shadow-2xl z-50 p-1.5 text-xs animate-in fade-in">
+              <div className="absolute right-0 mt-2 w-48 bg-[#161A24] border border-white/10 rounded-2xl shadow-2xl z-50 p-1.5 text-xs animate-in fade-in">
                 <div className="px-3 py-2 border-b border-white/10">
                   <p className="font-bold text-white">{currentUser?.name || 'User'}</p>
                   <p className="text-[10px] text-neutral-400 truncate">{currentUser?.email || 'user@example.com'}</p>

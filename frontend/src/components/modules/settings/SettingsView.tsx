@@ -11,7 +11,7 @@ import {
   CheckCircle2,
   Lock
 } from 'lucide-react';
-import { LanguageCode } from '../../../types';
+import type { LanguageCode } from '../../../types';
 
 export const SettingsView: React.FC = () => {
   const [defaultLanguage, setDefaultLanguage] = useState<LanguageCode>('hi');
@@ -56,9 +56,9 @@ export const SettingsView: React.FC = () => {
 
         <button
           onClick={handleSave}
-          className="px-5 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs sm:text-sm shadow-lg shadow-white/10 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
+          className="px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs sm:text-sm shadow-lg shadow-[#FF5E14]/20 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
-          <Save className="w-4 h-4 text-neutral-950" />
+          <Save className="w-4 h-4 text-white" />
           <span>Save Changes</span>
         </button>
       </div>
@@ -74,9 +74,9 @@ export const SettingsView: React.FC = () => {
       <div className="space-y-5">
         
         {/* Language & Voice Settings */}
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
+        <div className="bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center">
               <Globe className="w-5 h-5" />
             </div>
             <div>
@@ -91,11 +91,11 @@ export const SettingsView: React.FC = () => {
               <select
                 value={defaultLanguage}
                 onChange={(e) => setDefaultLanguage(e.target.value as LanguageCode)}
-                className="w-full px-3.5 py-2.5 bg-[#0B0D13] border border-white/10 rounded-xl font-medium text-white focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400/30 transition-colors"
+                className="w-full px-3.5 py-2.5 bg-[#0B0D13] border border-white/10 rounded-xl font-medium text-white focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
               >
-                <option value="hi" className="bg-[#10131A] text-white">Hindi (हिंदी) - Default</option>
-                <option value="mr" className="bg-[#10131A] text-white">Marathi (मराठी)</option>
-                <option value="en" className="bg-[#10131A] text-white">Indian English (EN-IN)</option>
+                <option value="hi" className="bg-[#161A24] text-white">Hindi (हिंदी) - Default</option>
+                <option value="mr" className="bg-[#161A24] text-white">Marathi (मराठी)</option>
+                <option value="en" className="bg-[#161A24] text-white">Indian English (EN-IN)</option>
               </select>
             </div>
 
@@ -107,7 +107,7 @@ export const SettingsView: React.FC = () => {
                   id="voiceAudio"
                   checked={enableVoiceAudio}
                   onChange={(e) => setEnableVoiceAudio(e.target.checked)}
-                  className="w-4 h-4 accent-sky-400 rounded cursor-pointer"
+                  className="w-4 h-4 accent-[#FF5E14] rounded cursor-pointer"
                 />
                 <label htmlFor="voiceAudio" className="text-xs text-neutral-300 font-medium cursor-pointer">
                   Speak synthesis voice confirmation after parsing
@@ -118,9 +118,9 @@ export const SettingsView: React.FC = () => {
         </div>
 
         {/* AI OCR & Vision */}
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
+        <div className="bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
@@ -139,7 +139,7 @@ export const SettingsView: React.FC = () => {
                 type="checkbox"
                 checked={instantChallanOCR}
                 onChange={(e) => setInstantChallanOCR(e.target.checked)}
-                className="w-4 h-4 accent-sky-400 cursor-pointer"
+                className="w-4 h-4 accent-[#FF5E14] cursor-pointer"
               />
             </div>
 
@@ -152,16 +152,16 @@ export const SettingsView: React.FC = () => {
                 type="checkbox"
                 checked={autoSyncEVM}
                 onChange={(e) => setAutoSyncEVM(e.target.checked)}
-                className="w-4 h-4 accent-sky-400 cursor-pointer"
+                className="w-4 h-4 accent-[#FF5E14] cursor-pointer"
               />
             </div>
           </div>
         </div>
 
         {/* Security & Access */}
-        <div className="bg-[#10131A] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
+        <div className="bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-4">
           <div className="flex items-center gap-3 pb-4 border-b border-white/10">
-            <div className="w-10 h-10 rounded-2xl bg-white/10 border border-white/15 text-sky-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center">
               <Lock className="w-5 h-5" />
             </div>
             <div>

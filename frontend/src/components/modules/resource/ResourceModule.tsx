@@ -15,7 +15,7 @@ import {
   Scale
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { 
+import type { 
   MaterialItem, 
   FinishedElement, 
   DispatchLog, 
@@ -108,22 +108,22 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
   return (
     <div className="space-y-6">
       {/* Module Title & AI Quick Action Banner */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-brand-200 shadow-xs">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#161A24] p-5 rounded-2xl border border-white/10 shadow-xs">
         <div>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-brand-100 border border-brand-200 flex items-center justify-center text-brand-800">
+            <div className="w-10 h-10 rounded-xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
               <Package className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-semibold text-brand-900">
+                <h2 className="text-base font-semibold text-white">
                   Module 2: Resource & Material Management
                 </h2>
-                <span className="px-2 py-0.5 text-[11px] bg-brand-100 text-brand-800 font-medium rounded-md border border-brand-200">
+                <span className="px-2 py-0.5 text-[11px] bg-[#FF5E14]/15 text-[#FF5E14] font-medium rounded-md border border-[#FF5E14]/30">
                   OCR Challan + Voice GRN
                 </span>
               </div>
-              <p className="text-xs text-brand-500 mt-0.5">
+              <p className="text-xs text-neutral-400 mt-0.5">
                 Stock balance, minimum reorder thresholds, Precast Kanban pipeline, and logistics dispatches
               </p>
             </div>
@@ -131,19 +131,18 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
         </div>
 
         <div className="flex items-center gap-2">
-
           <button
             onClick={() => onOpenAIModal('voice')}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-brand-50 text-brand-800 border border-brand-200 font-medium rounded-xl text-xs transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-white/5 hover:bg-[#FF5E14] hover:text-white text-white border border-white/10 font-medium rounded-xl text-xs transition-colors cursor-pointer"
           >
-            <Mic className="w-4 h-4 text-brand-600" />
+            <Mic className="w-4 h-4 text-[#FF5E14]" />
             <span className="hidden sm:inline">Voice Receipt</span>
           </button>
         </div>
       </div>
 
       {/* Sub-Navigation Tabs */}
-      <div className="flex items-center gap-1.5 border-b border-brand-200 pb-2 overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-1.5 border-b border-white/10 pb-2 overflow-x-auto scrollbar-none">
         {[
           { id: 'inventory', label: 'Stock Inventory & Reorders', badge: lowStockCount > 0 ? `${lowStockCount} Reorders` : undefined },
           { id: 'elements', label: 'Finished Element Kanban', badge: `${elements.length} Elements` },
@@ -155,14 +154,14 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
             onClick={() => setSubTab(tab.id as any)}
             className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
               subTab === tab.id
-                ? 'bg-brand-800 text-white shadow-xs'
-                : 'text-brand-600 hover:text-brand-900 hover:bg-brand-100'
+                ? 'bg-white text-neutral-950 font-bold shadow-xs'
+                : 'text-neutral-400 hover:text-white hover:bg-white/5'
             }`}
           >
             <span>{tab.label}</span>
             {tab.badge && (
               <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                subTab === tab.id ? 'bg-brand-900 text-white' : 'bg-brand-200 text-brand-800'
+                subTab === tab.id ? 'bg-neutral-900 text-white' : 'bg-white/10 text-neutral-300'
               }`}>
                 {tab.badge}
               </span>
@@ -175,7 +174,7 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
       {subTab === 'inventory' && (
         <div className="space-y-4">
           {/* Filter Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 rounded-xl border border-brand-200 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#161A24] p-3.5 rounded-2xl border border-white/10 shadow-xs">
             <div className="flex items-center gap-1.5 overflow-x-auto">
               {['All', 'Cement & Aggregates', 'Steel & Reinforcement', 'Chemicals & Additives', 'Formwork & Shuttering'].map((cat) => (
                 <button
@@ -183,8 +182,8 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
                   onClick={() => setFilterCategory(cat)}
                   className={`px-3 py-1 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer ${
                     filterCategory === cat
-                      ? 'bg-brand-800 text-white shadow-xs'
-                      : 'text-brand-600 hover:text-brand-900 hover:bg-brand-100'
+                      ? 'bg-[#FF5E14] text-white shadow-xs font-semibold'
+                      : 'text-neutral-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {cat}
@@ -193,22 +192,22 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
             </div>
 
             <div className="relative">
-              <Search className="w-3.5 h-3.5 text-brand-400 absolute left-3 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-neutral-500 absolute left-3 top-2.5" />
               <input
                 type="text"
                 placeholder="Search materials or supplier..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-brand-50 border border-brand-200 text-xs pl-8 pr-3 py-1.5 rounded-lg text-brand-900 placeholder:text-brand-400 w-full sm:w-60 focus:outline-brand-800"
+                className="bg-[#0B0D13] border border-white/10 text-xs pl-8 pr-3 py-1.5 rounded-lg text-white placeholder:text-neutral-500 w-full sm:w-60 focus:outline-none focus:border-[#FF5E14]"
               />
             </div>
           </div>
 
           {/* Materials Table */}
-          <div className="bg-white rounded-xl border border-brand-200 shadow-xs overflow-hidden">
+          <div className="bg-[#161A24] rounded-2xl border border-white/10 shadow-xs overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-brand-700">
-                <thead className="bg-brand-50 text-brand-500 uppercase tracking-wider text-[11px] border-b border-brand-200">
+              <table className="w-full text-left text-xs text-neutral-300">
+                <thead className="bg-[#0B0D13] text-neutral-400 uppercase tracking-wider text-[11px] border-b border-white/10">
                   <tr>
                     <th className="py-3 px-4">Material Name</th>
                     <th className="py-3 px-3">Opening</th>
@@ -220,67 +219,67 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
                     <th className="py-3 px-3 text-right">Stock Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-brand-100">
+                <tbody className="divide-y divide-white/5">
                   {filteredMaterials.map((m) => (
-                    <tr key={m.id} className="hover:bg-brand-50/70 transition-colors">
-                      <td className="py-3 px-4 font-semibold text-brand-900">
+                    <tr key={m.id} className="hover:bg-white/5 transition-colors">
+                      <td className="py-3 px-4 font-semibold text-white">
                         <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-brand-600"></span>
+                          <span className="w-2 h-2 rounded-full bg-[#FF5E14]"></span>
                           <span>{m.name}</span>
                         </div>
-                        <span className="text-[11px] text-brand-400 block font-normal truncate max-w-xs">{m.supplier}</span>
+                        <span className="text-[11px] text-neutral-400 block font-normal truncate max-w-xs">{m.supplier}</span>
                       </td>
-                      <td className="py-3 px-3 font-mono text-brand-500">
+                      <td className="py-3 px-3 font-mono text-neutral-400">
                         {m.openingStock} {m.unit}
                       </td>
                       <td className="py-3 px-3 font-mono">
                         {m.receivedToday > 0 ? (
-                          <span className="text-brand-800 font-bold bg-brand-100 px-2 py-0.5 rounded border border-brand-200">
+                          <span className="text-emerald-400 font-bold bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30">
                             +{m.receivedToday}
                           </span>
                         ) : (
-                          <span className="text-brand-400">0</span>
+                          <span className="text-neutral-500">0</span>
                         )}
                       </td>
                       <td className="py-3 px-3 font-mono">
                         {m.consumedToday > 0 ? (
-                          <span className="text-brand-800 font-bold bg-brand-100 px-2 py-0.5 rounded border border-brand-200">
+                          <span className="text-[#FF5E14] font-bold bg-[#FF5E14]/15 px-2 py-0.5 rounded border border-[#FF5E14]/30">
                             -{m.consumedToday}
                           </span>
                         ) : (
-                          <span className="text-brand-400">0</span>
+                          <span className="text-neutral-500">0</span>
                         )}
                       </td>
-                      <td className="py-3 px-3 font-mono font-bold text-brand-900">
-                        {m.currentStock} <span className="text-[10px] font-normal text-brand-500">{m.unit}</span>
+                      <td className="py-3 px-3 font-mono font-bold text-white">
+                        {m.currentStock} <span className="text-[10px] font-normal text-neutral-400">{m.unit}</span>
                       </td>
                       <td className="py-3 px-3">
                         <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                          m.reorderStatus === 'Sufficient' ? 'bg-brand-100 text-brand-800 border border-brand-200' :
-                          m.reorderStatus === 'Low Stock' ? 'bg-brand-50 text-brand-700 border border-brand-200' :
-                          'bg-brand-200 text-brand-900 border border-brand-300'
+                          m.reorderStatus === 'Sufficient' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' :
+                          m.reorderStatus === 'Low Stock' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' :
+                          'bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30'
                         }`}>
                           {m.reorderStatus !== 'Sufficient' && <AlertTriangle className="w-3 h-3" />}
                           {m.reorderStatus} (Min: {m.minReorderLevel})
                         </span>
                       </td>
                       <td className="py-3 px-3 font-mono">
-                        <span className={m.wastagePercent > 4 ? 'text-brand-800 font-semibold' : 'text-brand-600'}>
+                        <span className={m.wastagePercent > 4 ? 'text-amber-400 font-semibold' : 'text-neutral-400'}>
                           {m.wastagePercent}%
                         </span>
                       </td>
                       <td className="py-3 px-3 text-right">
-                        <div className="inline-flex items-center gap-1 bg-brand-50 p-0.5 rounded-lg border border-brand-200">
+                        <div className="inline-flex items-center gap-1 bg-[#0B0D13] p-0.5 rounded-lg border border-white/10">
                           <button
                             onClick={() => handleAdjustMaterialStock(m.id, 'received', 10)}
-                            className="px-2 py-1 bg-white hover:bg-brand-100 text-brand-800 font-semibold text-[10px] rounded border border-brand-200 cursor-pointer"
+                            className="px-2 py-1 bg-white/5 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 font-semibold text-[10px] rounded border border-white/10 transition-colors cursor-pointer"
                             title="+10 Received"
                           >
                             +10 In
                           </button>
                           <button
                             onClick={() => handleAdjustMaterialStock(m.id, 'consumed', 10)}
-                            className="px-2 py-1 bg-white hover:bg-brand-100 text-brand-800 font-semibold text-[10px] rounded border border-brand-200 cursor-pointer"
+                            className="px-2 py-1 bg-white/5 hover:bg-[#FF5E14]/20 text-[#FF5E14] hover:text-[#FF5E14] font-semibold text-[10px] rounded border border-white/10 transition-colors cursor-pointer"
                             title="+10 Consumed"
                           >
                             +10 Use
@@ -301,14 +300,14 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-semibold text-brand-900">
+              <h3 className="text-sm font-semibold text-white">
                 Precast & Modular Elements Pipeline
               </h3>
-              <p className="text-xs text-brand-500">Track elements from Casting Yard Bed through Curing to On-site Erection</p>
+              <p className="text-xs text-neutral-400">Track elements from Casting Yard Bed through Curing to On-site Erection</p>
             </div>
             <button
               onClick={() => onOpenAIModal('voice')}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-brand-800 hover:bg-brand-900 text-white rounded-lg text-xs font-medium cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white rounded-lg text-xs font-semibold cursor-pointer shadow-xs transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Log New Cast</span>
@@ -320,17 +319,17 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
             {STAGES.map((stage, sIdx) => {
               const stageElements = elements.filter(el => el.stage === stage);
               const stageBadgeColors: Record<ElementStage, string> = {
-                Cast: 'bg-brand-50 text-brand-800 border-brand-200',
-                Cured: 'bg-brand-100 text-brand-800 border-brand-200',
-                Ready: 'bg-brand-100 text-brand-800 border-brand-200',
-                Dispatched: 'bg-brand-200 text-brand-900 border-brand-300',
-                Erected: 'bg-brand-800 text-white border-brand-900',
+                Cast: 'bg-white/10 text-neutral-300 border-white/15',
+                Cured: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+                Ready: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+                Dispatched: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+                Erected: 'bg-[#FF5E14] text-white border-[#FF5E14]',
               };
 
               return (
-                <div key={stage} className="bg-white rounded-xl border border-brand-200 p-3.5 flex flex-col min-h-[420px] shadow-xs">
-                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-brand-100">
-                    <span className="font-semibold text-xs text-brand-900 flex items-center gap-1.5">
+                <div key={stage} className="bg-[#161A24] rounded-2xl border border-white/10 p-3.5 flex flex-col min-h-[420px] shadow-xs">
+                  <div className="flex items-center justify-between pb-2 mb-3 border-b border-white/10">
+                    <span className="font-semibold text-xs text-white flex items-center gap-1.5">
                       <span>{sIdx + 1}.</span> {stage}
                     </span>
                     <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${stageBadgeColors[stage]}`}>
@@ -343,31 +342,31 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
                     {stageElements.map((el) => (
                       <div
                         key={el.id}
-                        className="bg-brand-50/80 p-3 rounded-lg border border-brand-200 text-xs space-y-2"
+                        className="bg-[#0B0D13] p-3 rounded-xl border border-white/10 text-xs space-y-2"
                       >
                         <div className="flex items-start justify-between">
                           <div>
-                            <span className="font-semibold text-brand-900 block font-mono text-[11px]">{el.elementTag}</span>
-                            <span className="text-[10px] text-brand-500">{el.type}</span>
+                            <span className="font-semibold text-white block font-mono text-[11px]">{el.elementTag}</span>
+                            <span className="text-[10px] text-neutral-400">{el.type}</span>
                           </div>
                           {el.qcInspectionPassed && (
-                            <span className="text-brand-800 text-[10px] flex items-center gap-0.5 font-semibold" title="QC Passed">
+                            <span className="text-[#FF5E14] text-[10px] flex items-center gap-0.5 font-semibold" title="QC Passed">
                               <Check className="w-3 h-3" /> QC
                             </span>
                           )}
                         </div>
 
-                        <div className="text-[10px] text-brand-600 space-y-0.5 font-mono">
-                          <p className="flex items-center gap-1"><MapPin className="w-3 h-3 text-sky-400 shrink-0" /> {el.targetLocation}</p>
-                          <p className="flex items-center gap-1"><Scale className="w-3 h-3 text-sky-400 shrink-0" /> {el.weightTons} MT ({el.dimensions})</p>
+                        <div className="text-[10px] text-neutral-400 space-y-0.5 font-mono">
+                          <p className="flex items-center gap-1"><MapPin className="w-3 h-3 text-[#FF5E14] shrink-0" /> {el.targetLocation}</p>
+                          <p className="flex items-center gap-1"><Scale className="w-3 h-3 text-[#FF5E14] shrink-0" /> {el.weightTons} MT ({el.dimensions})</p>
                         </div>
 
                         {/* Stage Progression Buttons */}
-                        <div className="pt-2 border-t border-brand-200 flex items-center justify-between">
+                        <div className="pt-2 border-t border-white/10 flex items-center justify-between">
                           {sIdx > 0 && (
                             <button
                               onClick={() => handleStageChange(el.id, STAGES[sIdx - 1])}
-                              className="text-[10px] text-brand-500 hover:text-brand-800 font-medium cursor-pointer"
+                              className="text-[10px] text-neutral-400 hover:text-white font-medium cursor-pointer transition-colors"
                             >
                               ← Back
                             </button>
@@ -375,14 +374,14 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
                           {sIdx < STAGES.length - 1 && (
                             <button
                               onClick={() => handleStageChange(el.id, STAGES[sIdx + 1])}
-                              className="ml-auto text-[10px] text-brand-800 hover:text-brand-900 font-semibold flex items-center gap-1 cursor-pointer"
+                              className="ml-auto text-[10px] text-[#FF5E14] hover:text-[#E04F0F] font-semibold flex items-center gap-1 cursor-pointer transition-colors"
                             >
                               <span>Advance</span>
                               <ArrowRight className="w-3 h-3" />
                             </button>
                           )}
                           {stage === 'Erected' && (
-                            <span className="text-[10px] text-brand-800 font-semibold ml-auto flex items-center gap-1">
+                            <span className="text-[10px] text-emerald-400 font-semibold ml-auto flex items-center gap-1">
                               <CheckCircle2 className="w-3 h-3" /> Complete
                             </span>
                           )}
@@ -400,50 +399,50 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
       {/* SubTab 3: Logistics & Dispatches */}
       {subTab === 'dispatches' && (
         <div className="space-y-4">
-          <div className="bg-white rounded-xl border border-brand-200 p-5 shadow-xs">
-            <h3 className="text-sm font-semibold text-brand-900 mb-3 flex items-center gap-2">
-              <Truck className="w-4 h-4 text-brand-700" />
+          <div className="bg-[#161A24] rounded-2xl border border-white/10 p-5 shadow-xs">
+            <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
+              <Truck className="w-4 h-4 text-[#FF5E14]" />
               <span>Active Material & Precast Dispatches</span>
             </h3>
 
             <div className="space-y-3">
               {dispatches.map((disp) => (
-                <div key={disp.id} className="bg-brand-50/70 p-4 rounded-xl border border-brand-200 text-xs">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-brand-200">
+                <div key={disp.id} className="bg-[#0B0D13] p-4 rounded-xl border border-white/10 text-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-2 border-b border-white/10">
                     <div className="flex items-center gap-2">
-                      <span className="px-2 py-0.5 bg-brand-100 text-brand-800 border border-brand-200 rounded font-mono font-semibold text-[10px]">
+                      <span className="px-2 py-0.5 bg-[#FF5E14]/15 text-[#FF5E14] border border-[#FF5E14]/30 rounded font-mono font-semibold text-[10px]">
                         {disp.grnNo}
                       </span>
-                      <span className="font-semibold text-brand-900">{disp.elementOrMaterial}</span>
-                      <span className="text-brand-500 font-mono">({disp.quantity})</span>
+                      <span className="font-semibold text-white">{disp.elementOrMaterial}</span>
+                      <span className="text-neutral-400 font-mono">({disp.quantity})</span>
                     </div>
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
-                      disp.status === 'In Transit' ? 'bg-brand-100 text-brand-800 border border-brand-200' :
-                      disp.status === 'Delivered' ? 'bg-brand-100 text-brand-800 border border-brand-200' :
-                      'bg-brand-50 text-brand-600'
+                      disp.status === 'In Transit' ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30' :
+                      disp.status === 'Delivered' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' :
+                      'bg-white/10 text-neutral-300 border border-white/10'
                     }`}>
                       {disp.status}
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-brand-600">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-neutral-300">
                     <div>
-                      <p className="text-brand-400 font-medium">Route & Locations:</p>
-                      <p className="font-medium text-brand-900">From: {disp.origin}</p>
-                      <p className="font-medium text-brand-900">To: {disp.destination}</p>
+                      <p className="text-neutral-500 font-medium">Route & Locations:</p>
+                      <p className="font-medium text-white">From: {disp.origin}</p>
+                      <p className="font-medium text-white">To: {disp.destination}</p>
                     </div>
                     <div>
-                      <p className="text-brand-400 font-medium">Transporter & Vehicle:</p>
-                      <p className="font-medium text-brand-900">{disp.transporter}</p>
-                      <p className="font-mono text-brand-800 font-medium">{disp.vehicleNo}</p>
-                      <p className="text-[10px] text-brand-500">Driver: {disp.driverContact}</p>
+                      <p className="text-neutral-500 font-medium">Transporter & Vehicle:</p>
+                      <p className="font-medium text-white">{disp.transporter}</p>
+                      <p className="font-mono text-neutral-300 font-medium">{disp.vehicleNo}</p>
+                      <p className="text-[10px] text-neutral-400">Driver: {disp.driverContact}</p>
                     </div>
                     <div>
-                      <p className="text-brand-400 font-medium">Timing & Status:</p>
-                      <p className="font-mono text-brand-700">Dispatched: {disp.dispatchTime}</p>
-                      <p className="font-mono text-brand-800 font-semibold">ETA: {disp.eta}</p>
+                      <p className="text-neutral-500 font-medium">Timing & Status:</p>
+                      <p className="font-mono text-neutral-400">Dispatched: {disp.dispatchTime}</p>
+                      <p className="font-mono text-[#FF5E14] font-semibold">ETA: {disp.eta}</p>
                       {disp.receiptConfirmedBy && (
-                        <p className="text-brand-800 text-[10px] mt-0.5 font-medium">Confirmed by: {disp.receiptConfirmedBy}</p>
+                        <p className="text-emerald-400 text-[10px] mt-0.5 font-medium">Confirmed by: {disp.receiptConfirmedBy}</p>
                       )}
                     </div>
                   </div>
@@ -459,39 +458,39 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {vendors.map((vendor) => (
-              <div key={vendor.id} className="bg-white rounded-xl border border-brand-200 p-5 shadow-xs flex flex-col justify-between text-xs">
+              <div key={vendor.id} className="bg-[#161A24] rounded-2xl border border-white/10 p-5 shadow-xs flex flex-col justify-between text-xs">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="px-2 py-0.5 text-[10px] font-semibold bg-brand-100 text-brand-800 rounded border border-brand-200">
+                    <span className="px-2 py-0.5 text-[10px] font-semibold bg-[#FF5E14]/15 text-[#FF5E14] rounded-full border border-[#FF5E14]/30">
                       {vendor.type}
                     </span>
-                    <div className="flex items-center gap-1 text-brand-800 font-bold">
+                    <div className="flex items-center gap-1 text-[#FF5E14] font-bold">
                       <Star className="w-3.5 h-3.5 fill-current" />
                       <span>{vendor.rating} / 5.0</span>
                     </div>
                   </div>
 
-                  <h3 className="text-sm font-semibold text-brand-900">{vendor.name}</h3>
-                  <p className="text-[11px] text-brand-500 mt-0.5">
+                  <h3 className="text-sm font-semibold text-white">{vendor.name}</h3>
+                  <p className="text-[11px] text-neutral-400 mt-0.5">
                     Supplies: {vendor.materialsSupplied.join(', ')}
                   </p>
 
-                  <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-brand-100">
-                    <div className="bg-brand-50 p-2.5 rounded-lg border border-brand-200">
-                      <p className="text-[10px] text-brand-500">On-Time Delivery Rate</p>
-                      <p className="text-base font-bold text-brand-900 font-mono mt-0.5">{vendor.onTimeDeliveryRate}%</p>
+                  <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-white/10">
+                    <div className="bg-[#0B0D13] p-2.5 rounded-xl border border-white/10">
+                      <p className="text-[10px] text-neutral-400">On-Time Delivery Rate</p>
+                      <p className="text-base font-bold text-white font-mono mt-0.5">{vendor.onTimeDeliveryRate}%</p>
                     </div>
-                    <div className="bg-brand-50 p-2.5 rounded-lg border border-brand-200">
-                      <p className="text-[10px] text-brand-500">Quality Pass Rate</p>
-                      <p className="text-base font-bold text-brand-900 font-mono mt-0.5">{vendor.qualityPassRate}%</p>
+                    <div className="bg-[#0B0D13] p-2.5 rounded-xl border border-white/10">
+                      <p className="text-[10px] text-neutral-400">Quality Pass Rate</p>
+                      <p className="text-base font-bold text-white font-mono mt-0.5">{vendor.qualityPassRate}%</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-brand-100 flex items-center justify-between text-[11px]">
-                  <span className="text-brand-500">Total Billed YTD: <strong className="text-brand-900">₹{(vendor.totalBilledYTD / 10000000).toFixed(2)} Cr</strong></span>
+                <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px]">
+                  <span className="text-neutral-400">Total Billed YTD: <strong className="text-white font-bold">₹{(vendor.totalBilledYTD / 10000000).toFixed(2)} Cr</strong></span>
                   <span className={`px-2 py-0.5 rounded font-semibold ${
-                    vendor.paymentStatus === 'Cleared' ? 'bg-brand-100 text-brand-800 border border-brand-200' : 'bg-brand-50 text-brand-700 border border-brand-200'
+                    vendor.paymentStatus === 'Cleared' ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
                   }`}>
                     {vendor.paymentStatus}
                   </span>
