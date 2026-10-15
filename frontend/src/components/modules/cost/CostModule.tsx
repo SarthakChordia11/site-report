@@ -71,7 +71,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
                   Module 4: Cost Management & Earned Value (EVM)
                 </h2>
                 <span className="px-2 py-0.5 text-[11px] bg-[#FF5E14]/15 text-[#FF5E14] font-medium rounded-md border border-[#FF5E14]/30">
-                  LLaMA 3.3 Cost Intelligence
+                  AI Cost Intelligence
                 </span>
               </div>
               <p className="text-xs text-neutral-400 mt-0.5">
@@ -87,7 +87,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
             className="flex items-center gap-2 px-3.5 py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-xl text-xs shadow-xs transition-colors cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-white" />
-            <span>Generate LLaMA 3.3 Daily Cost Narrative</span>
+            <span>Generate AI Daily Cost Narrative</span>
           </button>
         </div>
       </div>
@@ -238,7 +238,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <Sparkles className="w-4 h-4 text-[#FF5E14]" />
-                  <h3 className="text-sm font-semibold text-white">LLaMA 3.3 Daily Cost Narrative</h3>
+                  <h3 className="text-sm font-semibold text-white">AI Daily Cost Narrative</h3>
                 </div>
 
                 <div className="p-3 bg-[#0B0D13] rounded-xl border border-white/10 text-neutral-300 leading-relaxed text-[11px]">
@@ -434,7 +434,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
           <div className="bg-[#161A24] rounded-2xl border border-white/10 p-5 shadow-xs">
             <h3 className="text-sm font-semibold text-white mb-1 flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-[#FF5E14]" />
-              <span>LLaMA 3.3 Cost Optimization Recommendations</span>
+              <span>AI Cost Optimization Recommendations</span>
             </h3>
             <p className="text-xs text-neutral-400 mb-4">Autonomous intelligence scanning idle labour, machinery, and material wastage</p>
 

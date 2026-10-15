@@ -140,7 +140,7 @@ export const SAMPLE_CHALLANS: SampleChallan[] = [
 
 /**
  * Intelligent multimodal structuring engine
- * Powered by Groq Whisper & LLaMA 3.3 NLP architecture patterns
+ * Powered by Multilingual NLP Architecture Patterns
  */
 export function parseVoiceOrTextInput(text: string): ExtractedAIData {
   const clean = text.trim();
@@ -246,7 +246,7 @@ export function parseVoiceOrTextInput(text: string): ExtractedAIData {
     targetModule = 'cost';
     intent = 'Earned Value Management & Project Cost Audit';
     actionSummary.push(`[EVM] Computed CPI at 1.031 (Cost Variance +₹39.0 Lakh Under Budget)`);
-    actionSummary.push(`[INSIGHT] LLaMA 3.3 flagged ₹3,560 potential daily saving on idle JCB excavator`);
+    actionSummary.push(`[INSIGHT] AI Engine flagged ₹3,560 potential daily saving on idle JCB excavator`);
   } else if (
     lower.includes('report') || lower.includes('dpr') || lower.includes('daily progress') ||
     lower.includes('summary') || lower.includes('full report')

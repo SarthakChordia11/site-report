@@ -14,8 +14,8 @@ React and Vite client for the SiteReportAI construction operations platform.
 The backend uses **Groq** for AI-powered features:
 
 - **Groq Whisper** (`large-v3`) for audio transcription (multilingual Hindi/Marathi/English)
-- **Groq LLaMA** (`openai/gpt-oss-120b`) for structured data extraction from transcripts and images
-- **Groq LLaMA** for cost narrative generation
+- **Groq LLM** (`openai/gpt-oss-120b`) for structured data extraction from transcripts and images
+- **Groq LLM** for cost narrative generation
 
 Set `GROQ_API_KEY` in `backend/.env` to enable AI features.
 

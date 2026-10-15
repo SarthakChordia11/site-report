@@ -24,11 +24,7 @@ import type {
   EquipmentItem 
 } from '../../types';
 import { 
-  SAMPLE_VOICE_PROMPTS, 
-  SAMPLE_CHALLANS, 
-  parseVoiceOrTextInput, 
-  type VoicePreset, 
-  type SampleChallan 
+  parseVoiceOrTextInput 
 } from '../../utils/aiParser';
 import { aiApi, dprApi } from '../../services/api';
 
@@ -59,8 +55,6 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [voiceText, setVoiceText] = useState('');
-  const [selectedPreset, setSelectedPreset] = useState<VoicePreset | null>(SAMPLE_VOICE_PROMPTS[0]);
-  const [selectedChallan, setSelectedChallan] = useState<SampleChallan | null>(SAMPLE_CHALLANS[0]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedResult, setExtractedResult] = useState<ExtractedAIData | null>(null);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
@@ -69,18 +63,18 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   // Quick form state
   const [formModule, setFormModule] = useState<ModuleId>('labour');
   const [formTrade, setFormTrade] = useState('Mason');
-  const [formPresent, setFormPresent] = useState(14);
-  const [formAbsent, setFormAbsent] = useState(2);
-  const [formOT, setFormOT] = useState(2);
+  const [formPresent, setFormPresent] = useState<number | ''>('');
+  const [formAbsent, setFormAbsent] = useState<number | ''>('');
+  const [formOT, setFormOT] = useState<number | ''>('');
 
-  const [formMaterial, setFormMaterial] = useState('OPC 53 Grade Cement');
-  const [formMatReceived, setFormMatReceived] = useState(200);
-  const [formMatConsumed, setFormMatConsumed] = useState(140);
-  const [formInvoice, setFormInvoice] = useState('UT-9941');
+  const [formMaterial, setFormMaterial] = useState('');
+  const [formMatReceived, setFormMatReceived] = useState<number | ''>('');
+  const [formMatConsumed, setFormMatConsumed] = useState<number | ''>('');
+  const [formInvoice, setFormInvoice] = useState('');
 
-  const [formEquip, setFormEquip] = useState('Tower Crane');
-  const [formWorkingHours, setFormWorkingHours] = useState(7);
-  const [formIdleHours, setFormIdleHours] = useState(0);
+  const [formEquip, setFormEquip] = useState('');
+  const [formWorkingHours, setFormWorkingHours] = useState<number | ''>('');
+  const [formIdleHours, setFormIdleHours] = useState<number | ''>('');
 
   const recognitionRef = useRef<any>(null);
 
@@ -172,13 +166,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   };
 
 
-  const handleSelectPreset = (preset: VoicePreset) => {
-    setSelectedPreset(preset);
-    setVoiceText(preset.transcript);
-    setExtractedResult(null);
-  };
-
   const playPresetAudio = (text: string) => {
+    if (!text.trim()) return;
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
@@ -192,7 +181,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   };
 
   const handleProcessVoice = async (textToParse?: string) => {
-    const text = textToParse || voiceText || selectedPreset?.transcript || '';
+    const text = textToParse || voiceText || '';
     if (!text.trim()) return;
 
     setIsProcessing(true);
@@ -279,11 +268,11 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
     setIsProcessing(true);
     let syntheticInput = '';
     if (formModule === 'labour') {
-      syntheticInput = `Aaj ${formTrade} ${formPresent} present, ${formAbsent} absent. OT ${formOT} ghante kaam kiya.`;
+      syntheticInput = `Aaj ${formTrade} ${formPresent || 0} present, ${formAbsent || 0} absent. OT ${formOT || 0} ghante kaam kiya.`;
     } else if (formModule === 'resource') {
-      syntheticInput = `Cement ${formMatReceived} bags mila Ultratech se, ${formMatConsumed} bags use hua. Invoice ${formInvoice}.`;
+      syntheticInput = `${formMaterial || 'Material'} ${formMatReceived || 0} units received, ${formMatConsumed || 0} units consumed. Invoice ${formInvoice || 'N/A'}.`;
     } else {
-      syntheticInput = `${formEquip} aaj ${formWorkingHours} ghante chali, ${formIdleHours} ghante idle tha.`;
+      syntheticInput = `${formEquip || 'Equipment'} aaj ${formWorkingHours || 0} ghante chali, ${formIdleHours || 0} ghante idle tha.`;
     }
     
     try {
@@ -345,7 +334,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white tracking-tight">AI Site Operations Assistant</h3>
                 <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-[#FF5E14]/15 text-[#FF5E14] rounded-full border border-[#FF5E14]/30">
-                  Groq Whisper + LLaMA 3.3
+                  AI Voice Intelligence
                 </span>
               </div>
               <p className="text-xs text-neutral-400 mt-0.5">Log attendance, materials, or machinery instantly via natural voice</p>
@@ -477,7 +466,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                           <span>Paused — Click Resume to continue speaking, or Done to parse</span>
                         </>
                       ) : (
-                        'Tap Microphone to speak or choose a sample prompt below'
+                        'Tap Microphone to speak, or type site report manually'
                       )}
                     </p>
                   </div>
@@ -509,8 +498,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                   {/* Actions Bar */}
                   <div className="mt-4 flex items-center justify-between gap-3">
                     <button
-                      onClick={() => playPresetAudio(voiceText || selectedPreset?.transcript || '')}
-                      disabled={isPlayingAudio || (!voiceText && !selectedPreset?.transcript)}
+                      onClick={() => playPresetAudio(voiceText)}
+                      disabled={isPlayingAudio || !voiceText.trim()}
                       className="flex items-center gap-2 px-3.5 py-2 bg-white/5 hover:bg-white/10 disabled:opacity-40 border border-white/10 rounded-full text-xs font-semibold text-neutral-300 transition-colors cursor-pointer"
                     >
                       <Volume2 className={`w-3.5 h-3.5 ${isPlayingAudio ? 'text-[#FF5E14] animate-bounce' : 'text-neutral-400'}`} />
@@ -519,7 +508,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 
                     <button
                       onClick={() => handleProcessVoice()}
-                      disabled={isProcessing || isRecording || (!voiceText.trim() && !selectedPreset?.transcript)}
+                      disabled={isProcessing || isRecording || !voiceText.trim()}
                       className="flex items-center gap-2 px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs transition-all shadow-lg shadow-[#FF5E14]/20 cursor-pointer disabled:opacity-40"
                     >
                       {isProcessing ? (
@@ -529,37 +518,6 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       )}
                       <span>Extract with AI</span>
                     </button>
-                  </div>
-                </div>
-
-                {/* Preset Prompts Section */}
-                <div className="bg-[#0B0D13] p-4 rounded-2xl border border-white/10">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-bold text-neutral-300">Quick Test Prompts</span>
-                    <span className="text-[10px] text-neutral-500">Click to load & extract</span>
-                  </div>
-                  <div className="space-y-2">
-                    {SAMPLE_VOICE_PROMPTS.slice(0, 3).map((preset) => (
-                      <button
-                        key={preset.id}
-                        onClick={() => handleSelectPreset(preset)}
-                        className={`w-full text-left p-3 rounded-xl border transition-all cursor-pointer ${
-                          selectedPreset?.id === preset.id && !voiceText
-                            ? 'bg-white/10 border-[#FF5E14]/50 text-white'
-                            : 'bg-[#10131A] border-white/5 text-neutral-300 hover:border-white/20'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-xs font-semibold text-white">{preset.title}</span>
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-neutral-400">
-                            {preset.language}
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-neutral-400 font-mono line-clamp-1 italic">
-                          "{preset.transcript}"
-                        </p>
-                      </button>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -617,7 +575,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formPresent}
-                          onChange={(e) => setFormPresent(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormPresent(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -626,7 +585,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formAbsent}
-                          onChange={(e) => setFormAbsent(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormAbsent(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -635,7 +595,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formOT}
-                          onChange={(e) => setFormOT(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormOT(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -650,6 +611,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       <input
                         type="text"
                         value={formMaterial}
+                        placeholder="e.g. OPC 53 Grade Cement"
                         onChange={(e) => setFormMaterial(e.target.value)}
                         className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
@@ -660,7 +622,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formMatReceived}
-                          onChange={(e) => setFormMatReceived(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormMatReceived(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -669,7 +632,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formMatConsumed}
-                          onChange={(e) => setFormMatConsumed(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormMatConsumed(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -679,6 +643,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       <input
                         type="text"
                         value={formInvoice}
+                        placeholder="e.g. UT-9941"
                         onChange={(e) => setFormInvoice(e.target.value)}
                         className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
@@ -693,6 +658,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       <input
                         type="text"
                         value={formEquip}
+                        placeholder="e.g. Tower Crane"
                         onChange={(e) => setFormEquip(e.target.value)}
                         className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                       />
@@ -703,7 +669,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formWorkingHours}
-                          onChange={(e) => setFormWorkingHours(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormWorkingHours(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -712,7 +679,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <input
                           type="number"
                           value={formIdleHours}
-                          onChange={(e) => setFormIdleHours(parseInt(e.target.value) || 0)}
+                          placeholder="0"
+                          onChange={(e) => setFormIdleHours(e.target.value === '' ? '' : parseInt(e.target.value) || 0)}
                           className="w-full bg-[#10131A] border border-white/10 rounded-xl p-2.5 text-white focus:outline-none focus:border-[#FF5E14]"
                         />
                       </div>
@@ -738,7 +706,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#FF5E14] animate-pulse"></span>
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
-                  LLaMA 3.3 Extraction
+                  AI Structured Extraction
                 </span>
               </div>
               {extractedResult && (
@@ -752,7 +720,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
               <div className="flex-1 flex flex-col items-center justify-center py-12 text-neutral-400 text-xs">
                 <RefreshCw className="w-8 h-8 animate-spin text-[#FF5E14] mb-3" />
                 <p className="font-bold text-white">Parsing Multilingual Audio & Documents...</p>
-                <p className="text-[11px] text-neutral-400 mt-1">Groq Whisper Transcription → LLaMA 3.3 Structuring</p>
+                <p className="text-[11px] text-neutral-400 mt-1">Voice Transcription → Structured Data Sync</p>
               </div>
             ) : extractedResult ? (
               <div className="flex-1 flex flex-col justify-between pt-3 space-y-3">
@@ -844,7 +812,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                 <Sparkles className="w-8 h-8 text-neutral-600 mb-2" />
                 <p className="font-bold text-neutral-300">No input processed yet</p>
                 <p className="text-[11px] text-neutral-500 mt-1">
-                  Speak into the mic, choose a test prompt, or enter quick form to see structured output here.
+                  Speak into the mic or enter quick form to see structured output here.
                 </p>
               </div>
             )}
