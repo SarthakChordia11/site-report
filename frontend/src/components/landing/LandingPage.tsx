@@ -300,14 +300,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         </div>
 
-        {/* The Exact 3-Column Asymmetric Layout from Screenshot 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+        {/* The Exact 3-Column Asymmetric Layout from Screenshot 2 - Aligned Heights */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           
-          {/* COLUMN 1: Tall Dark Card + High Production Capacity Card */}
+          {/* COLUMN 1: Tall Dark Card (460px) + White Card (190px) */}
           <div className="flex flex-col gap-6">
             
             {/* Card 1: Tall Dark Card with Orange Pipes */}
-            <div className="bg-[#111624] text-white rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden min-h-[480px] shadow-lg group">
+            <div className="bg-[#111624] text-white rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-[460px] shadow-lg group">
               <div className="space-y-6 relative z-10">
                 <h3 className="text-2xl font-bold leading-snug">
                   Delivering Precision<br />Engineering Solutions<br />for Modern Industry
@@ -322,7 +322,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
 
               {/* Orange Pipes Photo on Bottom */}
-              <div className="relative h-60 -mx-8 -mb-8 mt-6 overflow-hidden">
+              <div className="relative h-52 -mx-8 -mb-8 mt-4 overflow-hidden">
                 <img 
                   src="/steelora/pipes.webp"
                   onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
@@ -333,30 +333,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Card 2: High Production Capacity Card */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm space-y-4 text-left">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-bold text-[#111624]">High Production Capacity</h4>
-                {/* 3 Circle Masked Graphic */}
-                <div className="flex -space-x-2">
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-lg font-bold text-[#111624]">High Production Capacity</h4>
+                  {/* 3 Circle Masked Graphic */}
+                  <div className="flex -space-x-2">
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
                   </div>
                 </div>
+
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  Efficient manufacturing processes capable of handling both small-scale orders plus large industrial projects.
+                </p>
               </div>
 
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                Efficient manufacturing processes capable of handling both small-scale orders plus large industrial projects.
-              </p>
-
-              <div className="h-px bg-neutral-200 my-2" />
-
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
+              <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
               </div>
@@ -364,56 +364,56 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           </div>
 
-          {/* COLUMN 2: Strict Quality Standards + Tall Angle Grinder Photo */}
+          {/* COLUMN 2: White Card (190px) + Tall Worker Factory Photo (460px) */}
           <div className="flex flex-col gap-6">
             
             {/* Card 3: Strict Quality Standards */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm space-y-4 text-left">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-bold text-[#111624]">Strict Quality Standards</h4>
-                {/* 3 Circle Masked Graphic */}
-                <div className="flex -space-x-2">
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-lg font-bold text-[#111624]">Strict Quality Standards</h4>
+                  {/* 3 Circle Masked Graphic */}
+                  <div className="flex -space-x-2">
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
                   </div>
                 </div>
+
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  Comprehensive inspection procedures at every production stage to maintain reliability and performance.
+                </p>
               </div>
 
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                Comprehensive inspection procedures at every production stage to maintain reliability and performance
-              </p>
-
-              <div className="h-px bg-neutral-200 my-2" />
-
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
+              <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
               </div>
             </div>
 
-            {/* Card 4: Angle Grinding Steel Photo with Sparks Flying */}
-            <div className="rounded-3xl overflow-hidden shadow-md h-[360px] relative group">
+            {/* Card 4: Worker with Tablet & Industrial Machinery Photo */}
+            <div className="rounded-3xl overflow-hidden shadow-md h-[460px] relative group">
               <img 
-                src="/steelora/grinder.webp"
+                src="/steelora/worker-factory.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
-                alt="Worker angle grinding steel with bright sparks flying"
+                alt="Man in orange safety gear using a tablet inside an industrial factory"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
             </div>
 
           </div>
 
-          {/* COLUMN 3: Sunset Pumpjack with 25+ Overlay + Top Production Technology */}
+          {/* COLUMN 3: Tall Sunset Rig with 25+ Overlay (460px) + White Card (190px) */}
           <div className="flex flex-col gap-6">
             
             {/* Card 5: Sunset Rig with 25+ Years Overlay */}
-            <div className="rounded-3xl overflow-hidden shadow-md h-[380px] relative group flex flex-col justify-end p-6">
+            <div className="rounded-3xl overflow-hidden shadow-md h-[460px] relative group flex flex-col justify-end p-6">
               <img 
                 src="/steelora/sunset-rig.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg.png'; }}
@@ -437,30 +437,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Card 6: Top Production Technology Card */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm space-y-4 text-left">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-bold text-[#111624]">Top Production Technology</h4>
-                {/* 3 Circle Masked Graphic */}
-                <div className="flex -space-x-2">
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
-                    <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-lg font-bold text-[#111624]">Top Production Technology</h4>
+                  {/* 3 Circle Masked Graphic */}
+                  <div className="flex -space-x-2">
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user3.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user1.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
+                      <img src="/steelora/user2.webp" alt="" className="w-full h-full object-cover" />
+                    </div>
                   </div>
                 </div>
+
+                <p className="text-xs text-neutral-600 leading-relaxed">
+                  Equipped with modern machinery and automated systems to ensure high precision and consistent output.
+                </p>
               </div>
 
-              <p className="text-xs text-neutral-600 leading-relaxed">
-                Equipped with modern machinery and automated systems to ensure high precision and consistent output
-              </p>
-
-              <div className="h-px bg-neutral-200 my-2" />
-
-              <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
+              <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
                 <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
               </div>
