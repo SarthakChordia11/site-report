@@ -83,12 +83,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   }}
                   className={`w-full flex items-center justify-between px-4 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-white text-neutral-950 shadow-lg'
+                      ? 'bg-[#FF5E14] text-white shadow-lg shadow-[#FF5E14]/25 font-bold'
                       : 'text-neutral-400 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`w-4 h-4 ${isActive ? 'text-neutral-950' : 'text-neutral-400'}`} />
+                    <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-neutral-400'}`} />
                     <span>{item.label}</span>
                   </div>
 
@@ -96,7 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     <span 
                       className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                         isActive 
-                          ? 'bg-neutral-950 text-white' 
+                          ? 'bg-black/30 text-white' 
                           : 'bg-white/10 text-[#FF5E14] border border-white/10'
                       }`}
                     >

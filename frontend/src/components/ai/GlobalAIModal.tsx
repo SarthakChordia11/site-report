@@ -438,7 +438,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <button
                           onClick={doneRecording}
                           title="Stop and parse"
-                          className="px-6 py-3 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-bold shadow-md cursor-pointer transition-colors"
+                          className="px-6 py-3 rounded-full bg-[#FF5E14] hover:bg-[#E04F0F] text-white text-xs font-bold shadow-md shadow-[#FF5E14]/20 cursor-pointer transition-colors"
                         >
                           Done
                         </button>
@@ -458,7 +458,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                         <button
                           onClick={doneRecording}
                           title="Stop and parse"
-                          className="px-6 py-3 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 text-xs font-bold shadow-md cursor-pointer transition-colors"
+                          className="px-6 py-3 rounded-full bg-[#FF5E14] hover:bg-[#E04F0F] text-white text-xs font-bold shadow-md shadow-[#FF5E14]/20 cursor-pointer transition-colors"
                         >
                           Done
                         </button>

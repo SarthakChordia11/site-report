@@ -123,13 +123,13 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right Section: Actions, Notifications, User Profile */}
         <div className="flex items-center gap-3">
-          {/* Quick Voice Log Button - Crisp White Pill */}
+          {/* Quick Voice Log Button - Vibrant Steelora Orange Pill */}
           <button
             id="header-voice-btn"
             onClick={() => onOpenAIModal('voice')}
-            className="flex items-center gap-2 px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs shadow-md transition-all cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-lg shadow-[#FF5E14]/20 transition-all cursor-pointer"
           >
-            <Mic className="w-3.5 h-3.5 text-neutral-950" />
+            <Mic className="w-3.5 h-3.5 text-white" />
             <span className="hidden sm:inline">Voice Log</span>
           </button>
 

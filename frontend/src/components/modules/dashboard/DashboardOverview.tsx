@@ -85,9 +85,9 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
           <button
             id="dashboard-new-report-btn"
             onClick={() => onOpenAIModal('voice')}
-            className="px-6 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 font-bold rounded-full text-xs sm:text-sm shadow-xl flex items-center gap-2 transition-all cursor-pointer"
+            className="px-6 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs sm:text-sm shadow-xl shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer"
           >
-            <Plus className="w-4 h-4 text-neutral-950" />
+            <Plus className="w-4 h-4 text-white" />
             <span>New Report</span>
           </button>
         </div>
@@ -479,7 +479,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
                   setSelectedReportDetail(null);
                   onSelectModule('reports');
                 }}
-                className="px-5 py-2.5 bg-white hover:bg-neutral-200 text-neutral-950 rounded-full text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md transition-all"
+                className="px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white rounded-full text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md shadow-[#FF5E14]/20 transition-all"
               >
                 <span>Open in Reports Hub</span>
                 <ArrowRight className="w-3.5 h-3.5" />

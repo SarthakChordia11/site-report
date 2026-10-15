@@ -335,9 +335,9 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
 
                   <button
                     onClick={handleShare}
-                    className="px-4 py-2 bg-white hover:bg-neutral-200 text-neutral-950 rounded-full text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-md shadow-white/10"
+                    className="px-4 py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white rounded-full text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-md shadow-[#FF5E14]/20"
                   >
-                    <Share2 className="w-3.5 h-3.5 text-neutral-950" />
+                    <Share2 className="w-3.5 h-3.5 text-white" />
                     <span>Share</span>
                   </button>
                 </div>
