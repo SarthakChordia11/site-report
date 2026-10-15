@@ -208,21 +208,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </div>
 
       {/* ============================================================================== */}
-      {/* 2. FULL-BLEED DRAMATIC WELDER HERO SECTION                                     */}
+      {/* 2. FULL-BLEED ARCHITECTURAL & ENGINEERING PLANNING HERO SECTION                */}
       {/* ============================================================================== */}
       <section id="hero" className="relative -mt-[88px] pt-36 pb-24 lg:pt-44 lg:pb-36 min-h-[700px] flex items-center overflow-hidden">
         
-        {/* Full-Bleed Dramatic Welder Image Background */}
+        {/* Full-Bleed Engineering Planning Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="/steelora/hero.webp" 
-            onError={(e) => { e.currentTarget.src = '/steelora/hero-video.webp'; }}
-            alt="Welder in protective gear welding inside giant metal tunnel with sparks flying"
+            src="/steelora/hero-planning.webp" 
+            onError={(e) => { e.currentTarget.src = '/steelora/hero-planning.jpg'; }}
+            alt="Construction engineers and architects collaborating over architectural drawings and site blueprints"
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark Overlay matching Steelora theme */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+          {/* Dark Overlay matching Steelora theme for high text readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/45" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 relative z-10 w-full">
