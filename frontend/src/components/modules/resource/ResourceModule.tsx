@@ -205,8 +205,8 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
 
           {/* Materials Table */}
           <div className="bg-[#161A24] rounded-2xl border border-white/10 shadow-xs overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-neutral-300">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+              <table className="w-full text-left text-xs text-neutral-300 min-w-[760px]">
                 <thead className="bg-[#0B0D13] text-neutral-400 uppercase tracking-wider text-[11px] border-b border-white/10">
                   <tr>
                     <th className="py-3 px-4">Material Name</th>
@@ -315,7 +315,7 @@ export const ResourceModule: React.FC<ResourceModuleProps> = ({
           </div>
 
           {/* Kanban Columns */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
             {STAGES.map((stage, sIdx) => {
               const stageElements = elements.filter(el => el.stage === stage);
               const stageBadgeColors: Record<ElementStage, string> = {

@@ -115,7 +115,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
       </div>
 
       {/* 4 Core Financial Rollup KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {/* Planned Value (PV) */}
         <div className="bg-[#161A24] p-4 rounded-2xl border border-white/10 shadow-xs">
           <div className="flex items-center justify-between text-neutral-400 text-xs">
@@ -277,7 +277,7 @@ export const CostModule: React.FC<CostModuleProps> = ({
                 <p className="text-xs text-neutral-400">Planned Value (PV) vs Actual Cost (AC) vs Earned Value (EV)</p>
               </div>
 
-              <div className="flex items-center gap-4 text-xs font-mono">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-mono">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-1 bg-neutral-500 rounded"></span>
                   <span className="text-neutral-400">Planned (PV)</span>
@@ -374,8 +374,8 @@ export const CostModule: React.FC<CostModuleProps> = ({
             <h3 className="text-sm font-semibold text-white mb-1">Cost & Schedule Variance Mathematical Table</h3>
             <p className="text-xs text-neutral-400 mb-4">Formulas and real-time execution indices across project phases</p>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs text-neutral-300">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+              <table className="w-full text-left text-xs text-neutral-300 min-w-[640px]">
                 <thead className="bg-[#0B0D13] text-neutral-400 uppercase tracking-wider text-[11px] border-b border-white/10">
                   <tr>
                     <th className="py-3 px-3">EVM Metric</th>

@@ -154,10 +154,10 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       </div>
 
       {/* Live Site Quick Actions & AI Input triggers */}
-      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-6 shadow-xl">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/10">
+      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
+            <div className="w-9 h-9 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14] shrink-0">
               <Sparkles className="w-4.5 h-4.5" />
             </div>
             <div>
@@ -178,7 +178,7 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Live Pulse Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-4 text-xs">
           <div 
             onClick={() => onSelectModule('labour')}
             className="p-4 bg-[#0B0D13] hover:bg-white/5 border border-white/10 hover:border-[#FF5E14]/30 rounded-2xl cursor-pointer transition-colors"
@@ -220,28 +220,28 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
       </div>
 
       {/* Recent Reports Table with Steelora styling */}
-      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-6 shadow-xl">
+      <div className="bg-[#161A24] border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-lg font-bold text-white">Recent Reports</h2>
             <p className="text-xs text-neutral-400 mt-0.5">Summary of latest AI-generated site inspections and shift logs</p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
             {/* Search filter */}
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Search reports..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 pr-4 py-2 bg-[#0B0D13] border border-white/10 rounded-full text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
+                className="w-full sm:w-56 pl-9 pr-4 py-2 bg-[#0B0D13] border border-white/10 rounded-full text-xs text-white placeholder:text-neutral-500 focus:outline-none focus:border-[#FF5E14] focus:ring-1 focus:ring-[#FF5E14]/30 transition-colors"
               />
             </div>
 
             {/* Filter pills */}
-            <div className="flex bg-[#0B0D13] border border-white/10 rounded-full p-1 text-xs">
+            <div className="flex bg-[#0B0D13] border border-white/10 rounded-full p-1 text-xs justify-between sm:justify-start">
               {(['All', 'Completed', 'In Progress'] as const).map((filter) => (
                 <button
                   key={filter}
@@ -260,8 +260,8 @@ export const DashboardOverview: React.FC<DashboardOverviewProps> = ({
         </div>
 
         {/* Table layout with Steelora styling */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
+        <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+          <table className="w-full text-left text-xs min-w-[620px]">
             <thead>
               <tr className="border-b border-white/10 text-neutral-400 font-semibold">
                 <th className="pb-3 px-3">Report Name</th>

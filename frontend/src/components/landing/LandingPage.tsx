@@ -44,7 +44,9 @@ import {
   ExternalLink, 
   ChevronRight,
   Settings,
-  Share2
+  Share2,
+  Menu,
+  X
 } from 'lucide-react';
 import { SiteReportLogo } from '../common/SiteReportLogo';
 import { SAMPLE_VOICE_PROMPTS } from '../../utils/aiParser';
@@ -66,6 +68,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const [projectSizeCr, setProjectSizeCr] = useState<number>(50);
   const [numSites, setNumSites] = useState<number>(3);
   const [expandedFaq, setExpandedFaq] = useState<number | null>(0);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const estimatedDaysSaved = Math.round(numSites * 28);
   const estimatedCostSavedLakhs = Math.round(projectSizeCr * 0.035 * 100);
@@ -177,16 +180,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* ============================================================================== */}
       {/* 1. FLOATING PURE WHITE NAVBAR                                                  */}
       {/* ============================================================================== */}
-      <div className="sticky top-0 z-50 py-4 px-4 lg:px-10 bg-[#161A22]/20 backdrop-blur-md">
-        <nav className="max-w-7xl mx-auto bg-white rounded-full px-6 sm:px-8 py-3.5 flex items-center justify-between shadow-xl border border-neutral-200/80">
+      <div className="sticky top-0 z-50 py-3 sm:py-4 px-3 sm:px-6 lg:px-10 bg-[#161A22]/20 backdrop-blur-md">
+        <nav className="max-w-7xl mx-auto bg-white rounded-full px-4 sm:px-8 py-2.5 sm:py-3.5 flex items-center justify-between shadow-xl border border-neutral-200/80">
           
           {/* Logo with Orange Gear */}
           <div className="flex items-center gap-2">
             <SiteReportLogo isDark={false} size="md" />
           </div>
 
-          {/* Nav Links */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-wider text-[#111624]">
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-bold uppercase tracking-wider text-[#111624]">
             <a href="#hero" className="hover:text-[#FF5E14] transition-colors">Home</a>
             <a href="#about" className="hover:text-[#FF5E14] transition-colors">About Us</a>
             <a href="#services" className="hover:text-[#FF5E14] transition-colors">Solutions</a>
@@ -194,23 +197,99 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <a href="#faq" className="hover:text-[#FF5E14] transition-colors">FAQ</a>
           </div>
 
-          {/* Solid Orange Pill Button */}
-          <div className="flex items-center gap-3">
+          {/* Solid Orange Pill Button + Mobile Hamburger Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => onLaunchApp('dashboard')}
-              className="px-6 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span>Get a Free Quote / Launch App</span>
+              <span className="hidden sm:inline">Get a Free Quote / Launch App</span>
+              <span className="sm:hidden">Launch App</span>
               <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Mobile Hamburger Button */}
+            <button
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              aria-label="Toggle Navigation Menu"
+              className="md:hidden p-2 rounded-full hover:bg-neutral-100 text-[#111624] transition-colors cursor-pointer"
+            >
+              {mobileNavOpen ? <X className="w-5 h-5 text-[#FF5E14]" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </nav>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileNavOpen && (
+          <div className="md:hidden mt-2 max-w-7xl mx-auto bg-white/95 backdrop-blur-xl border border-neutral-200/80 rounded-3xl p-5 shadow-2xl animate-in fade-in space-y-4 text-left">
+            <div className="flex flex-col space-y-2 text-xs font-bold uppercase tracking-wider text-[#111624]">
+              <a 
+                href="#hero" 
+                onClick={() => setMobileNavOpen(false)}
+                className="p-2.5 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                Home
+              </a>
+              <a 
+                href="#about" 
+                onClick={() => setMobileNavOpen(false)}
+                className="p-2.5 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                About Us
+              </a>
+              <a 
+                href="#services" 
+                onClick={() => setMobileNavOpen(false)}
+                className="p-2.5 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                Solutions
+              </a>
+              <a 
+                href="#why-choose" 
+                onClick={() => setMobileNavOpen(false)}
+                className="p-2.5 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                Why Choose Us
+              </a>
+              <a 
+                href="#faq" 
+                onClick={() => setMobileNavOpen(false)}
+                className="p-2.5 rounded-xl hover:bg-neutral-100 transition-colors"
+              >
+                FAQ
+              </a>
+            </div>
+
+            <div className="pt-3 border-t border-neutral-100 flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setMobileNavOpen(false);
+                  onLaunchApp('dashboard');
+                }}
+                className="w-full py-3 bg-[#FF5E14] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Open Dashboard App</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => {
+                  setMobileNavOpen(false);
+                  onLaunchEstimator();
+                }}
+                className="w-full py-3 bg-[#111624] text-white font-bold rounded-full text-xs flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Calculator className="w-3.5 h-3.5" />
+                <span>Cost Estimator</span>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ============================================================================== */}
       {/* 2. FULL-BLEED ARCHITECTURAL & ENGINEERING PLANNING HERO SECTION                */}
       {/* ============================================================================== */}
-      <section id="hero" className="relative -mt-[88px] pt-36 pb-24 lg:pt-44 lg:pb-36 min-h-[700px] flex items-center overflow-hidden">
+      <section id="hero" className="relative -mt-[80px] sm:-mt-[88px] pt-32 pb-20 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-36 min-h-[580px] sm:min-h-[660px] lg:min-h-[700px] flex items-center overflow-hidden">
         
         {/* Full-Bleed Engineering Planning Background Image */}
         <div className="absolute inset-0 z-0">
@@ -303,13 +382,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         {/* The Exact 3-Column Asymmetric Layout from Screenshot 2 - Aligned Heights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           
-          {/* COLUMN 1: Tall Dark Card (460px) + White Card (190px) */}
+          {/* COLUMN 1: Tall Dark Card + White Card */}
           <div className="flex flex-col gap-6">
             
             {/* Card 1: Tall Dark Card with Orange Pipes */}
-            <div className="bg-[#111624] text-white rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden h-[460px] shadow-lg group">
+            <div className="bg-[#111624] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden min-h-[400px] md:h-[460px] shadow-lg group">
               <div className="space-y-6 relative z-10">
-                <h3 className="text-2xl font-bold leading-snug">
+                <h3 className="text-xl sm:text-2xl font-bold leading-snug">
                   Delivering Precision<br />Engineering Solutions<br />for Modern Industry
                 </h3>
                 <button
@@ -322,7 +401,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </div>
 
               {/* Orange Pipes Photo on Bottom */}
-              <div className="relative h-52 -mx-8 -mb-8 mt-4 overflow-hidden">
+              <div className="relative h-48 sm:h-52 -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 mt-4 overflow-hidden">
                 <img 
                   src="/steelora/pipes.webp"
                   onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
@@ -333,7 +412,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Card 2: High Production Capacity Card */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-lg font-bold text-[#111624]">High Production Capacity</h4>
@@ -364,11 +443,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           </div>
 
-          {/* COLUMN 2: White Card (190px) + Tall Worker Factory Photo (460px) */}
+          {/* COLUMN 2: White Card + Tall Worker Factory Photo */}
           <div className="flex flex-col gap-6">
             
             {/* Card 3: Strict Quality Standards */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-lg font-bold text-[#111624]">Strict Quality Standards</h4>
@@ -398,7 +477,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Card 4: Worker with Tablet & Industrial Machinery Photo */}
-            <div className="rounded-3xl overflow-hidden shadow-md h-[460px] relative group">
+            <div className="rounded-3xl overflow-hidden shadow-md min-h-[320px] md:h-[460px] relative group">
               <img 
                 src="/steelora/worker-factory.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
@@ -409,11 +488,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
           </div>
 
-          {/* COLUMN 3: Tall Sunset Rig with 25+ Overlay (460px) + White Card (190px) */}
+          {/* COLUMN 3: Tall Sunset Rig with 25+ Overlay + White Card */}
           <div className="flex flex-col gap-6">
             
             {/* Card 5: Sunset Rig with 25+ Years Overlay */}
-            <div className="rounded-3xl overflow-hidden shadow-md h-[460px] relative group flex flex-col justify-end p-6">
+            <div className="rounded-3xl overflow-hidden shadow-md min-h-[400px] md:h-[460px] relative group flex flex-col justify-end p-5 sm:p-6">
               <img 
                 src="/steelora/sunset-rig.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg.png'; }}
@@ -423,10 +502,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
               {/* Glass Overlay Box matching Screenshot 2 */}
-              <div className="relative z-10 bg-[#111624]/85 backdrop-blur-md rounded-2xl p-5 border border-white/10 text-white text-left space-y-2">
+              <div className="relative z-10 bg-[#111624]/85 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 text-white text-left space-y-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-extrabold text-[#FF5E14]">25</span>
-                  <span className="text-xl font-bold text-[#FF5E14]">+</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-[#FF5E14]">25</span>
+                  <span className="text-lg sm:text-xl font-bold text-[#FF5E14]">+</span>
                   <span className="text-xs font-bold text-neutral-300 ml-2">Years of Engineering Experience</span>
                 </div>
                 <div className="h-px bg-white/15 my-2" />
@@ -437,7 +516,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </div>
 
             {/* Card 6: Top Production Technology Card */}
-            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between h-[190px] text-left">
+            <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-lg font-bold text-[#111624]">Top Production Technology</h4>
@@ -569,7 +648,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           
           {/* Left Column: Full-Height Industrial Worker Photo with Glass 90+ Badge */}
           <div className="lg:col-span-6 relative">
-            <div className="rounded-3xl overflow-hidden relative shadow-2xl min-h-[520px] max-h-[640px] border border-white/10 group">
+            <div className="rounded-3xl overflow-hidden relative shadow-2xl min-h-[360px] sm:min-h-[520px] max-h-[640px] border border-white/10 group">
               <img 
                 src="/steelora/worker-wcu.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
@@ -579,7 +658,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
               {/* Floating Glass Badge in Corner: Expert Industrial Employee 90+ */}
-              <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-[#1A1F2D]/85 backdrop-blur-md rounded-2xl p-5 border border-white/15 text-left shadow-2xl max-w-sm space-y-3">
+              <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-auto bg-[#1A1F2D]/85 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 text-left shadow-2xl max-w-sm space-y-2 sm:space-y-3">
                 <div className="flex items-baseline justify-between">
                   <h4 className="text-xs font-bold text-white uppercase tracking-wider">Expert Industrial Employee</h4>
                   <div className="flex items-baseline gap-0.5">
@@ -843,7 +922,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* 9. ROI ESTIMATOR & VALUE CALCULATOR                                            */}
       {/* ============================================================================== */}
       <section className="py-16 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto">
-        <div className="rounded-3xl border border-neutral-300 bg-[#111624] text-white p-8 sm:p-14 shadow-2xl">
+        <div className="rounded-3xl border border-neutral-300 bg-[#111624] text-white p-5 sm:p-10 lg:p-14 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <div className="lg:col-span-6 space-y-6 text-left">

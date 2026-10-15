@@ -545,7 +545,7 @@ export const EstimatorModule: React.FC = () => {
         </div>
       </div>
 
-      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-6 space-y-4 shadow-xl">
+      <section className="bg-[#161A24] border border-white/10 rounded-3xl p-4 sm:p-6 space-y-4 shadow-xl">
         <div className="flex items-center gap-2.5">
           <span className="w-8 h-8 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-[#FF5E14] flex items-center justify-center text-xs font-mono font-bold shrink-0">
             <ImageIcon className="w-4 h-4" />
@@ -925,8 +925,8 @@ export const EstimatorModule: React.FC = () => {
           <div className="border-t border-gray-700 pt-4">
             <h2 className="text-lg font-bold mb-1">Bill of Quantities</h2>
             <p className="text-xs text-gray-400 mb-3">Item-wise quantity × rate = amount.</p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <div className="overflow-x-auto -mx-2 sm:mx-0">
+              <table className="w-full text-sm min-w-[620px]">
                 <thead>
                   <tr className="border-b border-gray-700 text-xs text-[#FF5E14] uppercase tracking-wider">
                     <th className="text-left py-2 pr-2">Sr</th>

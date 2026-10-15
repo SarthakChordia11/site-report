@@ -325,55 +325,57 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md overflow-y-auto">
       <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-4xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
         {/* Modal Header */}
-        <div className="px-6 py-4 bg-[#0B0D13] border-b border-white/10 flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4 bg-[#0B0D13] border-b border-white/10 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14] shrink-0">
               <Sparkles className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-white tracking-tight">AI Site Operations Assistant</h3>
-                <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-[#FF5E14]/15 text-[#FF5E14] rounded-full border border-[#FF5E14]/30">
+                <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">AI Site Assistant</h3>
+                <span className="hidden sm:inline-block px-2.5 py-0.5 text-[10px] font-semibold bg-[#FF5E14]/15 text-[#FF5E14] rounded-full border border-[#FF5E14]/30">
                   AI Voice Intelligence
                 </span>
               </div>
-              <p className="text-xs text-neutral-400 mt-0.5">Log attendance, materials, or machinery instantly via natural voice</p>
+              <p className="text-[11px] sm:text-xs text-neutral-400 mt-0.5 line-clamp-1 sm:line-clamp-none">Log attendance, materials, or machinery instantly</p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 sm:p-2 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Input Mode Selector Bar */}
-        <div className="px-6 py-3 bg-[#0B0D13]/60 border-b border-white/10 flex items-center justify-between gap-2 overflow-x-auto">
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[#0B0D13]/60 border-b border-white/10 flex items-center justify-between gap-2 overflow-x-auto shrink-0">
           <div className="p-1 bg-[#08090C] border border-white/10 rounded-full flex gap-1">
             <button
               onClick={() => { setActiveMode('voice'); setExtractedResult(null); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'voice'
                   ? 'bg-[#FF5E14] text-white shadow-md font-bold'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
-              <Mic className="w-3.5 h-3.5" />
-              <span>Voice Input (Hindi/Marathi/English)</span>
+              <Mic className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Voice Input (Hindi/Marathi/English)</span>
+              <span className="sm:hidden">Voice</span>
             </button>
 
             <button
               onClick={() => { setActiveMode('form'); setExtractedResult(null); }}
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                 activeMode === 'form'
                   ? 'bg-[#FF5E14] text-white shadow-md font-bold'
                   : 'text-neutral-400 hover:text-white'
               }`}
             >
-              <FileText className="w-3.5 h-3.5" />
-              <span>Quick Form</span>
+              <FileText className="w-3.5 h-3.5 shrink-0" />
+              <span className="hidden sm:inline">Quick Form</span>
+              <span className="sm:hidden">Form</span>
             </button>
           </div>
 
@@ -384,7 +386,7 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
         </div>
 
         {/* Modal Body: Split view of Input + Extracted AI Output */}
-        <div className="flex-1 p-6 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="flex-1 p-3.5 sm:p-6 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
           {/* Left Column: Interactive Input Controls */}
           <div className="lg:col-span-7 space-y-4">
             {activeMode === 'voice' && (

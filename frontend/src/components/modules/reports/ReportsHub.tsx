@@ -18,6 +18,7 @@ import {
   TrendingUp,
   Layers,
   ArrowRight,
+  ArrowLeft,
   ShieldCheck,
   RefreshCw,
   SlidersHorizontal
@@ -47,6 +48,7 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
   const [filterType, setFilterType] = useState<string>('All');
   const [copiedToast, setCopiedToast] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'list' | 'preview'>('list');
 
   React.useEffect(() => {
     if (!selectedReport && reports && reports.length > 0) {
@@ -172,11 +174,37 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
         </div>
       </div>
 
+      {/* Mobile Tab Switcher visible on < lg */}
+      <div className="lg:hidden flex bg-[#0B0D13] p-1 rounded-full border border-white/10 text-xs">
+        <button
+          onClick={() => setMobileTab('list')}
+          className={`flex-1 py-2 rounded-full font-bold transition-all text-center cursor-pointer ${
+            mobileTab === 'list'
+              ? 'bg-[#FF5E14] text-white shadow-md'
+              : 'text-neutral-400 hover:text-white'
+          }`}
+        >
+          Reports List ({filteredReports.length})
+        </button>
+        <button
+          onClick={() => setMobileTab('preview')}
+          className={`flex-1 py-2 rounded-full font-bold transition-all text-center cursor-pointer ${
+            mobileTab === 'preview'
+              ? 'bg-[#FF5E14] text-white shadow-md'
+              : 'text-neutral-400 hover:text-white'
+          }`}
+        >
+          Report Preview
+        </button>
+      </div>
+
       {/* Main Grid: Reports List (Left) + Detailed Report Preview (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left Column: Report Navigation List */}
-        <div className="lg:col-span-4 bg-[#161A24] border border-white/10 rounded-3xl p-5 shadow-2xl space-y-4">
+        <div className={`lg:col-span-4 bg-[#161A24] border border-white/10 rounded-3xl p-4 sm:p-5 shadow-2xl space-y-4 ${
+          mobileTab === 'preview' ? 'hidden lg:block' : 'block'
+        }`}>
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-sm font-bold text-white flex items-center gap-2">
               <Layers className="w-4 h-4 text-[#FF5E14]" />
@@ -252,7 +280,10 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                 return (
                   <div
                     key={report.id}
-                    onClick={() => setSelectedReport(report)}
+                    onClick={() => {
+                      setSelectedReport(report);
+                      setMobileTab('preview');
+                    }}
                     className={`p-4 rounded-2xl border text-xs cursor-pointer transition-all ${
                       isSelected
                         ? 'bg-white/10 border-[#FF5E14]/50 shadow-md ring-1 ring-[#FF5E14]/30'
@@ -295,7 +326,20 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
         </div>
 
         {/* Right Column: Detailed Universal Document Viewer */}
-        <div className="lg:col-span-8 bg-[#161A24] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+        <div className={`lg:col-span-8 bg-[#161A24] border border-white/10 rounded-3xl p-4 sm:p-8 shadow-2xl space-y-6 ${
+          mobileTab === 'list' ? 'hidden lg:block' : 'block'
+        }`}>
+          {/* Mobile Back Button */}
+          <div className="lg:hidden">
+            <button
+              onClick={() => setMobileTab('list')}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-semibold text-neutral-300 hover:text-white transition-colors cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>← Back to Reports List</span>
+            </button>
+          </div>
+
           {selectedReport ? (
             <div>
               {/* Document Header & Actions */}

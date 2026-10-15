@@ -49,60 +49,63 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="px-4 lg:px-8 py-3 flex items-center justify-between gap-4">
         
         {/* Left Section: Mobile Menu & Site Switcher */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           {/* Mobile hamburger */}
           <button
             onClick={onToggleMobileSidebar}
-            className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/10 lg:hidden cursor-pointer"
+            aria-label="Open Navigation Menu"
+            className="p-2 rounded-full bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/10 lg:hidden cursor-pointer shrink-0"
           >
             <Menu className="w-4 h-4" />
           </button>
 
-          {/* Logo visible on smaller screens when sidebar collapsed */}
-          <div className="lg:hidden">
+          {/* Logo visible on medium screens when sidebar collapsed */}
+          <div className="hidden sm:block lg:hidden shrink-0">
             <SiteReportLogo isDark={true} size="sm" />
           </div>
 
-          {/* Project Switcher Dropdown */}
-          <div className="relative hidden sm:block">
+          {/* Project Switcher Dropdown - Accessible on Mobile & Desktop */}
+          <div className="relative">
             <button
               id="header-site-selector-btn"
               onClick={() => setSiteMenuOpen(!siteMenuOpen)}
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition-colors cursor-pointer"
             >
-              <Building2 className="w-3.5 h-3.5 text-[#FF5E14]" />
-              <span className="max-w-[180px] lg:max-w-[240px] truncate">
-                {currentSite ? currentSite.name : 'No Site Selected'}
+              <Building2 className="w-3.5 h-3.5 text-[#FF5E14] shrink-0" />
+              <span className="max-w-[105px] sm:max-w-[180px] lg:max-w-[240px] truncate">
+                {currentSite ? currentSite.name : 'Select Site'}
               </span>
-              <ChevronDown className="w-3.5 h-3.5 text-neutral-400 ml-0.5" />
+              <ChevronDown className="w-3 h-3 text-neutral-400 shrink-0" />
             </button>
 
             {siteMenuOpen && (
-              <div className="absolute left-0 mt-2 w-72 bg-[#161A24] border border-white/10 rounded-2xl shadow-2xl z-50 p-2 animate-in fade-in">
+              <div className="absolute left-0 mt-2 w-72 max-w-[calc(100vw-2rem)] bg-[#161A24] border border-white/10 rounded-2xl shadow-2xl z-50 p-2 animate-in fade-in">
                 <p className="px-3 py-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Select Construction Site</p>
                 {sites.length === 0 && (
                   <p className="px-3 py-2 text-xs text-neutral-500 italic">No sites created yet.</p>
                 )}
-                {sites.map((s) => (
-                  <button
-                    key={s.id}
-                    onClick={() => {
-                      onSelectSite(s);
-                      setSiteMenuOpen(false);
-                    }}
-                    className={`w-full text-left px-3 py-2.5 rounded-xl text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
-                      s.id === currentSite?.id ? 'bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-white font-bold' : 'text-neutral-300 hover:bg-white/5'
-                    }`}
-                  >
-                    <Building2 className={`w-4 h-4 mt-0.5 ${s.id === currentSite?.id ? 'text-[#FF5E14]' : 'text-neutral-400'}`} />
-                    <div className="flex-1 min-w-0">
-                      <p className="truncate font-semibold">{s.name}</p>
-                      <p className={`text-[10px] ${s.id === currentSite?.id ? 'text-neutral-300' : 'text-neutral-500'}`}>
-                        {s.location} • ₹{(s.budgetTotal / 10000000).toFixed(0)} Cr
-                      </p>
-                    </div>
-                  </button>
-                ))}
+                <div className="max-h-64 overflow-y-auto space-y-1">
+                  {sites.map((s) => (
+                    <button
+                      key={s.id}
+                      onClick={() => {
+                        onSelectSite(s);
+                        setSiteMenuOpen(false);
+                      }}
+                      className={`w-full text-left px-3 py-2.5 rounded-xl text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
+                        s.id === currentSite?.id ? 'bg-[#FF5E14]/15 border border-[#FF5E14]/30 text-white font-bold' : 'text-neutral-300 hover:bg-white/5'
+                      }`}
+                    >
+                      <Building2 className={`w-4 h-4 mt-0.5 shrink-0 ${s.id === currentSite?.id ? 'text-[#FF5E14]' : 'text-neutral-400'}`} />
+                      <div className="flex-1 min-w-0">
+                        <p className="truncate font-semibold">{s.name}</p>
+                        <p className={`text-[10px] ${s.id === currentSite?.id ? 'text-neutral-300' : 'text-neutral-500'}`}>
+                          {s.location} • ₹{(s.budgetTotal / 10000000).toFixed(0)} Cr
+                        </p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
                 
                 <div className="border-t border-white/10 mt-1.5 pt-1.5">
                   <button
@@ -122,12 +125,12 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Right Section: Actions, Notifications, User Profile */}
-        <div className="flex items-center gap-3">
-          {/* Quick Voice Log Button - Vibrant Steelora Orange Pill */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Quick Voice Log Button */}
           <button
             id="header-voice-btn"
             onClick={() => onOpenAIModal('voice')}
-            className="flex items-center gap-2 px-4 py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-lg shadow-[#FF5E14]/20 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-lg shadow-[#FF5E14]/20 transition-all cursor-pointer"
           >
             <Mic className="w-3.5 h-3.5 text-white" />
             <span className="hidden sm:inline">Voice Log</span>

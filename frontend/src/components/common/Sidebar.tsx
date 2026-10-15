@@ -9,7 +9,8 @@ import {
   Settings, 
   LogOut,
   FolderKanban,
-  Files
+  Files,
+  X
 } from 'lucide-react';
 import type { ModuleId } from '../../types';
 import { SiteReportLogo } from './SiteReportLogo';
@@ -61,10 +62,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         {/* Top Section: Logo & Nav Items */}
-        <div className="p-5">
-          {/* Brand Logo */}
-          <div className="pb-6 border-b border-white/10">
+        <div className="p-5 flex-1 overflow-y-auto">
+          {/* Brand Logo & Mobile Close */}
+          <div className="pb-6 border-b border-white/10 flex items-center justify-between">
             <SiteReportLogo isDark={true} size="md" />
+            {isOpenMobile && (
+              <button
+                onClick={onCloseMobile}
+                aria-label="Close Sidebar"
+                className="lg:hidden p-1.5 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
           </div>
 
           {/* Navigation Links */}
@@ -109,7 +119,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </nav>
         </div>
 
-        <div className="p-5 border-t border-white/10 space-y-3">
+        <div className="p-5 border-t border-white/10 space-y-3 pb-8 lg:pb-5 shrink-0">
           <div className="p-3 rounded-2xl bg-[#161A24] border border-white/10 flex items-center gap-3">
             <div className="w-8 h-8 rounded-full bg-[#FF5E14]/20 border border-[#FF5E14]/30 flex items-center justify-center font-bold text-[#FF5E14] text-xs uppercase">
               {currentUser?.name?.charAt(0) || 'U'}

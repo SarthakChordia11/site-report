@@ -75,12 +75,12 @@ export const AddSiteModal: React.FC<AddSiteModalProps> = ({ isOpen, onClose, onS
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-      <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
+      <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-lg max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
         {/* Header */}
-        <div className="bg-[#0B0D13] px-6 py-4 flex items-center justify-between border-b border-white/10">
+        <div className="bg-[#0B0D13] px-5 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#FF5E14]/15 border border-[#FF5E14]/30 rounded-2xl flex items-center justify-center text-[#FF5E14]">
+            <div className="w-10 h-10 bg-[#FF5E14]/15 border border-[#FF5E14]/30 rounded-2xl flex items-center justify-center text-[#FF5E14] shrink-0">
               <Building2 className="w-5 h-5" />
             </div>
             <div>
@@ -90,21 +90,21 @@ export const AddSiteModal: React.FC<AddSiteModalProps> = ({ isOpen, onClose, onS
           </div>
           <button 
             onClick={onClose} 
-            className="p-1.5 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            className="p-1.5 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer shrink-0"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
           {error && (
             <div className="p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-xs">
               {error}
             </div>
           )}
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             <div className="col-span-2">
               <label className="block text-xs font-semibold text-neutral-300 mb-1.5">
                 Site Name <span className="text-[#FF5E14]">*</span>

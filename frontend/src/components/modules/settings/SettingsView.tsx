@@ -44,7 +44,7 @@ export const SettingsView: React.FC = () => {
 
   return (
     <div className="space-y-6 max-w-4xl animate-in fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
             Settings & System Preferences
@@ -56,7 +56,7 @@ export const SettingsView: React.FC = () => {
 
         <button
           onClick={handleSave}
-          className="px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs sm:text-sm shadow-lg shadow-[#FF5E14]/20 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
+          className="self-start sm:self-auto px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs sm:text-sm shadow-lg shadow-[#FF5E14]/20 flex items-center gap-2 transition-all cursor-pointer active:scale-95"
         >
           <Save className="w-4 h-4 text-white" />
           <span>Save Changes</span>

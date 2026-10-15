@@ -195,20 +195,21 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
           <button
             onClick={() => setShowAddTradeModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full text-xs border border-white/10 hover:border-white/20 transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-full text-xs border border-white/10 hover:border-white/20 transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4 text-[#FF5E14]" />
             <span>+ Add Custom Trade</span>
           </button>
           <button
             onClick={onOpenAIModal}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 transition-all cursor-pointer active:scale-95"
+            className="flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 transition-all cursor-pointer active:scale-95"
           >
-            <Mic className="w-4 h-4 text-white" />
-            <span>Voice Muster Entry ("Aaj mason 14 present...")</span>
+            <Mic className="w-4 h-4 text-white shrink-0" />
+            <span className="hidden sm:inline">Voice Muster Entry ("Aaj mason 14 present...")</span>
+            <span className="sm:hidden">Voice Muster Entry</span>
           </button>
         </div>
       </div>
@@ -238,7 +239,7 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
       </div>
 
       {/* Top 4 Quick Summary KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-[#161A24] p-4 rounded-2xl border border-white/10 shadow-lg">
           <div className="flex items-center justify-between text-neutral-400 text-xs">
             <span>Total Headcount</span>
@@ -303,8 +304,8 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
               </span>
             </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
+            <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+              <table className="w-full text-left text-xs min-w-[760px]">
                 <thead className="bg-[#0B0D13] text-neutral-400 font-semibold uppercase tracking-wider text-[11px] border-b border-white/10">
                   <tr>
                     <th className="py-3 px-4">Trade Name</th>
@@ -786,8 +787,8 @@ export const LabourModule: React.FC<LabourModuleProps> = ({
 
       {/* Add Custom Trade Modal */}
       {showAddTradeModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-          <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-md p-6 shadow-2xl text-white relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fade-in overflow-y-auto">
+          <div className="bg-[#161A24] border border-white/10 rounded-3xl w-full max-w-md max-h-[92vh] overflow-y-auto p-5 sm:p-6 shadow-2xl text-white relative">
             <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-4">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-[#FF5E14]/15 border border-[#FF5E14]/30 flex items-center justify-center text-[#FF5E14]">
