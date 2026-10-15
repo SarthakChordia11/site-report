@@ -45,7 +45,8 @@ export type TradeType =
   | 'Module Fitter'
   | 'Equipment Operator'
   | 'Bar Bender'
-  | 'Electrician';
+  | 'Electrician'
+  | (string & {});
 
 export interface TradeRosterItem {
   trade: TradeType;

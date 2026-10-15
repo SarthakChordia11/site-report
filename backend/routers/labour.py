@@ -20,7 +20,8 @@ TRADE_RATES = {
 # --- Attendance ---
 class AttendanceIn(BaseModel):
     site_id: str
-    date: date
+    date: Optional[date] = None
+    log_date: Optional[date] = None
     trade: str
     agency: Optional[str] = ""
     location: Optional[str] = "on_site"
@@ -28,6 +29,11 @@ class AttendanceIn(BaseModel):
     absent: int = 0
     ot_hours: float = 0
     remarks: Optional[str] = ""
+    rate_per_day: Optional[float] = None
+    ot_rate_multiplier: Optional[float] = 1.5
+
+    def get_effective_date(self) -> date:
+        return self.date or self.log_date or date.today()
 
 
 def _trade_key(trade: str) -> str:
@@ -35,11 +41,14 @@ def _trade_key(trade: str) -> str:
 
 
 def _create_wage(data: AttendanceIn, trade: str) -> LabourWage:
-    rate = TRADE_RATES.get(trade, TRADE_RATES["other"])
-    ot_rate = rate / 8 * 1.5
+    req_date = data.get_effective_date()
+    # If a manual rate_per_day is provided, use it; otherwise fallback to default TRADE_RATES
+    rate = data.rate_per_day if (data.rate_per_day is not None and data.rate_per_day > 0) else TRADE_RATES.get(trade, TRADE_RATES["other"])
+    multiplier = data.ot_rate_multiplier if (data.ot_rate_multiplier is not None and data.ot_rate_multiplier > 0) else 1.5
+    ot_rate = (rate / 8) * multiplier
     total = (data.present * rate) + (data.ot_hours * ot_rate)
     return LabourWage(
-        id=str(uuid.uuid4()), site_id=data.site_id, date=data.date,
+        id=str(uuid.uuid4()), site_id=data.site_id, date=req_date,
         trade=trade, rate_per_day=rate, ot_rate_per_hour=ot_rate,
         present=data.present, ot_hours=data.ot_hours, total_wages=total,
     )
@@ -50,15 +59,55 @@ def get_attendance(site_id: str, log_date: Optional[date] = None, db: Session = 
     if log_date:
         q = q.filter(LabourAttendance.date == log_date)
     rows = q.order_by(LabourAttendance.date.desc()).all()
-    return [{"id": r.id, "date": str(r.date), "trade": r.trade, "agency": r.agency,
-             "location": r.location, "present": r.present, "absent": r.absent,
-             "ot_hours": r.ot_hours, "remarks": r.remarks} for r in rows]
+
+    # Query wages to pair stored rate_per_day and ot_rate_multiplier
+    w_query = db.query(LabourWage).filter(LabourWage.site_id == site_id)
+    if log_date:
+        w_query = w_query.filter(LabourWage.date == log_date)
+    wages = w_query.all()
+    wages_map = {(w.date, w.trade): w for w in wages}
+
+    # Also build latest customized wage rate per trade for this site
+    latest_wages = {}
+    for w in sorted(wages, key=lambda x: x.date if x.date else date.min):
+        latest_wages[w.trade] = w.rate_per_day
+
+    results = []
+    for r in rows:
+        wage = wages_map.get((r.date, r.trade))
+        rate = wage.rate_per_day if (wage and wage.rate_per_day > 0) else latest_wages.get(r.trade, TRADE_RATES.get(r.trade, 700))
+        results.append({
+            "id": r.id,
+            "date": str(r.date),
+            "trade": r.trade,
+            "agency": r.agency,
+            "location": r.location,
+            "present": r.present,
+            "absent": r.absent,
+            "ot_hours": r.ot_hours,
+            "remarks": r.remarks,
+            "rate_per_day": rate,
+            "ot_rate_multiplier": (wage.ot_rate_per_hour / (wage.rate_per_day / 8)) if (wage and wage.rate_per_day) else 1.5,
+        })
+    return results
 
 @router.post("/attendance")
 def log_attendance(data: AttendanceIn, db: Session = Depends(get_db)):
-    data.trade = _trade_key(data.trade)
-    row = LabourAttendance(id=str(uuid.uuid4()), **data.model_dump())
-    wage = _create_wage(data, data.trade)
+    effective_date = data.get_effective_date()
+    trade = _trade_key(data.trade)
+    row_data = {
+        "site_id": data.site_id,
+        "date": effective_date,
+        "trade": trade,
+        "agency": data.agency or "",
+        "location": data.location or "on_site",
+        "present": data.present,
+        "absent": data.absent,
+        "ot_hours": data.ot_hours,
+        "remarks": data.remarks or "",
+    }
+    row = LabourAttendance(id=str(uuid.uuid4()), **row_data)
+    wage = _create_wage(data, trade)
     db.add(row)
     db.add(wage)
     db.commit()
@@ -69,22 +118,33 @@ def log_attendance(data: AttendanceIn, db: Session = Depends(get_db)):
 def upsert_attendance(data: AttendanceIn, db: Session = Depends(get_db)):
     """Replace one site's attendance row for a trade and day without duplicating wages."""
     trade = _trade_key(data.trade)
+    effective_date = data.get_effective_date()
     row = db.query(LabourAttendance).filter(
         LabourAttendance.site_id == data.site_id,
-        LabourAttendance.date == data.date,
+        LabourAttendance.date == effective_date,
         LabourAttendance.trade == trade,
     ).first()
-    payload = data.model_dump() | {"trade": trade}
+    row_data = {
+        "site_id": data.site_id,
+        "date": effective_date,
+        "trade": trade,
+        "agency": data.agency or "",
+        "location": data.location or "on_site",
+        "present": data.present,
+        "absent": data.absent,
+        "ot_hours": data.ot_hours,
+        "remarks": data.remarks or "",
+    }
     if row:
-        for key, value in payload.items():
+        for key, value in row_data.items():
             setattr(row, key, value)
         db.query(LabourWage).filter(
             LabourWage.site_id == data.site_id,
-            LabourWage.date == data.date,
+            LabourWage.date == effective_date,
             LabourWage.trade == trade,
         ).delete()
     else:
-        row = LabourAttendance(id=str(uuid.uuid4()), **payload)
+        row = LabourAttendance(id=str(uuid.uuid4()), **row_data)
         db.add(row)
     wage = _create_wage(data, trade)
     db.add(wage)
@@ -95,12 +155,24 @@ def upsert_attendance(data: AttendanceIn, db: Session = Depends(get_db)):
 def log_attendance_bulk(items: List[AttendanceIn], db: Session = Depends(get_db)):
     results = []
     for data in items:
-        data.trade = _trade_key(data.trade)
-        row = LabourAttendance(id=str(uuid.uuid4()), **data.model_dump())
-        wage = _create_wage(data, data.trade)
+        effective_date = data.get_effective_date()
+        trade = _trade_key(data.trade)
+        row_data = {
+            "site_id": data.site_id,
+            "date": effective_date,
+            "trade": trade,
+            "agency": data.agency or "",
+            "location": data.location or "on_site",
+            "present": data.present,
+            "absent": data.absent,
+            "ot_hours": data.ot_hours,
+            "remarks": data.remarks or "",
+        }
+        row = LabourAttendance(id=str(uuid.uuid4()), **row_data)
+        wage = _create_wage(data, trade)
         db.add(row)
         db.add(wage)
-        results.append({"trade": data.trade, "total_wages": wage.total_wages})
+        results.append({"trade": trade, "total_wages": wage.total_wages, "rate": wage.rate_per_day})
     db.commit()
     return results
 

@@ -6,6 +6,7 @@ import { $currentSite } from '../../stores/siteStore';
 import { labourApi } from '../../services/api';
 import { LabourModule } from '../modules/labour/LabourModule';
 import { GlobalAIModal } from '../ai/GlobalAIModal';
+import { INITIAL_TRADES } from '../../data/initialData';
 import type {
   TradeRosterItem,
   AgencyLog,
@@ -17,7 +18,7 @@ export default function LabourIsland() {
   const isLoggedIn = useStore($isLoggedIn);
   const currentSite = useStore($currentSite);
 
-  const [trades, setTrades] = useState<TradeRosterItem[]>([]);
+  const [trades, setTrades] = useState<TradeRosterItem[]>(INITIAL_TRADES);
   const [agencies, setAgencies] = useState<AgencyLog[]>([]);
   const [inductions, setInductions] = useState<WorkerInduction[]>([]);
   const [aiModalOpen, setAiModalOpen] = useState(false);
@@ -52,7 +53,7 @@ export default function LabourIsland() {
             leaveCount: 0,
             ratePerDay: r.rate_per_day || 700,
             overtimeHours: r.ot_hours || 0,
-            otRateMultiplier: 1.5,
+            otRateMultiplier: r.ot_rate_multiplier || 1.5,
             productivityOutput: 0,
             productivityUnit: 'Nos',
             workType: r.remarks || '',
@@ -63,9 +64,19 @@ export default function LabourIsland() {
           tradeMap[r.trade].presentCount += r.present || 0;
           tradeMap[r.trade].absentCount += r.absent || 0;
           tradeMap[r.trade].plannedCount += (r.present || 0) + (r.absent || 0);
+          if (r.rate_per_day) {
+            tradeMap[r.trade].ratePerDay = r.rate_per_day;
+          }
+          if (r.ot_rate_multiplier) {
+            tradeMap[r.trade].otRateMultiplier = r.ot_rate_multiplier;
+          }
         }
       });
-      setTrades(Object.values(tradeMap));
+      if (Object.keys(tradeMap).length > 0) {
+        setTrades(Object.values(tradeMap));
+      } else {
+        setTrades(INITIAL_TRADES);
+      }
     }
 
     // Map raw mobilization rows → AgencyLog[]
@@ -118,12 +129,14 @@ export default function LabourIsland() {
     try {
       const payload = updatedTrades.map((t) => ({
         site_id: currentSite.id,
+        date: today,
         log_date: today,
         trade: t.trade,
         present: t.presentCount,
         absent: t.absentCount,
         ot_hours: t.overtimeHours,
         rate_per_day: t.ratePerDay,
+        ot_rate_multiplier: t.otRateMultiplier || 1.5,
         remarks: t.workType,
       }));
       await Promise.all(payload.map((row) => labourApi.upsertAttendance(row)));

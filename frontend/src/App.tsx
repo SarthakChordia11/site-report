@@ -323,6 +323,8 @@ export default function App() {
         present: trade.presentCount, absent: trade.absentCount,
         ot_hours: trade.overtimeHours, location: trade.offSiteCount > 0 ? 'casting_yard' : 'on_site',
         remarks: trade.workType,
+        rate_per_day: trade.ratePerDay,
+        ot_rate_multiplier: trade.otRateMultiplier || 1.5,
       })));
       loadSiteData();
     } catch (error) {

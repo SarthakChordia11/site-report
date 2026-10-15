@@ -5,6 +5,7 @@ from collections import defaultdict
 from sqlalchemy.orm import Session
 from models.report import SiteReport
 from models.site import Site
+from models.labour import LabourWage
 
 
 def _parse_numeric(val) -> float:
@@ -90,12 +91,17 @@ def build_weekly_rollup(
             "avg": avg_val,
         })
         man_days = float(sum(counts))
+        w_row = db.query(LabourWage).filter(
+            LabourWage.site_id == site_id,
+            LabourWage.trade == trade.lower().strip().replace(" ", "_")
+        ).order_by(LabourWage.date.desc()).first()
+        trade_rate = w_row.rate_per_day if (w_row and w_row.rate_per_day > 0) else 800.0
         b11_labour_wages.append({
             "trade": trade,
             "man_days_week": man_days,
             "avg_daily_strength": avg_val,
-            "total_wages_paid": man_days * 800.0,  # standard daily wage reference
-            "remarks": f"Average daily strength {avg_val} across week",
+            "total_wages_paid": man_days * trade_rate,
+            "remarks": f"Average daily strength {avg_val} across week (₹{int(trade_rate)}/day)",
         })
 
     # ── B5. Material Consumption Summary ──────────────────────────────────────

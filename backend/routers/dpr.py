@@ -66,7 +66,11 @@ def _sync_dpr_to_modules(report: DPRFullReport, site_id: str, db: Session) -> di
         if not lbr.trade or lbr.present <= 0:
             continue
         trade_key = _normalize_trade(lbr.trade)
-        rate = TRADE_RATES.get(trade_key, 600)
+        custom_wage = db.query(LabourWage).filter(
+            LabourWage.site_id == site_id,
+            LabourWage.trade == trade_key
+        ).order_by(LabourWage.date.desc()).first()
+        rate = custom_wage.rate_per_day if (custom_wage and custom_wage.rate_per_day > 0) else TRADE_RATES.get(trade_key, 600)
         ot_rate = rate / 8 * 1.5
         total_wages = lbr.present * rate
 
