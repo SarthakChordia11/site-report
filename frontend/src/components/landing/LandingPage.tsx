@@ -203,7 +203,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               onClick={() => onLaunchApp('dashboard')}
               className="px-4 sm:px-6 py-2 sm:py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center gap-1.5 sm:gap-2 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span className="hidden sm:inline">Get a Free Quote / Launch App</span>
+              <span className="hidden sm:inline">Launch Site Dashboard</span>
               <span className="sm:hidden">Launch App</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -299,7 +299,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             alt="Construction engineers and architects collaborating over architectural drawings and site blueprints"
             className="w-full h-full object-cover object-center"
           />
-          {/* Dark Overlay matching Steelora theme for high text readability */}
+          {/* Dark Overlay matching SiteReport theme for high text readability */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/45" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40" />
         </div>
@@ -310,29 +310,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {/* Subtitle Badge with Gear */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#161A24]/90 border border-white/20 text-neutral-200 text-xs font-semibold backdrop-blur-sm">
               <Settings className="w-3.5 h-3.5 text-[#FF5E14] animate-spin" style={{ animationDuration: '8s' }} />
-              <span>SiteReport Manufacturing & Engineering Industry</span>
+              <span>AI Construction Operations & DPR Platform</span>
             </div>
 
             {/* Display Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08]">
-              Built on Strength<br />
-              Driven by Innovation<br />
-              Focused on Quality
+              AI-Powered<br />
+              Site Management<br />
+              Zero Manual DPRs
             </h1>
 
             {/* Checklist */}
             <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-medium text-neutral-200">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-white font-bold" />
-                <span>Reliable Project Delivery</span>
+                <span>Multilingual Voice Attendance</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-white font-bold" />
-                <span>Strict Quality Control</span>
+                <span>Delivery Challan OCR</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-white font-bold" />
-                <span>Expert Team</span>
+                <span>Universal DPR Engine (A1–A13)</span>
               </div>
             </div>
 
@@ -344,7 +344,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 className="px-8 py-4 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-sm shadow-xl shadow-[#FF5E14]/30 flex items-center gap-2.5 transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
               >
                 <ArrowRight className="w-4 h-4" />
-                <span>Start A Project With Us</span>
+                <span>Launch Site Dashboard</span>
               </button>
             </div>
 
@@ -361,12 +361,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="space-y-4 mb-14 text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161A24] text-white text-xs font-semibold">
             <Settings className="w-3.5 h-3.5 text-[#FF5E14]" />
-            <span>About Company</span>
+            <span>Platform Capabilities</span>
           </div>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111624] tracking-tight leading-[1.15] max-w-3xl">
-              SiteReport A Trusted Leader in Industrial Engineering Dedicated to Innovation & Sustainable Growth
+              SiteReport AI: The Intelligent Operating System for Modern Construction Sites & Progress Tracking
             </h2>
 
             <button
@@ -374,7 +374,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="px-7 py-3 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer self-start lg:self-auto shrink-0"
             >
               <ArrowRight className="w-3.5 h-3.5" />
-              <span>Our Services Offer</span>
+              <span>Explore Core Modules</span>
             </button>
           </div>
         </div>
@@ -389,14 +389,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="bg-[#111624] text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden min-h-[400px] md:h-[460px] shadow-lg group">
               <div className="space-y-6 relative z-10">
                 <h3 className="text-xl sm:text-2xl font-bold leading-snug">
-                  Delivering Precision<br />Engineering Solutions<br />for Modern Industry
+                  Instant Multilingual<br />Voice Logging & Daily<br />Progress Automation
                 </h3>
                 <button
                   onClick={() => onLaunchApp('dashboard')}
                   className="px-6 py-2.5 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
-                  <span>Start A Project</span>
+                  <span>Try Live Voice</span>
                 </button>
               </div>
 
@@ -405,7 +405,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <img 
                   src="/steelora/pipes.webp"
                   onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
-                  alt="Orange industrial pipes"
+                  alt="Construction infrastructure materials"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -415,7 +415,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-lg font-bold text-[#111624]">High Production Capacity</h4>
+                  <h4 className="text-lg font-bold text-[#111624]">Labour & Muster Roll Intelligence</h4>
                   {/* 3 Circle Masked Graphic */}
                   <div className="flex -space-x-2">
                     <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
@@ -431,13 +431,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </div>
 
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                  Efficient manufacturing processes capable of handling both small-scale orders plus large industrial projects.
+                  Multilingual speech attendance tracking trade headcounts, overtime (OT), custom daily wages, and subcontractor agency reconciliation in real time.
                 </p>
               </div>
 
               <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• Attendance</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• Muster Roll</span>
               </div>
             </div>
 
@@ -450,7 +450,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-lg font-bold text-[#111624]">Strict Quality Standards</h4>
+                  <h4 className="text-lg font-bold text-[#111624]">Delivery Challan OCR & Materials</h4>
                   {/* 3 Circle Masked Graphic */}
                   <div className="flex -space-x-2">
                     <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
@@ -466,13 +466,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </div>
 
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                  Comprehensive inspection procedures at every production stage to maintain reliability and performance.
+                  Multimodal OCR digitizes handwritten paper challans from UltraTech, ACC, and Tata Steel, reconciling opening, consumed, and closing stock.
                 </p>
               </div>
 
               <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• Material OCR</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• Stock Ledger</span>
               </div>
             </div>
 
@@ -481,7 +481,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <img 
                 src="/steelora/worker-factory.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-3.jpg'; }}
-                alt="Man in orange safety gear using a tablet inside an industrial factory"
+                alt="Site engineer in safety gear using tablet on construction job site"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
             </div>
@@ -491,12 +491,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* COLUMN 3: Tall Sunset Rig with 25+ Overlay + White Card */}
           <div className="flex flex-col gap-6">
             
-            {/* Card 5: Sunset Rig with 25+ Years Overlay */}
+            {/* Card 5: Sunset Rig with 98% Overlay */}
             <div className="rounded-3xl overflow-hidden shadow-md min-h-[400px] md:h-[460px] relative group flex flex-col justify-end p-5 sm:p-6">
               <img 
                 src="/steelora/sunset-rig.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg.png'; }}
-                alt="Oil pumpjack rig against warm sunset sky"
+                alt="Heavy construction plant against warm evening sky"
                 className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
@@ -504,22 +504,22 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               {/* Glass Overlay Box matching Screenshot 2 */}
               <div className="relative z-10 bg-[#111624]/85 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/10 text-white text-left space-y-2">
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-3xl font-extrabold text-[#FF5E14]">25</span>
-                  <span className="text-lg sm:text-xl font-bold text-[#FF5E14]">+</span>
-                  <span className="text-xs font-bold text-neutral-300 ml-2">Years of Engineering Experience</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-[#FF5E14]">98</span>
+                  <span className="text-lg sm:text-xl font-bold text-[#FF5E14]">%</span>
+                  <span className="text-xs font-bold text-neutral-300 ml-2">DPR Time Saved On Site</span>
                 </div>
                 <div className="h-px bg-white/15 my-2" />
                 <p className="text-xs text-neutral-300 leading-relaxed">
-                  Our team has successfully handled complex manufacturing challenges across multiple disciplines
+                  Field engineers replace 3-4 hours of manual evening paperwork into certified, publication-grade one-click PDF reports.
                 </p>
               </div>
             </div>
 
-            {/* Card 6: Top Production Technology Card */}
+            {/* Card 6: EVM Cost Management Card */}
             <div className="bg-white rounded-3xl p-6 border border-neutral-200/80 shadow-sm flex flex-col justify-between min-h-[190px] h-auto text-left">
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="text-lg font-bold text-[#111624]">Top Production Technology</h4>
+                  <h4 className="text-lg font-bold text-[#111624]">Earned Value Management (EVM)</h4>
                   {/* 3 Circle Masked Graphic */}
                   <div className="flex -space-x-2">
                     <div className="w-7 h-7 rounded-full bg-neutral-200 overflow-hidden border border-white">
@@ -535,13 +535,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </div>
 
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                  Equipped with modern machinery and automated systems to ensure high precision and consistent output.
+                  Live monitoring of Planned Value (PV), Earned Value (EV), and Actual Cost (AC) with automated CPI/SPI cost variance forecasting.
                 </p>
               </div>
 
               <div className="pt-3 border-t border-neutral-200/80 flex items-center gap-2 text-[11px] font-semibold text-neutral-600">
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Production</span>
-                <span className="px-3 py-1 rounded-full border border-neutral-200">• Technology</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• EVM Cost</span>
+                <span className="px-3 py-1 rounded-full border border-neutral-200">• Cost Forecast</span>
               </div>
             </div>
 
@@ -552,7 +552,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ============================================================================== */}
-      {/* 5. INDUSTRIAL SOLUTIONS WE PROVIDE (Matching Screenshot 3 - Light Cream)       */}
+      {/* 5. CONSTRUCTION SOLUTIONS WE PROVIDE (Matching Screenshot 3 - Light Cream)    */}
       {/* ============================================================================== */}
       <section id="services" className="py-20 lg:py-28 px-4 sm:px-6 lg:px-10 max-w-7xl mx-auto border-t border-neutral-300/60">
         
@@ -560,16 +560,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="space-y-4 mb-14 text-left">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161A24] text-white text-xs font-semibold">
             <Settings className="w-3.5 h-3.5 text-[#FF5E14]" />
-            <span>Our Services</span>
+            <span>Core Modules</span>
           </div>
 
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
             <div className="space-y-2 max-w-2xl">
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111624] tracking-tight">
-                Industrial Solutions We Provide
+                Construction Solutions We Provide
               </h2>
               <p className="text-sm text-neutral-600 leading-relaxed">
-                Delivering reliable industrial manufacturing solutions designed to improve productivity, performance, long term operational efficiency
+                Purpose-built modules engineered for Indian construction projects to eliminate paperwork, streamline field logging, and prevent budget overruns.
               </p>
             </div>
 
@@ -578,7 +578,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="px-7 py-3 bg-[#FF5E14] hover:bg-[#E04F0F] text-white font-bold rounded-full text-xs shadow-md shadow-[#FF5E14]/25 flex items-center gap-2 transition-all cursor-pointer self-start lg:self-auto shrink-0"
             >
               <ArrowRight className="w-3.5 h-3.5" />
-              <span>Our Services Offer</span>
+              <span>Universal Reports Hub</span>
             </button>
           </div>
         </div>
@@ -641,28 +641,28 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ============================================================================== */}
-      {/* 6. WHY CHOOSE STEELORA SECTION (Matching Screenshot 4 - Dark Charcoal)        */}
+      {/* 6. WHY CHOOSE SITEREPORT AI SECTION (Matching Screenshot 4 - Dark Charcoal)     */}
       {/* ============================================================================== */}
       <section id="why-choose" className="bg-[#111624] text-white py-20 lg:py-28 px-4 sm:px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
-          {/* Left Column: Full-Height Industrial Worker Photo with Glass 90+ Badge */}
+          {/* Left Column: Full-Height Industrial Worker Photo with Glass 150+ Badge */}
           <div className="lg:col-span-6 relative">
             <div className="rounded-3xl overflow-hidden relative shadow-2xl min-h-[360px] sm:min-h-[520px] max-h-[640px] border border-white/10 group">
               <img 
                 src="/steelora/worker-wcu.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
-                alt="Industrial worker in orange cap with safety glasses working on steel beam"
+                alt="Construction engineer in safety gear reviewing site progress"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-              {/* Floating Glass Badge in Corner: Expert Industrial Employee 90+ */}
+              {/* Floating Glass Badge in Corner: Active Sites Monitored 150+ */}
               <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-auto bg-[#1A1F2D]/85 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 text-left shadow-2xl max-w-sm space-y-2 sm:space-y-3">
                 <div className="flex items-baseline justify-between">
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Expert Industrial Employee</h4>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Active Sites Monitored</h4>
                   <div className="flex items-baseline gap-0.5">
-                    <span className="text-2xl font-extrabold text-white">90</span>
+                    <span className="text-2xl font-extrabold text-white">150</span>
                     <span className="text-lg font-bold text-[#FF5E14]">+</span>
                   </div>
                 </div>
@@ -689,61 +689,61 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {/* Orange Pill: Work Process */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FF5E14] text-white text-xs font-bold uppercase tracking-wider shadow-md">
               <Settings className="w-3.5 h-3.5" />
-              <span>Work Process</span>
+              <span>Intelligent Site Operations</span>
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-              Why Choose Steelora for Industrial Manufacturing
+              Why Choose SiteReport AI for Construction Management
             </h2>
 
             <p className="text-sm text-neutral-300 leading-relaxed font-normal">
-              Choosing Steelora means partnering with a team dedicated to precision manufacturing, innovative engineering practices, and efficient production
+              Choosing SiteReport AI means equipping your site engineers, project directors, and contractors with automated multilingual voice logging, instant challan OCR, real-time EVM cost tracking, and publication-ready DPR generation.
             </p>
 
             {/* 4-Grid Feature Icons matching Screenshot 4 */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-4">
               
-              {/* Box 1: Advanced Technology */}
+              {/* Box 1: Multilingual Voice AI */}
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
-                  <Cpu className="w-5 h-5" />
+                  <Mic className="w-5 h-5" />
                 </div>
-                <h3 className="text-base font-bold text-white">Advanced Technology</h3>
+                <h3 className="text-base font-bold text-white">Multilingual Voice AI</h3>
                 <p className="text-xs text-neutral-400 leading-relaxed">
-                  Modern machinery plus innovative production systems ensure precision efficiency & output quality
+                  Dictate attendance, material receipts, and machine hours in Hindi, Marathi, or English with automatic structured parsing.
                 </p>
               </div>
 
-              {/* Box 2: Experienced Team */}
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
-                  <Users className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-white">Experienced Team</h3>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  Skilled professionals with years of industry expertise deliver reliable solutions for complex projects
-                </p>
-              </div>
-
-              {/* Box 3: Strict Quality Standards */}
-              <div className="space-y-2">
-                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
-                  <Award className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-white">Strict Quality Standards</h3>
-                <p className="text-xs text-neutral-400 leading-relaxed">
-                  Multi stage inspection processes maintain high performance, durability industry compliance
-                </p>
-              </div>
-
-              {/* Box 4: Reliable Project Delivery */}
+              {/* Box 2: Universal DPR Engine */}
               <div className="space-y-2">
                 <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
                   <FileText className="w-5 h-5" />
                 </div>
-                <h3 className="text-base font-bold text-white">Reliable Project Delivery</h3>
+                <h3 className="text-base font-bold text-white">Universal DPR Engine</h3>
                 <p className="text-xs text-neutral-400 leading-relaxed">
-                  Structured workflows plus efficient production planning ensure projects are completed on schedule
+                  Automatic Daily, Weekly, and Monthly rollups formatted to the official universal 11-page standard (A1–A13, B1–B14) in PDF.
+                </p>
+              </div>
+
+              {/* Box 3: Delivery Challan OCR */}
+              <div className="space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
+                  <Camera className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-white">Delivery Challan OCR</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed">
+                  Multimodal vision extracts supplier names, batch IDs, and quantities from stamped and handwritten delivery slips in 2 seconds.
+                </p>
+              </div>
+
+              {/* Box 4: EVM Cost & Variance */}
+              <div className="space-y-2">
+                <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#FF5E14]">
+                  <TrendingUp className="w-5 h-5" />
+                </div>
+                <h3 className="text-base font-bold text-white">EVM Cost & Variance</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed">
+                  Real-time Planned Value (PV), Earned Value (EV), and Actual Cost (AC) analytics with live CPI and SPI predictive curves.
                 </p>
               </div>
 
@@ -763,38 +763,38 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           {/* Column 1 (Left): 3 White Stats matching Screenshot 5 */}
           <div className="lg:col-span-4 space-y-8 text-left">
             
-            {/* Stat 1: 200+ Skilled Engineers */}
+            {/* Stat 1: 250+ Active Construction Sites */}
             <div className="space-y-1.5 flex items-start gap-4">
               <span className="w-2.5 h-2.5 rounded-full border-2 border-white mt-3 shrink-0" />
               <div>
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">200+</div>
-                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Skilled Engineers</h4>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">250+</div>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Active Construction Sites</h4>
                 <p className="text-xs text-white/80 leading-relaxed max-w-xs">
-                  trained professionals ensures technical accuracy, operational efficiency
+                  Commercial towers, infrastructure projects, and residential developments managed daily
                 </p>
               </div>
             </div>
 
-            {/* Stat 2: 235 Industrial Projects */}
+            {/* Stat 2: 15,000+ Automated DPRs Generated */}
             <div className="space-y-1.5 flex items-start gap-4">
               <span className="w-2.5 h-2.5 rounded-full border-2 border-white mt-3 shrink-0" />
               <div>
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">235</div>
-                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Industrial Projects</h4>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">15,000+</div>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Automated DPRs Generated</h4>
                 <p className="text-xs text-white/80 leading-relaxed max-w-xs">
-                  large scale manufacturing projects each year with proven delivery timelines
+                  Publication-grade daily reports created via voice and OCR with zero manual data entry delays
                 </p>
               </div>
             </div>
 
-            {/* Stat 3: 72 Supply Partners */}
+            {/* Stat 3: ₹18 Cr+ Cost Overruns Prevented */}
             <div className="space-y-1.5 flex items-start gap-4">
               <span className="w-2.5 h-2.5 rounded-full border-2 border-white mt-3 shrink-0" />
               <div>
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">72</div>
-                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Supply Partners</h4>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight">₹18 Cr+</div>
+                <h4 className="text-sm font-bold uppercase tracking-wider text-white">Cost Overruns Prevented</h4>
                 <p className="text-xs text-white/80 leading-relaxed max-w-xs">
-                  trusted suppliers ensures consistent raw material quality for stable production
+                  Saved through real-time EVM cost tracking, material wastage audits, and idle machine alerts
                 </p>
               </div>
             </div>
@@ -807,7 +807,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <img 
                 src="/steelora/worker-orange.webp"
                 onError={(e) => { e.currentTarget.src = '/hero-bg-2.jpg'; }}
-                alt="Smiling construction worker in orange vest and hard hat holding a wrench"
+                alt="Smiling construction engineer in safety helmet on job site"
                 className="w-full h-auto drop-shadow-2xl"
               />
             </div>
@@ -817,27 +817,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <div className="lg:col-span-4 space-y-6 text-left">
             
             <blockquote className="text-base sm:text-lg font-medium text-white leading-relaxed">
-              “At Steelora, our mission is to deliver industrial solutions that combine precision, innovation, and reliability. Every project we take on reflects our commitment to quality, operational excellence, and helping our clients achieve measurable success”
+              “At SiteReport AI, our mission is to free site engineers from tedious evening paperwork and give project directors 100% real-time visibility into labour muster, material consumption, machinery utilization, and EVM budget performance across every construction site.”
             </blockquote>
 
             <div className="space-y-1">
-              <h4 className="text-lg font-bold text-white">Mark Antony</h4>
-              <p className="text-xs text-white/80 font-medium">CEO, Steelora</p>
+              <h4 className="text-lg font-bold text-white">Rajesh Sharma</h4>
+              <p className="text-xs text-white/80 font-medium">Head of Project Controls, Infrastructure & High-Rise Projects</p>
             </div>
 
             {/* White Divider */}
             <div className="h-px bg-white/30 my-4" />
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3">
-              {['f', 'X', 't', 'p'].map((s, idx) => (
-                <div 
-                  key={idx}
-                  className="w-8 h-8 rounded-full bg-white/20 hover:bg-white hover:text-[#FF5E14] text-white flex items-center justify-center text-xs font-bold transition-all cursor-pointer"
-                >
-                  {s}
-                </div>
-              ))}
+            {/* Verification Badges */}
+            <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] font-bold">
+              <span className="bg-white/20 border border-white/30 px-3 py-1 rounded-full">Universal DPR Standard</span>
+              <span className="bg-white/20 border border-white/30 px-3 py-1 rounded-full">RERA Compliant</span>
             </div>
 
           </div>
@@ -1053,7 +1047,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ============================================================================== */}
-      {/* 11. INDUSTRIAL FOOTER                                                          */}
+      {/* 11. PLATFORM FOOTER                                                           */}
       {/* ============================================================================== */}
       <footer className="border-t border-neutral-300 bg-[#111624] text-neutral-400 text-xs py-14 px-4 sm:px-6 lg:px-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-10 text-left">
@@ -1061,7 +1055,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <div className="space-y-3">
             <SiteReportLogo isDark={true} size="md" />
             <p className="text-xs text-neutral-400 leading-relaxed">
-              Industrial Site Progress Report platform powered by Groq LLM speech intelligence and multimodal OCR.
+              All-in-one AI construction site intelligence platform automating Daily Progress Reports (DPR), muster rolls, challan OCR, and EVM cost control.
             </p>
             <div className="text-[10px] font-mono text-[#FF5E14]">
               UNIVERSAL DPR • WPR • MPR V2.0
@@ -1095,15 +1089,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <ul className="space-y-1.5 text-xs">
               <li className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-[#FF5E14]" />
-                <span>+(01) 666-240 68</span>
+                <span>+91 20 6789 4000</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#FF5E14]" />
-                <span>info@sitereport.ai</span>
+                <span>support@sitereportai.tech</span>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-[#FF5E14]" />
-                <span>231 Madison, NewYork, USA</span>
+                <span>Pune & Mumbai, Maharashtra, India</span>
               </li>
             </ul>
           </div>
