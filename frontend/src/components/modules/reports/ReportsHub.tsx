@@ -21,7 +21,8 @@ import {
   ArrowLeft,
   ShieldCheck,
   RefreshCw,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Download
 } from 'lucide-react';
 import type { SiteReport, Site } from '../../../types';
 import { dprApi } from '../../../services/api';
@@ -49,6 +50,8 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
   const [copiedToast, setCopiedToast] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [mobileTab, setMobileTab] = useState<'list' | 'preview'>('list');
+  const [pdfDownloadUrl, setPdfDownloadUrl] = useState<{ url: string; name: string } | null>(null);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (!selectedReport && reports && reports.length > 0) {
@@ -79,35 +82,91 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
   const handleExportPDF = async () => {
     if (!selectedReport) return;
     setIsExporting(true);
+    setExportError(null);
     try {
       const ext = selectedReport.extractedData || {};
-      const payload = ext.fullReport || ext.universal || ext.wpr || ext.mpr || {
+      const payload: any = ext.fullReport || ext.universal || ext.wpr || ext.mpr || {
         report_type: selectedReport.reportType || 'Daily',
-        site_info: {
-          project_name: selectedReport.projectName || currentSite?.name || 'Site Project',
-          date: selectedReport.date,
-          location: currentSite?.name || '',
-          inspector: selectedReport.author,
-        },
         ...ext,
       };
+
       payload.report_type = selectedReport.reportType || 'Daily';
+      if (!payload.site_info) {
+        payload.site_info = {};
+      }
+      if (!payload.site_info.project_name) {
+        payload.site_info.project_name = selectedReport.projectName || currentSite?.name || 'Site Project';
+      }
+      if (!payload.site_info.date) {
+        payload.site_info.date = selectedReport.date || new Date().toLocaleDateString('en-GB');
+      }
+      if (!payload.site_info.location) {
+        payload.site_info.location = currentSite?.name || 'Site';
+      }
+      if (!payload.site_info.inspector) {
+        payload.site_info.inspector = selectedReport.author || 'Site Engineer';
+      }
+
       const blob = await dprApi.generatePdf(payload);
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
+      
       const typeLabel = selectedReport.reportType || 'Daily';
-      a.download = `${(selectedReport.projectName || 'Site').replace(/\s+/g, '_')}_${typeLabel}_${(selectedReport.date || 'report').replace(/[\/\s]/g, '-')}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (err) {
+      const cleanProject = (selectedReport.projectName || currentSite?.name || 'Site').replace(/[^a-zA-Z0-9_-]/g, '_');
+      const cleanDate = (selectedReport.date || 'report').replace(/[\/\s]/g, '-');
+      const fileName = `${cleanProject}_${typeLabel}_${cleanDate}.pdf`;
+
+      const isMobile = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || '');
+      
+      // On mobile devices supporting navigator.share with files (iOS Safari, Android Chrome):
+      // Web Share API triggers native "Save to Files" / system download sheet directly.
+      if (isMobile && typeof navigator.canShare === 'function') {
+        try {
+          const pdfFile = new File([blob], fileName, { type: 'application/pdf' });
+          if (navigator.canShare({ files: [pdfFile] })) {
+            await navigator.share({
+              files: [pdfFile],
+              title: fileName,
+            });
+            setIsExporting(false);
+            return;
+          }
+        } catch (shareErr: any) {
+          if (shareErr.name === 'AbortError') {
+            setIsExporting(false);
+            return;
+          }
+          console.warn('Web Share failed, using direct download/preview fallback:', shareErr);
+        }
+      }
+
+      // Create blob URL for direct download or new window preview
+      const url = URL.createObjectURL(blob);
+      setPdfDownloadUrl({ url, name: fileName });
+
+      if (isMobile) {
+        // Open PDF in mobile browser PDF viewer
+        const win = window.open(url, '_blank');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          // If popup blocked, direct user through window location
+          window.location.href = url;
+        }
+      } else {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 1500);
+      }
+    } catch (err: any) {
       console.error('Failed to generate PDF from backend:', err);
-      window.print();
+      setExportError(err?.message || 'Unable to generate PDF document. Please try again.');
     } finally {
       setIsExporting(false);
     }
   };
+
 
   const handleShare = () => {
     setCopiedToast(true);
@@ -393,6 +452,33 @@ export const ReportsHub: React.FC<ReportsHubProps> = ({
                   <span>Report link copied to clipboard!</span>
                 </div>
               )}
+
+              {pdfDownloadUrl && (
+                <div className="mt-4 p-3.5 bg-emerald-500/10 border border-emerald-500/25 rounded-2xl flex flex-wrap items-center justify-between gap-3 animate-in fade-in">
+                  <div className="flex items-center gap-2 text-xs text-emerald-300 font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span>PDF ready: <strong>{pdfDownloadUrl.name}</strong></span>
+                  </div>
+                  <a
+                    href={pdfDownloadUrl.url}
+                    download={pdfDownloadUrl.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-neutral-950 rounded-full text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm active:scale-95"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Open / Save PDF</span>
+                  </a>
+                </div>
+              )}
+
+              {exportError && (
+                <div className="mt-4 p-3.5 bg-red-500/10 border border-red-500/25 rounded-2xl flex items-center gap-2 text-xs text-red-300 animate-in fade-in">
+                  <AlertTriangle className="w-4 h-4 text-red-400 shrink-0" />
+                  <span>{exportError}</span>
+                </div>
+              )}
+
 
               {/* Document Body */}
               <div className="space-y-6 text-xs text-neutral-200 mt-6">

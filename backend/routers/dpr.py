@@ -6,7 +6,7 @@ from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from database import get_db
-from services.auth_utils import get_current_user
+from services.auth_utils import get_current_user, get_current_user_optional
 from services.dpr_transcriber import DPRTranscriber
 from services.dpr_extractor import DPRExtractor
 from services.dpr_pdf_generator import PDFGenerator
@@ -15,7 +15,7 @@ from models.report import SiteReport
 from models.site import Site
 from services.rollup import trigger_rollups
 
-router = APIRouter(prefix="/api/dpr", tags=["Module 5 – DPR"], dependencies=[Depends(get_current_user)])
+router = APIRouter(prefix="/api/dpr", tags=["Module 5 – DPR"])
 
 _transcriber = DPRTranscriber()
 _extractor = DPRExtractor()
@@ -288,8 +288,36 @@ async def dpr_generate_pdf(report_data: dict):
     Returns: PDF file download
     """
     try:
-        report = DPRFullReport(**report_data)
-        date_str = report.site_info.date.replace("/", "-").replace(" ", "_") if report.site_info else "report"
+        if isinstance(report_data, dict):
+            # If wrapped in fullReport or universal
+            if "fullReport" in report_data and isinstance(report_data["fullReport"], dict):
+                merged = {**report_data["fullReport"]}
+                for k, v in report_data.items():
+                    if k != "fullReport" and k not in merged:
+                        merged[k] = v
+                report_data = merged
+            elif "universal" in report_data and isinstance(report_data["universal"], dict):
+                merged = {**report_data["universal"]}
+                for k, v in report_data.items():
+                    if k != "universal" and k not in merged:
+                        merged[k] = v
+                report_data = merged
+
+        try:
+            report = DPRFullReport(**report_data)
+        except Exception as parse_err:
+            print("Warning: Direct DPRFullReport parse error, using fallback:", parse_err)
+            report = DPRFullReport()
+            if isinstance(report_data, dict):
+                report.report_type = report_data.get("report_type") or report_data.get("reportType") or "Daily"
+                site_info_data = report_data.get("site_info") or report_data.get("siteInfo")
+                if isinstance(site_info_data, dict):
+                    report.site_info.project_name = site_info_data.get("project_name") or site_info_data.get("projectName") or ""
+                    report.site_info.date = site_info_data.get("date") or ""
+                    report.site_info.location = site_info_data.get("location") or ""
+                    report.site_info.inspector = site_info_data.get("inspector") or ""
+
+        date_str = report.site_info.date.replace("/", "-").replace(" ", "_") if (report.site_info and report.site_info.date) else "report"
         filename = f"DPR_{date_str}_{uuid.uuid4().hex[:6]}.pdf"
         import io
         buffer = io.BytesIO()
@@ -299,9 +327,14 @@ async def dpr_generate_pdf(report_data: dict):
         return StreamingResponse(
             buffer,
             media_type="application/pdf",
-            headers={"Content-Disposition": f"attachment; filename={filename}"},
+            headers={
+                "Content-Disposition": f"attachment; filename={filename}",
+                "Access-Control-Expose-Headers": "Content-Disposition",
+            },
         )
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 

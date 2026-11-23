@@ -53,7 +53,8 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
 }) => {
   const [activeMode, setActiveMode] = useState<InputMode>(initialMode);
   const [isRecording, setIsRecording] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [micError, setMicError] = useState<string | null>(null);
   const [voiceText, setVoiceText] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [extractedResult, setExtractedResult] = useState<ExtractedAIData | null>(null);
@@ -77,93 +78,165 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
   const [formIdleHours, setFormIdleHours] = useState<number | ''>('');
 
   const recognitionRef = useRef<any>(null);
+  const shouldListenRef = useRef(false);
+  const isMutedRef = useRef(false);
+  const committedTranscriptRef = useRef('');
 
   useEffect(() => {
     setActiveMode(initialMode);
   }, [initialMode, isOpen]);
 
-  // Handle live Web Speech recognition if available
+  // Clean up recognition when modal closes
   useEffect(() => {
-    if (typeof window !== 'undefined' && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!isOpen) {
+      shouldListenRef.current = false;
+      isMutedRef.current = false;
+      setIsRecording(false);
+      setIsMuted(false);
+      if (recognitionRef.current) {
+        try { recognitionRef.current.stop(); } catch (e) {}
+      }
+    }
+  }, [isOpen]);
+
+  const initRecognition = () => {
+    if (typeof window === 'undefined') return null;
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) return null;
+
+    try {
       const recognition = new SpeechRecognition();
       recognition.continuous = true;
       recognition.interimResults = true;
+      recognition.maxAlternatives = 1;
       recognition.lang = 'hi-IN';
 
       recognition.onresult = (event: any) => {
-        let currentTranscript = '';
+        // When muted, ignore incoming speech
+        if (isMutedRef.current) return;
+
+        let sessionFinal = '';
+        let interim = '';
+
         for (let i = event.resultIndex; i < event.results.length; ++i) {
-          currentTranscript += event.results[i][0].transcript;
+          const res = event.results[i];
+          if (res.isFinal) {
+            sessionFinal += res[0].transcript + ' ';
+          } else {
+            interim += res[0].transcript;
+          }
         }
-        if (currentTranscript) {
-          setVoiceText(currentTranscript);
+
+        if (sessionFinal) {
+          committedTranscriptRef.current = (
+            (committedTranscriptRef.current ? committedTranscriptRef.current + ' ' : '') + sessionFinal
+          ).replace(/\s+/g, ' ').trim();
+        }
+
+        const combined = (
+          (committedTranscriptRef.current ? committedTranscriptRef.current + ' ' : '') + interim
+        ).replace(/\s+/g, ' ').trim();
+
+        if (combined) {
+          setVoiceText(combined);
         }
       };
 
-      recognition.onerror = () => {
-        setIsRecording(false);
+      recognition.onerror = (event: any) => {
+        console.warn('SpeechRecognition error:', event.error);
+        if (event.error === 'no-speech') {
+          // Silence pause in Web Speech API: do NOT cancel recording
+          return;
+        }
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          shouldListenRef.current = false;
+          setIsRecording(false);
+          setIsMuted(false);
+          setMicError('Microphone permission blocked. Please enable microphone permissions in your browser address bar.');
+          return;
+        }
       };
 
       recognition.onend = () => {
-        setIsRecording(false);
+        // Keep-alive loop: Chrome stops recognition automatically after brief silence
+        if (shouldListenRef.current) {
+          try {
+            recognition.start();
+          } catch (e) {
+            // Already started or busy
+          }
+        } else {
+          setIsRecording(false);
+          setIsMuted(false);
+        }
       };
 
-      recognitionRef.current = recognition;
+      return recognition;
+    } catch (err) {
+      console.warn('Failed to initialize speech recognition:', err);
+      return null;
     }
-  }, []);
+  };
 
   const startRecording = () => {
+    setMicError(null);
     setVoiceText('');
     setExtractedResult(null);
+    committedTranscriptRef.current = '';
+    shouldListenRef.current = true;
+    isMutedRef.current = false;
     setIsRecording(true);
-    setIsPaused(false);
+    setIsMuted(false);
+
+    if (!recognitionRef.current) {
+      recognitionRef.current = initRecognition();
+    }
+
     if (recognitionRef.current) {
-      try { recognitionRef.current.start(); } catch (err) {
-        console.log('Using simulated speech stream');
+      try {
+        recognitionRef.current.start();
+      } catch (err) {
+        console.log('Recognition already active or transitioning:', err);
       }
+    } else {
+      setMicError('Speech recognition is not supported in this browser. Please type or use the Quick Form.');
     }
   };
 
-  const pauseRecording = () => {
-    if (recognitionRef.current) {
-      try { recognitionRef.current.stop(); } catch (e) {}
-    }
-    setIsRecording(false);
-    setIsPaused(true);
-  };
-
-  const resumeRecording = () => {
-    setIsRecording(true);
-    setIsPaused(false);
-    if (recognitionRef.current) {
-      // Append new speech on top of existing transcript
-      const existingText = voiceText;
-      recognitionRef.current.onresult = (event: any) => {
-        let newSpeech = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          newSpeech += event.results[i][0].transcript;
-        }
-        if (newSpeech) {
-          setVoiceText(existingText ? `${existingText} ${newSpeech}` : newSpeech);
-        }
-      };
-      try { recognitionRef.current.start(); } catch (err) {
-        console.log('Using simulated speech stream');
-      }
-    }
+  const toggleMute = () => {
+    const nextMuted = !isMuted;
+    setIsMuted(nextMuted);
+    isMutedRef.current = nextMuted;
   };
 
   const doneRecording = () => {
+    shouldListenRef.current = false;
+    isMutedRef.current = false;
+    setIsRecording(false);
+    setIsMuted(false);
+
     if (recognitionRef.current) {
       try { recognitionRef.current.stop(); } catch (e) {}
     }
-    setIsRecording(false);
-    setIsPaused(false);
-    if (voiceText) {
-      handleProcessVoice(voiceText);
+
+    const currentText = (committedTranscriptRef.current || voiceText || '').trim();
+    if (currentText) {
+      handleProcessVoice(currentText);
     }
   };
+
+  const cancelRecording = () => {
+    shouldListenRef.current = false;
+    isMutedRef.current = false;
+    setIsRecording(false);
+    setIsMuted(false);
+    committedTranscriptRef.current = '';
+
+    if (recognitionRef.current) {
+      try { recognitionRef.current.abort(); } catch (e) {}
+    }
+  };
+
 
 
   const playPresetAudio = (text: string) => {
@@ -400,10 +473,10 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     </span>
                   </div>
 
-                  {/* Mic Button & Waveform */}
+                  {/* Mic Button & Controls */}
                   <div className="flex flex-col items-center justify-center py-4">
                     {/* Idle: single mic button */}
-                    {!isRecording && !isPaused && (
+                    {!isRecording && (
                       <button
                         onClick={startRecording}
                         className="w-16 h-16 rounded-full flex items-center justify-center transition-all transform hover:scale-105 shadow-xl shadow-[#FF5E14]/20 cursor-pointer bg-[#FF5E14] hover:bg-[#E04F0F] text-white"
@@ -413,64 +486,77 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       </button>
                     )}
 
-                    {/* Recording: Pause + Done */}
+                    {/* Recording active: Mute / Done / Cancel */}
                     {isRecording && (
-                      <div className="flex items-center gap-4">
+                      <div className="flex flex-wrap items-center justify-center gap-3">
+                        {/* Mute/Unmute button */}
                         <button
-                          onClick={pauseRecording}
-                          title="Pause recording"
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-amber-500 hover:bg-amber-600 text-white animate-pulse ring-4 ring-amber-500/30"
+                          onClick={toggleMute}
+                          title={isMuted ? "Unmute microphone" : "Mute microphone"}
+                          className={`flex items-center gap-2 px-5 py-3 rounded-full font-bold text-xs shadow-lg transition-all cursor-pointer ${
+                            isMuted
+                              ? 'bg-amber-500 hover:bg-amber-600 text-neutral-950 ring-4 ring-amber-500/40 animate-pulse'
+                              : 'bg-neutral-800 hover:bg-neutral-700 text-white border border-white/20'
+                          }`}
                         >
-                          <svg className="w-6 h-6 fill-white" viewBox="0 0 24 24">
-                            <rect x="6" y="4" width="4" height="16" rx="1" />
-                            <rect x="14" y="4" width="4" height="16" rx="1" />
-                          </svg>
+                          {isMuted ? (
+                            <>
+                              <MicOff className="w-4 h-4 text-neutral-950" />
+                              <span>Muted (Click to Unmute)</span>
+                            </>
+                          ) : (
+                            <>
+                              <MicOff className="w-4 h-4 text-amber-400" />
+                              <span>Mute Mic</span>
+                            </>
+                          )}
                         </button>
-                        <button
-                          onClick={doneRecording}
-                          title="Stop and parse"
-                          className="px-6 py-3 rounded-full bg-[#FF5E14] hover:bg-[#E04F0F] text-white text-xs font-bold shadow-md shadow-[#FF5E14]/20 cursor-pointer transition-colors"
-                        >
-                          Done
-                        </button>
-                      </div>
-                    )}
 
-                    {/* Paused: Resume + Done */}
-                    {isPaused && (
-                      <div className="flex items-center gap-4">
-                        <button
-                          onClick={resumeRecording}
-                          title="Resume recording"
-                          className="w-14 h-14 rounded-full flex items-center justify-center transition-all shadow-lg cursor-pointer bg-[#FF5E14] hover:bg-[#E04F0F] text-white ring-4 ring-[#FF5E14]/30"
-                        >
-                          <Mic className="w-6 h-6 text-white" />
-                        </button>
+                        {/* Done button */}
                         <button
                           onClick={doneRecording}
-                          title="Stop and parse"
-                          className="px-6 py-3 rounded-full bg-[#FF5E14] hover:bg-[#E04F0F] text-white text-xs font-bold shadow-md shadow-[#FF5E14]/20 cursor-pointer transition-colors"
+                          title="Finish speaking and extract report"
+                          className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#FF5E14] hover:bg-[#E04F0F] text-white text-xs font-bold shadow-md shadow-[#FF5E14]/20 cursor-pointer transition-colors active:scale-95"
                         >
-                          Done
+                          <Check className="w-4 h-4 text-white" />
+                          <span>Done</span>
+                        </button>
+
+                        {/* Cancel button */}
+                        <button
+                          onClick={cancelRecording}
+                          title="Discard recording"
+                          className="px-4 py-3 rounded-full bg-white/10 hover:bg-white/15 text-neutral-400 hover:text-white text-xs font-medium transition-colors cursor-pointer"
+                        >
+                          Cancel
                         </button>
                       </div>
                     )}
 
                     <p className="mt-3 text-xs font-medium text-neutral-300 flex items-center justify-center">
                       {isRecording ? (
-                        <>
-                          <span className="w-2 h-2 rounded-full bg-[#FF5E14] animate-ping inline-block mr-2" />
-                          <span>Listening... Click Pause or Done when finished</span>
-                        </>
-                      ) : isPaused ? (
-                        <>
-                          <span className="w-2 h-2 rounded-full bg-amber-400 inline-block mr-2" />
-                          <span>Paused — Click Resume to continue speaking, or Done to parse</span>
-                        </>
+                        isMuted ? (
+                          <>
+                            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block mr-2" />
+                            <span className="text-amber-300">Mic Muted — Click "Muted" to unmute and resume speaking</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="w-2.5 h-2.5 rounded-full bg-[#FF5E14] animate-ping inline-block mr-2" />
+                            <span className="text-neutral-200">Listening live... Click Mute or Done when finished</span>
+                          </>
+                        )
                       ) : (
                         'Tap Microphone to speak, or type site report manually'
                       )}
                     </p>
+
+                    {micError && (
+                      <div className="mt-3 p-2.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs flex items-center gap-2 text-left">
+                        <span className="shrink-0 font-bold">⚠️</span>
+                        <span>{micError}</span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Transcript Display & Editable Input */}
@@ -481,8 +567,11 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                       </span>
                       {voiceText && (
                         <button
-                          onClick={() => setVoiceText('')}
-                          className="text-[10px] text-neutral-500 hover:text-white transition-colors"
+                          onClick={() => {
+                            setVoiceText('');
+                            committedTranscriptRef.current = '';
+                          }}
+                          className="text-[10px] text-neutral-500 hover:text-white transition-colors cursor-pointer"
                         >
                           Clear
                         </button>
@@ -491,10 +580,14 @@ export const GlobalAIModal: React.FC<GlobalAIModalProps> = ({
                     <textarea
                       rows={2}
                       value={voiceText}
-                      onChange={(e) => setVoiceText(e.target.value)}
+                      onChange={(e) => {
+                        setVoiceText(e.target.value);
+                        committedTranscriptRef.current = e.target.value;
+                      }}
                       placeholder="Spoken words will appear here in real-time, or type manually..."
                       className="w-full bg-transparent text-xs text-white placeholder-neutral-500 font-mono resize-none focus:outline-none"
                     />
+
                   </div>
 
                   {/* Actions Bar */}

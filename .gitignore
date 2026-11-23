@@ -3,7 +3,9 @@ backend/.env
 backend/venv/
 backend/venv2/
 backend/.venv/
-backend/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
 backend/*.db
 backend/reports/
 backend/error_log.txt
@@ -27,3 +29,4 @@ frontend/.astro/
 # OS
 .DS_Store
 Thumbs.db
+*.pdf
